@@ -1,9 +1,7 @@
 name: 'Rebase nonProd onto master'
 
 on:
-  push:
-    branches:
-      - master
+  workflow_call:
 
 jobs:
   rebase-nonprod:
