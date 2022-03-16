@@ -1,9 +1,17 @@
+### [0.1.2](https://github.com/CleverShuttle/gh-reusable-workflows/compare/v0.1.1...v0.1.2) (2022-03-16)
+
+
+### Chores
+
+* **deps:** update clevershuttle/gh-composite-actions action to v1.6.11 ([19ebd98](https://github.com/CleverShuttle/gh-reusable-workflows/commit/19ebd984ab7b62a8da865a5d383a8ce4bb27ecd2))
+
 ### [0.1.1](https://github.com/CleverShuttle/gh-reusable-workflows/compare/v0.1.0...v0.1.1) (2022-03-15)
 
 
 ### Chores
 
 * Cleanup repository ([cf006b5](https://github.com/CleverShuttle/gh-reusable-workflows/commit/cf006b5319e2e2d46c7543b5c9c4bc66955e65b6))
+* **release:** v0.1.1 ([1f484ea](https://github.com/CleverShuttle/gh-reusable-workflows/commit/1f484ead92b8834fb1cb811fc3fca8da6a04872a))
 
 ## [0.1.0](https://github.com/CleverShuttle/gh-reusable-workflows/compare/716eb926d9256c1efd8121b3cf9681e8ad7f41a4...v0.1.0) (2022-03-15)
 
