@@ -1,0 +1,99 @@
+name: "Check branches created by Renovate"
+
+on:
+  workflow_call:
+    inputs:
+      java_version:
+        required: true
+        default: "11"
+        type: string
+      create_pr_environment:
+        description: "Optional, set to true if pull requests are verified against AWS infrastructure that is created per pull request"
+        required: false
+        default: false
+        type: boolean
+    secrets:
+      ARTIFACTORY_PASSWORD: true
+        required: true
+      ARTIFACTORY_USERNAME:
+        required: true
+      AWS_REGION:
+        required: true
+      NONPROD_AWS_SECRET_ACCESS_KEY:
+        required: true
+      NONPROD_AWS_ACCESS_KEY_ID:
+        required: true
+
+jobs:
+  build-pull-request:
+    runs-on: ubuntu-20.04
+    steps:
+      - name: "Checkout repository"
+        uses: actions/checkout@v2
+
+      - name: "Set up JDK"
+        uses: actions/setup-java@v2
+        with:
+          java-version: ${{ inputs.java_version }}
+          distribution: "temurin"
+
+      - name: "Install xmlstarlet"
+        run: sudo apt-get install xmlstarlet
+
+      - name: "Configure AWS credentials"
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.NONPROD_AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.NONPROD_AWS_SECRET_ACCESS_KEY }}
+          aws-region: ${{ secrets.AWS_REGION }}
+
+      - name: "Env variable: PROJECT_VERSION"
+        run: echo "PROJECT_VERSION=$(xmlstarlet sel -N my=http://maven.apache.org/POM/4.0.0 -t -m my:project -v my:version pom.xml)" >> $GITHUB_ENV
+
+      - name: "Restore Maven cache"
+        uses: skjolber/maven-cache-github-action@v1
+        with:
+          step: restore
+
+      - name: "Copy settings.xml"
+        run: |
+          mkdir -p ~/.m2
+          cp .github/workflows/github-settings.xml ~/.m2/settings.xml
+
+      - name: "Build lambda with Maven"
+        env:
+          USERNAME: ${{ secrets.ARTIFACTORY_USERNAME }}
+          PASSWORD: ${{ secrets.ARTIFACTORY_PASSWORD }}
+        run: mvn clean package
+
+      - name: "Create and deploy lambda for integration tests"
+        if: inputs.create_pr_environment
+        working-directory: terraform/environments/pr
+        env:
+          TF_VAR_project_version: ${{ env.PROJECT_VERSION }}
+        run: |
+          terraform init \
+          && terraform apply -auto-approve \
+          && echo "Giving AWS time to create the kinesis event iterator so it able to catch the first test event ..." \
+          && sleep 70 \
+          && echo "FUNCTION_NAME=$(terraform output -raw function_name)" >> $GITHUB_ENV \
+          && echo "KINESIS_INPUT_STREAM=$(terraform output -raw kinesis_input_stream)" >> $GITHUB_ENV
+
+      - name: "Test lambda integration with Maven"
+        env:
+          USERNAME: ${{ secrets.ARTIFACTORY_USERNAME }}
+          PASSWORD: ${{ secrets.ARTIFACTORY_PASSWORD }}
+          AWS_TEST_KINESIS_INPUT_STEAM: ${{ env.KINESIS_INPUT_STREAM }}
+        run: mvn install
+
+      - name: "Remove lambda after integration tests"
+        if: inputs.create_pr_environment && always()
+        working-directory: terraform/environments/pr
+        env:
+          TF_VAR_project_version: ${{ env.PROJECT_VERSION }}
+        run: terraform apply -destroy -auto-approve
+
+      - name: "Save Maven cache"
+        uses: skjolber/maven-cache-github-action@v1
+        with:
+          step: save
