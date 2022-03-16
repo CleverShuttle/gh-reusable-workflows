@@ -4,7 +4,7 @@ on:
   workflow_call:
     inputs:
       java_version:
-        required: true
+        required: false
         default: "11"
         type: string
       create_pr_environment:

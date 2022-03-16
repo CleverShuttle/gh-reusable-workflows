@@ -4,7 +4,7 @@ on:
   workflow_call:
     inputs:
       java_version:
-        required: true
+        required: false
         default: "17"
         type: string
     secrets:
