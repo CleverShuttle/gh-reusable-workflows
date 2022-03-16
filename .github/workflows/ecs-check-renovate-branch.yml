@@ -26,7 +26,7 @@ on:
         required: true
 
 jobs:
-  build-pull-request:
+  ecs-check-renovate-branch:
     runs-on: ubuntu-20.04
     steps:
       - name: "Checkout repository"

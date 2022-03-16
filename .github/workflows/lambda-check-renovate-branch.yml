@@ -25,7 +25,7 @@ on:
         required: true
 
 jobs:
-  build-pull-request:
+  lambda-check-renovate-branch:
     runs-on: ubuntu-20.04
     steps:
       - name: "Checkout repository"
@@ -84,7 +84,7 @@ jobs:
           USERNAME: ${{ secrets.ARTIFACTORY_USERNAME }}
           PASSWORD: ${{ secrets.ARTIFACTORY_PASSWORD }}
           AWS_TEST_KINESIS_INPUT_STEAM: ${{ env.KINESIS_INPUT_STREAM }}
-        run: mvn install
+        run: mvn verify
 
       - name: "Remove lambda after integration tests"
         if: inputs.create_pr_environment && always()
