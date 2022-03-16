@@ -1,9 +1,17 @@
+## [0.2.0](https://github.com/CleverShuttle/gh-reusable-workflows/compare/v0.1.2...v0.2.0) (2022-03-16)
+
+
+### Features
+
+* Add initial check-renovate-branchr for ecs and lambda ([b8dd1cd](https://github.com/CleverShuttle/gh-reusable-workflows/commit/b8dd1cda6ce580a2a94e5479733c3c0833566782))
+
 ### [0.1.2](https://github.com/CleverShuttle/gh-reusable-workflows/compare/v0.1.1...v0.1.2) (2022-03-16)
 
 
 ### Chores
 
 * **deps:** update clevershuttle/gh-composite-actions action to v1.6.11 ([19ebd98](https://github.com/CleverShuttle/gh-reusable-workflows/commit/19ebd984ab7b62a8da865a5d383a8ce4bb27ecd2))
+* **release:** v0.1.2 ([e0055c9](https://github.com/CleverShuttle/gh-reusable-workflows/commit/e0055c9ccdd9462f2189c8fbbf61a18f1907f1d2))
 
 ### [0.1.1](https://github.com/CleverShuttle/gh-reusable-workflows/compare/v0.1.0...v0.1.1) (2022-03-15)
 
