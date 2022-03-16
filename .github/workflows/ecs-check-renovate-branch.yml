@@ -8,7 +8,7 @@ on:
         default: "17"
         type: string
     secrets:
-      ARTIFACTORY_PASSWORD: true
+      ARTIFACTORY_PASSWORD:
         required: true
       ARTIFACTORY_USERNAME:
         required: true

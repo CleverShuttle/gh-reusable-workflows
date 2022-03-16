@@ -13,7 +13,7 @@ on:
         default: false
         type: boolean
     secrets:
-      ARTIFACTORY_PASSWORD: true
+      ARTIFACTORY_PASSWORD:
         required: true
       ARTIFACTORY_USERNAME:
         required: true
