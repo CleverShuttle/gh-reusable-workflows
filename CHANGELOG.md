@@ -1,9 +1,21 @@
+### [0.2.1](https://github.com/CleverShuttle/gh-reusable-workflows/compare/v0.2.0...v0.2.1) (2022-03-16)
+
+
+### Bug Fixes
+
+* Syntax error in workflow .yml ([635c4cf](https://github.com/CleverShuttle/gh-reusable-workflows/commit/635c4cf8f992b894c068d2aa307e94e97cb05924))
+
 ## [0.2.0](https://github.com/CleverShuttle/gh-reusable-workflows/compare/v0.1.2...v0.2.0) (2022-03-16)
 
 
 ### Features
 
 * Add initial check-renovate-branchr for ecs and lambda ([b8dd1cd](https://github.com/CleverShuttle/gh-reusable-workflows/commit/b8dd1cda6ce580a2a94e5479733c3c0833566782))
+
+
+### Chores
+
+* **release:** v0.2.0 ([117d5b3](https://github.com/CleverShuttle/gh-reusable-workflows/commit/117d5b3fd0d94f3f6c5305a53479855733721442))
 
 ### [0.1.2](https://github.com/CleverShuttle/gh-reusable-workflows/compare/v0.1.1...v0.1.2) (2022-03-16)
 
