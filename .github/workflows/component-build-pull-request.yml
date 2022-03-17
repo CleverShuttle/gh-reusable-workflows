@@ -62,25 +62,6 @@ jobs:
           sonar_url: ${{ inputs.sonar_url }}
           sonar_project_key: ${{ inputs.sonar_project_key }}
 
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: mvn -B org.sonarsource.scanner.maven:sonar-maven-plugin:3.9.1.2184:sonar
-          -Dsonar.host.url=${{ secrets.SONAR_URL }}
-          -Dsonar.login=${{ secrets.SONAR_TOKEN }}
-          -Dsonar.projectKey=${{ inputs.sonar_project_key }}
-          -Dsonar.scm.provider=git
-          -Dsonar.sourceEncoding=UTF-8
-          -Dsonar.language=java
-          -Dsonar.qualitygate.wait=true
-          -Dsonar.qualitygate.timeout=300
-          -Dsonar.dependencyCheck.reportPath=target/dependency-check-report.xml
-          -Dsonar.dependencyCheck.htmlReportPath=target/site/dependency-check-report.html
-          -Dsonar.pullrequest.provider=GitHub
-          -Dsonar.pullrequest.key=${{ github.event.number }}
-          -Dsonar.pullrequest.branch=${{ github.HEAD_REF }}
-          -Dsonar.pullrequest.base=${{ github.event.pull_request.base.ref }}
-          -Dsonar.pullrequest.github.repository=${{ github.repository }}
-
       - name: "Save Maven cache"
         uses: skjolber/maven-cache-github-action@v1
         with:
