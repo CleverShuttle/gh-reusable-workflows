@@ -7,18 +7,14 @@ on:
         required: false
         default: "17"
         type: string
-      sonar_url:
-        required: true
-        type: string
-      sonar_project_key:
-        required: true
-        type: string
     secrets:
       ARTIFACTORY_PASSWORD:
         required: true
       ARTIFACTORY_USERNAME:
         required: true
       SONAR_TOKEN:
+        required: true
+      SONAR_URL:
         required: true
 
 jobs:
@@ -36,6 +32,13 @@ jobs:
 
       - name: "Install xmlstarlet"
         run: sudo apt-get install xmlstarlet
+
+      - name: "Read sonar.project.key from workflow.properties"
+        id: sonar_project_key
+        uses: christian-draeger/read-properties@1.0.1
+        with:
+          path: '.github/workflows/workflow.properties'
+          property: 'sonar.project.key'
 
       - name: "Env variable: PROJECT_VERSION"
         run: echo "PROJECT_VERSION=$(xmlstarlet sel -N my=http://maven.apache.org/POM/4.0.0 -t -m my:project -v my:version pom.xml)" >> $GITHUB_ENV
@@ -59,8 +62,8 @@ jobs:
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           sonar_token: ${{ secrets.SONAR_TOKEN }}
-          sonar_url: ${{ inputs.sonar_url }}
-          sonar_project_key: ${{ inputs.sonar_project_key }}
+          sonar_url: ${{ secrets.SONAR_URL }}
+          sonar_project_key: ${{ steps.sonar_project_key.outputs.value }}
 
       - name: "Save Maven cache"
         uses: skjolber/maven-cache-github-action@v1

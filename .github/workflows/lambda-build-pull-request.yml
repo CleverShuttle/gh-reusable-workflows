@@ -44,7 +44,6 @@ jobs:
       - name: "Install xmlstarlet"
         run: sudo apt-get install xmlstarlet
 
-        # TODO replace with input variable and remove this step
       - name: "Read sonar.project.key from workflow.properties"
         id: sonar_project_key
         uses: christian-draeger/read-properties@1.0.1
