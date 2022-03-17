@@ -19,7 +19,7 @@ on:
         required: true
       AWS_REGION:
         required: true
-      GITHUB_TOKEN:
+      GITHUB_ACCESS_TOKEN:
         required: true
       NONPROD_AWS_SECRET_ACCESS_KEY:
         required: true
@@ -108,7 +108,7 @@ jobs:
 
       - name: "Sonar: run analysis for pull requests"
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_ACCESS_TOKEN }}
         run: mvn -B org.sonarsource.scanner.maven:sonar-maven-plugin:3.9.1.2184:sonar
           -Dsonar.host.url=${{ secrets.SONAR_URL }}
           -Dsonar.login=${{ secrets.SONAR_TOKEN }}
