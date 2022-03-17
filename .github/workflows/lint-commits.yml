@@ -1,4 +1,4 @@
-name: 'Lint commits'
+name: 'Lint commit messages'
 
 on:
   workflow_call:

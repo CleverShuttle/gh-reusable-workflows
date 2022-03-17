@@ -1,4 +1,4 @@
-name: 'Release gh-reusable-workflows'
+name: 'Workflows: Release master'
 
 on:
   push:

@@ -1,4 +1,4 @@
-name: 'Lint gh-reusable-workflows commit messages'
+name: 'Workflows: Lint commit messages'
 
 on:
   pull_request:
