@@ -55,10 +55,11 @@ jobs:
         env:
           USERNAME: ${{ secrets.ARTIFACTORY_USERNAME }}
           PASSWORD: ${{ secrets.ARTIFACTORY_PASSWORD }}
-        run: mvn clean install
+        # https://stackoverflow.com/a/21638827
+        run: mvn -B clean install
 
       - name: "Sonar: Run analysis for pull requests"
-        uses: CleverShuttle/gh-composite-actions/actions/sonar-java-pull-request@v1.8.0
+        uses: CleverShuttle/gh-composite-actions/actions/sonar-java-pull-request@v1.9.1
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           sonar_token: ${{ secrets.SONAR_TOKEN }}
