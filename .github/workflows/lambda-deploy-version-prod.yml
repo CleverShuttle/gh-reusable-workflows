@@ -1,0 +1,114 @@
+name: "Lambda: Deploy version to PROD"
+
+on:
+  workflow_call:
+    inputs:
+      java_version:
+        required: false
+        default: "11"
+        type: string
+    secrets:
+      ARTIFACTORY_PASSWORD:
+        required: true
+      ARTIFACTORY_USERNAME:
+        required: true
+      AWS_REGION:
+        required: true
+      PRODUCTION_AWS_ACCESS_KEY_ID:
+        required: true
+      PRODUCTION_AWS_SECRET_ACCESS_KEY:
+        required: true
+      PRODUCTION_DEPLOYMENTS_SLACK_CHANNEL_ID:
+        required: true
+      SLACK_BOT_TOKEN_OMG_BACKEND:
+        required: true
+      SLACK_BOT_SIGNING_SECRET_OMG_BACKEND:
+        required: true
+
+concurrency:
+  group: deploy-prod
+
+jobs:
+  lambda-deploy-version-prod:
+    runs-on: ubuntu-20.04
+    steps:
+      - name: "Checkout repository"
+        uses: actions/checkout@v2
+
+      - name: "Set up JDK"
+        uses: actions/setup-java@v2
+        with:
+          java-version: "${{ inputs.java_version }}"
+          distribution: "temurin"
+
+      - name: "Read lambda.mavenGroupIdToDeploy from workflow.properties"
+        id: lambda_maven_group_id_to_deploy
+        uses: christian-draeger/read-properties@1.0.1
+        with:
+          path: ".github/workflows/workflow.properties"
+          property: "lambda.mavenGroupIdToDeploy"
+
+      - name: "Read lambda.mavenArtifactIdToDeploy from workflow.properties"
+        id: lambda_maven_artifact_id_to_deploy
+        uses: christian-draeger/read-properties@1.0.1
+        with:
+          path: ".github/workflows/workflow.properties"
+          property: "lambda.mavenArtifactIdToDeploy"
+
+      - name: "Restore Maven cache"
+        uses: skjolber/maven-cache-github-action@v1
+        with:
+          step: restore
+
+      - name: "Copy settings.xml"
+        run: |
+          mkdir -p ~/.m2
+          cp .github/workflows/github-settings.xml ~/.m2/settings.xml
+
+      - name: "Env variable: REPO_BASE_URL"
+        run: echo "REPO_BASE_URL=https://github.com/CleverShuttle/${{ github.event.repository.name }}" >> $GITHUB_ENV
+
+      - name: "Configure AWS credentials"
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.PRODUCTION_AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.PRODUCTION_AWS_SECRET_ACCESS_KEY }}
+          aws-region: ${{ secrets.AWS_REGION }}
+
+      - name: "Download lambda function code"
+        env:
+          USERNAME: ${{ secrets.ARTIFACTORY_USERNAME }}
+          PASSWORD: ${{ secrets.ARTIFACTORY_PASSWORD }}
+        run: |
+          mvn dependency:get \
+            -Dartifact="${{ steps.lambda_maven_group_id_to_deploy.outputs.value }}:${{ steps.lambda_maven_artifact_id_to_deploy.outputs.value }}:${{ github.event.inputs.version }}:jar" \
+            -Dtransitive=false \
+            -Ddest="${{ steps.lambda_maven_artifact_id_to_deploy.outputs.value }}/target/${{ steps.lambda_maven_artifact_id_to_deploy.outputs.value }}-${{ github.event.inputs.version }}.jar" \
+
+      - name: "Save Maven cache"
+        uses: skjolber/maven-cache-github-action@v1
+        with:
+          step: save
+
+      - name: "Deploy lambda function"
+        run: bash deploy-via-cli.sh ${{ github.event.inputs.version }} prod
+
+      - name: "Notification: Success"
+        if: ${{ success() && github.event.sender.login != 'renovate[bot]' }}
+        uses: aibexhq/slack-rich-notify@v2.0.1
+        with:
+          token: ${{secrets.SLACK_BOT_TOKEN_OMG_BACKEND}}
+          secret: ${{secrets.SLACK_BOT_SIGNING_SECRET_OMG_BACKEND}}
+          channel: ${{secrets.PRODUCTION_DEPLOYMENTS_SLACK_CHANNEL_ID}}
+          message: |
+            :white_check_mark: Lambda <${{ env.REPO_BASE_URL }}|${{ github.event.repository.name }}> ( version `${{ github.event.inputs.version }}` ) was successfully deployed to `PRODUCTION` – <${{ env.REPO_BASE_URL }}/actions/runs/${{ github.run_id }}|Details>
+
+      - name: "Notification: Failure"
+        if: ${{ failure() }}
+        uses: aibexhq/slack-rich-notify@v2.0.1
+        with:
+          token: ${{secrets.SLACK_BOT_TOKEN_OMG_BACKEND}}
+          secret: ${{secrets.SLACK_BOT_SIGNING_SECRET_OMG_BACKEND}}
+          channel: ${{secrets.PRODUCTION_DEPLOYMENTS_SLACK_CHANNEL_ID}}
+          message: |
+            :x: Lambda <${{ env.REPO_BASE_URL }}|${{ github.event.repository.name }}> ( version `${{ github.event.inputs.version }}` ) failed to be deployed to `PRODUCTION` – <${{ env.REPO_BASE_URL }}/actions/runs/${{ github.run_id }}|Details>

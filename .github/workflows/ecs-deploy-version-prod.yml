@@ -1,0 +1,88 @@
+name: "ECS: Deploy version to PROD"
+
+on:
+  workflow_call:
+    secrets:
+      AWS_REGION:
+        required: true
+      ECR_REGISTRY:
+        required: true
+      PRODUCTION_AWS_ACCESS_KEY_ID:
+        required: true
+      PRODUCTION_AWS_SECRET_ACCESS_KEY:
+        required: true
+      PRODUCTION_DEPLOYMENTS_SLACK_CHANNEL_ID:
+        required: true
+      SLACK_BOT_SIGNING_SECRET_OMG_BACKEND:
+        required: true
+      SLACK_BOT_TOKEN_OMG_BACKEND:
+        required: true
+
+concurrency:
+  group: deploy-prod
+
+jobs:
+  ecs-deploy-version-prod:
+    runs-on: ubuntu-20.04
+    steps:
+      - name: "Checkout repository"
+        uses: actions/checkout@v2
+
+      - name: "Read ecr.image.name from workflow.properties"
+        id: ecr_image_name
+        uses: christian-draeger/read-properties@1.0.1
+        with:
+          path: ".github/workflows/workflow.properties"
+          property: "ecr.image.name"
+
+      - name: "Read ecs.cluster.name.cs.production from workflow.properties"
+        id: ecs_cluster_name_cs_production
+        uses: christian-draeger/read-properties@1.0.1
+        with:
+          path: ".github/workflows/workflow.properties"
+          property: "ecs.cluster.name.cs.production"
+
+      - name: "Read ecs.service.name.production from workflow.properties"
+        id: ecs_service_name_production
+        uses: christian-draeger/read-properties@1.0.1
+        with:
+          path: ".github/workflows/workflow.properties"
+          property: "ecs.service.name.production"
+
+      - name: "Env variable: IMAGE_TAG"
+        run: echo "IMAGE_TAG=${{ secrets.ECR_REGISTRY }}/${{ steps.ecr_image_name.outputs.value }}:${{ github.event.inputs.version }}" >> $GITHUB_ENV
+
+      - name: "Env variable: REPO_BASE_URL"
+        run: echo "REPO_BASE_URL=https://github.com/CleverShuttle/${{ github.event.repository.name }}" >> $GITHUB_ENV
+
+      - name: "Configure AWS credentials"
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.PRODUCTION_AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.PRODUCTION_AWS_SECRET_ACCESS_KEY }}
+          aws-region: ${{ secrets.AWS_REGION }}
+
+      - name: "Deploy ECS"
+        uses: brunocascio/ecs-deploy@v2.0.0
+        with:
+          args: deploy ${{ steps.ecs_cluster_name_cs_production.outputs.value }} ${{ steps.ecs_service_name_production.outputs.value }} --image ${{ steps.ecr_image_name.outputs.value }} ${{ env.IMAGE_TAG }} --region ${{ secrets.AWS_REGION }} --timeout 600 --rollback
+
+      - name: "Notification: Success"
+        if: ${{ success() && github.event.sender.login != 'renovate[bot]' }}
+        uses: aibexhq/slack-rich-notify@v2.0.1
+        with:
+          token: ${{secrets.SLACK_BOT_TOKEN_OMG_BACKEND}}
+          secret: ${{secrets.SLACK_BOT_SIGNING_SECRET_OMG_BACKEND}}
+          channel: ${{secrets.PRODUCTION_DEPLOYMENTS_SLACK_CHANNEL_ID}}
+          message: |
+            :white_check_mark: Service <${{ env.REPO_BASE_URL }}|${{ github.event.repository.name }}> ( version `${{ github.event.inputs.version }}` ) was successfully deployed to `PRODUCTION` – <${{ env.REPO_BASE_URL }}/actions/runs/${{ github.run_id }}|Details>
+
+      - name: "Notification: Failure"
+        if: ${{ failure() }}
+        uses: aibexhq/slack-rich-notify@v2.0.1
+        with:
+          token: ${{secrets.SLACK_BOT_TOKEN_OMG_BACKEND}}
+          secret: ${{secrets.SLACK_BOT_SIGNING_SECRET_OMG_BACKEND}}
+          channel: ${{secrets.PRODUCTION_DEPLOYMENTS_SLACK_CHANNEL_ID}}
+          message: |
+            :x: Service <${{ env.REPO_BASE_URL }}|${{ github.event.repository.name }}> ( version `${{ github.event.inputs.version }}` ) failed to be deployed to `PRODUCTION` – <${{ env.REPO_BASE_URL }}/actions/runs/${{ github.run_id }}|Details>

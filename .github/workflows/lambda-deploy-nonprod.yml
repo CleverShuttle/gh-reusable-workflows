@@ -154,11 +154,6 @@ jobs:
         with:
           text: ${{ steps.changelog.outputs.text }}
 
-      - name: "Determine deployed entity"
-        if: always()
-        run: |
-          echo "DEPLOYED_ENTITY=Lambda" >> $GITHUB_ENV
-
       - name: "Notification: Success"
         if: ${{ success() && !(github.event.sender.login == 'renovate[bot]' || startsWith(github.event.head_commit.message, 'renovate/')) }}
         uses: aibexhq/slack-rich-notify@v2.0.1
@@ -167,7 +162,7 @@ jobs:
           secret: ${{secrets.SLACK_BOT_SIGNING_SECRET_OMG_BACKEND}}
           channel: ${{secrets.TEST_DEPLOYMENTS_SLACK_CHANNEL_ID}}
           message: |
-            :white_check_mark: ${{ env.DEPLOYED_ENTITY }} <${{ env.REPO_BASE_URL }}/tree/nonprod|${{ github.event.repository.name }}> ( version `${{ env.NONPROD_VERSION }}` ) was successfully deployed to `NONPROD` – <${{ env.REPO_BASE_URL }}/actions/runs/${{ github.run_id }}|Details>
+            :white_check_mark: Lambda <${{ env.REPO_BASE_URL }}/tree/nonprod|${{ github.event.repository.name }}> ( version `${{ env.NONPROD_VERSION }}` ) was successfully deployed to `NONPROD` – <${{ env.REPO_BASE_URL }}/actions/runs/${{ github.run_id }}|Details>
 
             ${{ steps.changelog_format.outputs.text }}
 
@@ -179,4 +174,4 @@ jobs:
           secret: ${{secrets.SLACK_BOT_SIGNING_SECRET_OMG_BACKEND}}
           channel: ${{secrets.TEST_DEPLOYMENTS_SLACK_CHANNEL_ID}}
           message: |
-            :x: ${{ env.DEPLOYED_ENTITY }} <${{ env.REPO_BASE_URL }}/tree/nonprod|${{ github.event.repository.name }}> ( version `${{ env.NONPROD_VERSION }}` ) failed to be deployed to `NONPROD` – <${{ env.REPO_BASE_URL }}/actions/runs/${{ github.run_id }}|Details>
+            :x: Lambda <${{ env.REPO_BASE_URL }}/tree/nonprod|${{ github.event.repository.name }}> ( version `${{ env.NONPROD_VERSION }}` ) failed to be deployed to `NONPROD` – <${{ env.REPO_BASE_URL }}/actions/runs/${{ github.run_id }}|Details>
