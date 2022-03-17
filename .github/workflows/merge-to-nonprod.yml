@@ -2,6 +2,9 @@ name: "Merge to nonprod"
 
 on:
   workflow_call:
+    secrets:
+      OMG_GITHUB_ACCESS_TOKEN:
+        required: true
 
 jobs:
   merge-to-nonprod:
