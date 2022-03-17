@@ -1,9 +1,21 @@
+### [0.6.9](https://github.com/CleverShuttle/gh-reusable-workflows/compare/v0.6.8...v0.6.9) (2022-03-17)
+
+
+### Chores
+
+* Use the latest component actions ([de4b45b](https://github.com/CleverShuttle/gh-reusable-workflows/commit/de4b45b1d5cab8c9b7f4659c95407013780e1b97))
+
 ### [0.6.8](https://github.com/CleverShuttle/gh-reusable-workflows/compare/v0.6.7...v0.6.8) (2022-03-17)
 
 
 ### Bug Fixes
 
 * Typo ([b720fc9](https://github.com/CleverShuttle/gh-reusable-workflows/commit/b720fc92bc48b3b01e720a07f137b2ddd41aaea8))
+
+
+### Chores
+
+* **release:** v0.6.8 ([5657f2f](https://github.com/CleverShuttle/gh-reusable-workflows/commit/5657f2ff07d850c2725518043e85765127dced6a))
 
 ### [0.6.7](https://github.com/CleverShuttle/gh-reusable-workflows/compare/v0.6.6...v0.6.7) (2022-03-17)
 
@@ -28,12 +40,4 @@
 
 * Append new component workflow; TODOs added; ([93a2e11](https://github.com/CleverShuttle/gh-reusable-workflows/commit/93a2e110bc749afc20226a694a81523ae283968f))
 * **release:** v0.6.5 ([0887a3f](https://github.com/CleverShuttle/gh-reusable-workflows/commit/0887a3f4f512633eba60ff1cf82becead844af41))
-
-### [0.6.4](https://github.com/CleverShuttle/gh-reusable-workflows/compare/v0.6.3...v0.6.4) (2022-03-17)
-
-
-### Chores
-
-* Modify path of _lint-commits flow; Update versions; Wording ([beca3ff](https://github.com/CleverShuttle/gh-reusable-workflows/commit/beca3ffb39aa8bbaeebddab2c6f69f84e4177403))
-* **release:** v0.6.4 ([2165cc7](https://github.com/CleverShuttle/gh-reusable-workflows/commit/2165cc7bf42818fc489d33aea66b611ff4063425))
 
