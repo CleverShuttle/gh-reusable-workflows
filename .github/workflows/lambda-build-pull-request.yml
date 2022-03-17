@@ -20,6 +20,8 @@ on:
       AWS_REGION:
         required: true
       GITHUB_ACCESS_TOKEN:
+        # We're renaming because GITHUB_TOKEN is a reserved name
+        description: "The GitHub token from GITHUB_TOKEN"
         required: true
       NONPROD_AWS_SECRET_ACCESS_KEY:
         required: true
