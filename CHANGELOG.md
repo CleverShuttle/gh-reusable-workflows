@@ -1,9 +1,21 @@
+### [0.6.1](https://github.com/CleverShuttle/gh-reusable-workflows/compare/v0.6.0...v0.6.1) (2022-03-17)
+
+
+### Chores
+
+* Reset maven-settings action for all flows ([d71b6e6](https://github.com/CleverShuttle/gh-reusable-workflows/commit/d71b6e6f67cee5b2d3a136094d6b5276d2ad4ad6))
+
 ## [0.6.0](https://github.com/CleverShuttle/gh-reusable-workflows/compare/v0.5.4...v0.6.0) (2022-03-17)
 
 
 ### Features
 
 * Add deploy-prod workflows ([a9f387e](https://github.com/CleverShuttle/gh-reusable-workflows/commit/a9f387eabfdd38a919520cf71cc104ad10254813))
+
+
+### Chores
+
+* **release:** v0.6.0 ([7285904](https://github.com/CleverShuttle/gh-reusable-workflows/commit/7285904eec5256b72de5ac6e3077d5f103226e69))
 
 ### [0.5.4](https://github.com/CleverShuttle/gh-reusable-workflows/compare/v0.5.3...v0.5.4) (2022-03-17)
 
@@ -28,12 +40,4 @@
 
 * **release:** v0.5.2 ([a6f221d](https://github.com/CleverShuttle/gh-reusable-workflows/commit/a6f221dccc486b9fdf3f4faabb8a403bd34fd01f))
 * Use maven-settings action for all flows ([6445605](https://github.com/CleverShuttle/gh-reusable-workflows/commit/64456054ca2f1c4dea063809a8ee3699915b5f2a))
-
-### [0.5.1](https://github.com/CleverShuttle/gh-reusable-workflows/compare/v0.5.0...v0.5.1) (2022-03-17)
-
-
-### Chores
-
-* Append new component workflow; use maven-settings action for all flows ([76983eb](https://github.com/CleverShuttle/gh-reusable-workflows/commit/76983eb8573289c84cf10680b9329c74891833ec))
-* **release:** v0.5.1 ([90d1b78](https://github.com/CleverShuttle/gh-reusable-workflows/commit/90d1b7884900546227cf16a972f34687cc01ae46))
 
