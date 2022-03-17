@@ -9,7 +9,6 @@ on:
 jobs:
   merge-to-nonprod:
     runs-on: ubuntu-20.04
-    needs: build-pull-request
     steps:
       - name: "Checkout repository"
         uses: actions/checkout@v2
