@@ -1,0 +1,184 @@
+name: "Lambda: Deploy to NONPROD"
+
+on:
+  workflow_call:
+    inputs:
+      java_version:
+        required: false
+        default: "11"
+        type: string
+      create_pr_environment:
+        description: "Optional, set to true if pull requests are verified against AWS infrastructure that is created per pull request"
+        required: false
+        default: false
+        type: boolean
+      deploy_e2etest:
+        description: "Optional, defaults to true, set to false if the lambda should not be deployed to the E2ETEST environment"
+        required: false
+        default: true
+        type: boolean
+    secrets:
+      ARTIFACTORY_PASSWORD:
+        required: true
+      ARTIFACTORY_USERNAME:
+        required: true
+      AWS_REGION:
+        required: true
+      NONPROD_AWS_SECRET_ACCESS_KEY:
+        required: true
+      NONPROD_AWS_ACCESS_KEY_ID:
+        required: true
+      SLACK_BOT_TOKEN_OMG_BACKEND:
+        required: true
+      SLACK_BOT_SIGNING_SECRET_OMG_BACKEND:
+        required: true
+      TEST_DEPLOYMENTS_SLACK_CHANNEL_ID:
+        required: true
+
+concurrency:
+  group: deploy-nonprod
+  cancel-in-progress: true
+
+jobs:
+  lambda-deploy-nonprod:
+    runs-on: ubuntu-20.04
+    steps:
+      - name: "Checkout repository"
+        uses: actions/checkout@v2
+
+      - name: "Set up JDK"
+        uses: actions/setup-java@v2
+        with:
+          java-version: "${{ inputs.java_version }}"
+          distribution: "temurin"
+
+      - name: "Install xmlstarlet"
+        run: sudo apt-get install xmlstarlet
+
+      - name: "Configure AWS credentials"
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.NONPROD_AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.NONPROD_AWS_SECRET_ACCESS_KEY }}
+          aws-region: ${{ secrets.AWS_REGION }}
+
+      - name: "Env variables: General"
+        run: echo "REPO_BASE_URL=https://github.com/CleverShuttle/${{ github.event.repository.name }}" >> $GITHUB_ENV
+
+      - name: "Env variable: PROJECT_VERSION"
+        run: echo "PROJECT_VERSION=$(xmlstarlet sel -N my=http://maven.apache.org/POM/4.0.0 -t -m my:project -v my:version pom.xml)" >> $GITHUB_ENV
+
+      - name: "Env variable: NONPROD_VERSION"
+        run: echo "NONPROD_VERSION=${{ env.PROJECT_VERSION }}-NONPROD-${{ github.run_number }}" >> $GITHUB_ENV
+
+      - name: "Restore Maven cache"
+        uses: skjolber/maven-cache-github-action@v1
+        with:
+          step: restore
+
+      - name: "Copy settings.xml"
+        run: |
+          mkdir -p ~/.m2
+          cp .github/workflows/github-settings.xml ~/.m2/settings.xml
+
+      - name: "Bump Version"
+        env:
+          USERNAME: ${{ secrets.ARTIFACTORY_USERNAME }}
+          PASSWORD: ${{ secrets.ARTIFACTORY_PASSWORD }}
+        run: mvn -q versions:set -DnewVersion="${{ env.NONPROD_VERSION }}" -DprocessAllModules=true
+
+      - name: "Test lambda with Maven"
+        env:
+          USERNAME: ${{ secrets.ARTIFACTORY_USERNAME }}
+          PASSWORD: ${{ secrets.ARTIFACTORY_PASSWORD }}
+        run: mvn clean package
+
+      - name: "Create and deploy lambda for integration tests"
+        if: inputs.create_pr_environment
+        working-directory: terraform/environments/pr
+        env:
+          TF_VAR_project_version: ${{ env.NONPROD_VERSION }}
+        run: |
+          terraform init \
+          && terraform apply -auto-approve \
+          && echo "Giving AWS time to create the kinesis event iterator so it able to catch the first test event ..." \
+          && sleep 70 \
+          && echo "FUNCTION_NAME=$(terraform output -raw function_name)" >> $GITHUB_ENV \
+          && echo "KINESIS_INPUT_STREAM=$(terraform output -raw kinesis_input_stream)" >> $GITHUB_ENV
+
+      - name: "Test lambda integration with Maven"
+        env:
+          USERNAME: ${{ secrets.ARTIFACTORY_USERNAME }}
+          PASSWORD: ${{ secrets.ARTIFACTORY_PASSWORD }}
+          AWS_TEST_KINESIS_INPUT_STEAM: ${{ env.KINESIS_INPUT_STREAM }}
+        run: mvn install
+
+      - name: "Remove lambda after integration tests"
+        if: inputs.create_pr_environment && always()
+        working-directory: terraform/environments/pr
+        env:
+          TF_VAR_project_version: ${{ env.NONPROD_VERSION }}
+        run: terraform apply -destroy -auto-approve
+
+      - name: "Deploy to Artifactory"
+        env:
+          USERNAME: ${{ secrets.ARTIFACTORY_USERNAME }}
+          PASSWORD: ${{ secrets.ARTIFACTORY_PASSWORD }}
+        run: mvn -DskipDockerBuild -DskipForbiddenApisCheck -Dmaven.main.skip -DskipTests -DskipIntegrationTests -DskipUnitTests -DskipDependencyCheck deploy
+
+      - name: "Save Maven cache"
+        uses: skjolber/maven-cache-github-action@v1
+        with:
+          step: save
+
+      - name: "Deploy lambda function to NONPROD"
+        run: bash deploy-via-cli.sh ${{ env.NONPROD_VERSION }} nonprod
+
+      - name: "Deploy lambda function to E2ETEST"
+        if: inputs.deploy_e2etest
+        run: bash deploy-via-cli.sh ${{ env.NONPROD_VERSION }} e2etest
+
+      - name: "Generate changelog"
+        id: changelog
+        run: |
+          set -o nounset -o errexit
+          git fetch origin
+          git checkout nonprod
+          output=$(node .github/workflows/generate-nonprod-changelog.js ${{ env.REPO_BASE_URL }})
+          output="${output//'%'/'%25'}"
+          output="${output//$'\n'/'%0A'}"
+          output="${output//$'\r'/'%0D'}"
+          echo "::set-output name=text::$output"
+
+      - name: "Format changelog for slack"
+        id: changelog_format
+        uses: lovetoknow/slackify-markdown-action@v1.0.0
+        with:
+          text: ${{ steps.changelog.outputs.text }}
+
+      - name: "Determine deployed entity"
+        if: always()
+        run: |
+          echo "DEPLOYED_ENTITY=Lambda" >> $GITHUB_ENV
+
+      - name: "Notification: Success"
+        if: ${{ success() && !(github.event.sender.login == 'renovate[bot]' || startsWith(github.event.head_commit.message, 'renovate/')) }}
+        uses: aibexhq/slack-rich-notify@v2.0.1
+        with:
+          token: ${{secrets.SLACK_BOT_TOKEN_OMG_BACKEND}}
+          secret: ${{secrets.SLACK_BOT_SIGNING_SECRET_OMG_BACKEND}}
+          channel: ${{secrets.TEST_DEPLOYMENTS_SLACK_CHANNEL_ID}}
+          message: |
+            :white_check_mark: ${{ env.DEPLOYED_ENTITY }} <${{ env.REPO_BASE_URL }}/tree/nonprod|${{ github.event.repository.name }}> ( version `${{ env.NONPROD_VERSION }}` ) was successfully deployed to `NONPROD` – <${{ env.REPO_BASE_URL }}/actions/runs/${{ github.run_id }}|Details>
+
+            ${{ steps.changelog_format.outputs.text }}
+
+      - name: "Notification: Failure"
+        if: ${{ failure() }}
+        uses: aibexhq/slack-rich-notify@v2.0.1
+        with:
+          token: ${{secrets.SLACK_BOT_TOKEN_OMG_BACKEND}}
+          secret: ${{secrets.SLACK_BOT_SIGNING_SECRET_OMG_BACKEND}}
+          channel: ${{secrets.TEST_DEPLOYMENTS_SLACK_CHANNEL_ID}}
+          message: |
+            :x: ${{ env.DEPLOYED_ENTITY }} <${{ env.REPO_BASE_URL }}/tree/nonprod|${{ github.event.repository.name }}> ( version `${{ env.NONPROD_VERSION }}` ) failed to be deployed to `NONPROD` – <${{ env.REPO_BASE_URL }}/actions/runs/${{ github.run_id }}|Details>
