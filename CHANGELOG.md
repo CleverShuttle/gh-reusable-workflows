@@ -1,9 +1,17 @@
+### [0.5.2](https://github.com/CleverShuttle/gh-reusable-workflows/compare/v0.5.1...v0.5.2) (2022-03-17)
+
+
+### Chores
+
+* Use maven-settings action for all flows ([6445605](https://github.com/CleverShuttle/gh-reusable-workflows/commit/64456054ca2f1c4dea063809a8ee3699915b5f2a))
+
 ### [0.5.1](https://github.com/CleverShuttle/gh-reusable-workflows/compare/v0.5.0...v0.5.1) (2022-03-17)
 
 
 ### Chores
 
 * Append new component workflow; use maven-settings action for all flows ([76983eb](https://github.com/CleverShuttle/gh-reusable-workflows/commit/76983eb8573289c84cf10680b9329c74891833ec))
+* **release:** v0.5.1 ([90d1b78](https://github.com/CleverShuttle/gh-reusable-workflows/commit/90d1b7884900546227cf16a972f34687cc01ae46))
 
 ## [0.5.0](https://github.com/CleverShuttle/gh-reusable-workflows/compare/v0.4.4...v0.5.0) (2022-03-17)
 
@@ -36,17 +44,4 @@
 ### Chores
 
 * **release:** v0.4.3 ([5fa74da](https://github.com/CleverShuttle/gh-reusable-workflows/commit/5fa74daff5e78e3afcf8ff26b31892381116347e))
-
-### [0.4.2](https://github.com/CleverShuttle/gh-reusable-workflows/compare/v0.4.1...v0.4.2) (2022-03-17)
-
-
-### Bug Fixes
-
-* Reference required secret ([3005eb2](https://github.com/CleverShuttle/gh-reusable-workflows/commit/3005eb2f1a3b9536c935f858fc9179728478e426))
-
-
-### Chores
-
-* Describe GITHUB_ACCESS_TOKEN secret ([bb95e7b](https://github.com/CleverShuttle/gh-reusable-workflows/commit/bb95e7b390c1660946c8e62d9670b7f928c81b00))
-* **release:** v0.4.2 ([ca5093f](https://github.com/CleverShuttle/gh-reusable-workflows/commit/ca5093f4faafb6a4c3c9dbee1087cadebceb6f1e))
 
