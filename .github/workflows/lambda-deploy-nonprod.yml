@@ -77,9 +77,7 @@ jobs:
           step: restore
 
       - name: "Copy settings.xml"
-        run: |
-          mkdir -p ~/.m2
-          cp .github/workflows/github-settings.xml ~/.m2/settings.xml
+        uses: CleverShuttle/gh-composite-actions/actions/maven-settings@v1.6.16
 
       - name: "Bump Version"
         env:

@@ -61,9 +61,7 @@ jobs:
           step: restore
 
       - name: "Copy settings.xml"
-        run: |
-          mkdir -p ~/.m2
-          cp .github/workflows/github-settings.xml ~/.m2/settings.xml
+        uses: CleverShuttle/gh-composite-actions/actions/maven-settings@v1.6.16
 
       - name: "Env variable: REPO_BASE_URL"
         run: echo "REPO_BASE_URL=https://github.com/CleverShuttle/${{ github.event.repository.name }}" >> $GITHUB_ENV
