@@ -56,7 +56,9 @@ jobs:
           step: restore
 
       - name: "Copy settings.xml"
-        uses: CleverShuttle/gh-composite-actions/actions/maven-settings@v1.6.13
+        run: |
+          mkdir -p ~/.m2
+          cp .github/workflows/github-settings.xml ~/.m2/settings.xml
 
       - name: "Build lambda with Maven"
         env:
