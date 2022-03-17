@@ -1,9 +1,21 @@
+### [0.4.1](https://github.com/CleverShuttle/gh-reusable-workflows/compare/v0.4.0...v0.4.1) (2022-03-17)
+
+
+### Bug Fixes
+
+* Rename secret to avoid use of reserved name ([f407c85](https://github.com/CleverShuttle/gh-reusable-workflows/commit/f407c8531f74e67839c0bb04b04ab52c96615da9))
+
 ## [0.4.0](https://github.com/CleverShuttle/gh-reusable-workflows/compare/v0.3.0...v0.4.0) (2022-03-17)
 
 
 ### Features
 
 * Add workflows for PR builds and rebase nonprod ([4fb4e4d](https://github.com/CleverShuttle/gh-reusable-workflows/commit/4fb4e4dac198b1ca21893c41ea2a2b6eeced4a36))
+
+
+### Chores
+
+* **release:** v0.4.0 ([60cc901](https://github.com/CleverShuttle/gh-reusable-workflows/commit/60cc901a492d1e4aba5196fb5d7568407521f791))
 
 ## [0.3.0](https://github.com/CleverShuttle/gh-reusable-workflows/compare/v0.2.1...v0.3.0) (2022-03-16)
 
@@ -45,12 +57,4 @@
 ### Chores
 
 * **release:** v0.2.0 ([117d5b3](https://github.com/CleverShuttle/gh-reusable-workflows/commit/117d5b3fd0d94f3f6c5305a53479855733721442))
-
-### [0.1.2](https://github.com/CleverShuttle/gh-reusable-workflows/compare/v0.1.1...v0.1.2) (2022-03-16)
-
-
-### Chores
-
-* **deps:** update clevershuttle/gh-composite-actions action to v1.6.11 ([19ebd98](https://github.com/CleverShuttle/gh-reusable-workflows/commit/19ebd984ab7b62a8da865a5d383a8ce4bb27ecd2))
-* **release:** v0.1.2 ([e0055c9](https://github.com/CleverShuttle/gh-reusable-workflows/commit/e0055c9ccdd9462f2189c8fbbf61a18f1907f1d2))
 
