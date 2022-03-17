@@ -1,9 +1,26 @@
+### [0.4.2](https://github.com/CleverShuttle/gh-reusable-workflows/compare/v0.4.1...v0.4.2) (2022-03-17)
+
+
+### Bug Fixes
+
+* Reference required secret ([3005eb2](https://github.com/CleverShuttle/gh-reusable-workflows/commit/3005eb2f1a3b9536c935f858fc9179728478e426))
+
+
+### Chores
+
+* Describe GITHUB_ACCESS_TOKEN secret ([bb95e7b](https://github.com/CleverShuttle/gh-reusable-workflows/commit/bb95e7b390c1660946c8e62d9670b7f928c81b00))
+
 ### [0.4.1](https://github.com/CleverShuttle/gh-reusable-workflows/compare/v0.4.0...v0.4.1) (2022-03-17)
 
 
 ### Bug Fixes
 
 * Rename secret to avoid use of reserved name ([f407c85](https://github.com/CleverShuttle/gh-reusable-workflows/commit/f407c8531f74e67839c0bb04b04ab52c96615da9))
+
+
+### Chores
+
+* **release:** v0.4.1 ([4833843](https://github.com/CleverShuttle/gh-reusable-workflows/commit/4833843817e5fdf490006fdd1346c5623c566c30))
 
 ## [0.4.0](https://github.com/CleverShuttle/gh-reusable-workflows/compare/v0.3.0...v0.4.0) (2022-03-17)
 
@@ -45,16 +62,4 @@
 ### Chores
 
 * **release:** v0.2.1 ([845b17a](https://github.com/CleverShuttle/gh-reusable-workflows/commit/845b17a1a091c82aa3b4ff99dae701f80623707b))
-
-## [0.2.0](https://github.com/CleverShuttle/gh-reusable-workflows/compare/v0.1.2...v0.2.0) (2022-03-16)
-
-
-### Features
-
-* Add initial check-renovate-branchr for ecs and lambda ([b8dd1cd](https://github.com/CleverShuttle/gh-reusable-workflows/commit/b8dd1cda6ce580a2a94e5479733c3c0833566782))
-
-
-### Chores
-
-* **release:** v0.2.0 ([117d5b3](https://github.com/CleverShuttle/gh-reusable-workflows/commit/117d5b3fd0d94f3f6c5305a53479855733721442))
 
