@@ -9,4 +9,4 @@ jobs:
 
     steps:
       - name: "Checkout repository"
-        uses: CleverShuttle/gh-composite-actions/actions/rebase-nonprod@v1.7.0
+        uses: CleverShuttle/gh-composite-actions/actions/rebase-nonprod@v1.8.0
