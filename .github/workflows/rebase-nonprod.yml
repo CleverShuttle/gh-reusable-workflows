@@ -1,4 +1,4 @@
-name: 'Rebase nonProd onto master'
+name: 'Rebase nonprod onto master'
 
 on:
   workflow_call:

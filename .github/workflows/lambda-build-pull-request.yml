@@ -1,4 +1,4 @@
-name: "Lambda: Check branches created by Renovate"
+name: "Lambda: Build pull request"
 
 on:
   workflow_call:
@@ -19,13 +19,19 @@ on:
         required: true
       AWS_REGION:
         required: true
+      GITHUB_TOKEN:
+        required: true
       NONPROD_AWS_SECRET_ACCESS_KEY:
         required: true
       NONPROD_AWS_ACCESS_KEY_ID:
         required: true
+      SONAR_TOKEN:
+        required: true
+      SONAR_URL:
+        required: true
 
 jobs:
-  lambda-check-renovate-branch:
+  lambda-build-pull-request:
     runs-on: ubuntu-20.04
     steps:
       - name: "Checkout repository"
@@ -34,11 +40,18 @@ jobs:
       - name: "Set up JDK"
         uses: actions/setup-java@v2
         with:
-          java-version: ${{ inputs.java_version }}
+          java-version: "${{ inputs.java_version }}"
           distribution: "temurin"
 
       - name: "Install xmlstarlet"
         run: sudo apt-get install xmlstarlet
+
+      - name: "Read sonar.project.key from workflow.properties"
+        id: sonar_project_key
+        uses: christian-draeger/read-properties@1.0.1
+        with:
+          path: '.github/workflows/workflow.properties'
+          property: 'sonar.project.key'
 
       - name: "Configure AWS credentials"
         uses: aws-actions/configure-aws-credentials@v1
@@ -84,7 +97,7 @@ jobs:
           USERNAME: ${{ secrets.ARTIFACTORY_USERNAME }}
           PASSWORD: ${{ secrets.ARTIFACTORY_PASSWORD }}
           AWS_TEST_KINESIS_INPUT_STEAM: ${{ env.KINESIS_INPUT_STREAM }}
-        run: mvn verify
+        run: mvn install
 
       - name: "Remove lambda after integration tests"
         if: inputs.create_pr_environment && always()
@@ -92,6 +105,26 @@ jobs:
         env:
           TF_VAR_project_version: ${{ env.PROJECT_VERSION }}
         run: terraform apply -destroy -auto-approve
+
+      - name: "Sonar: run analysis for pull requests"
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: mvn -B org.sonarsource.scanner.maven:sonar-maven-plugin:3.9.1.2184:sonar
+          -Dsonar.host.url=${{ secrets.SONAR_URL }}
+          -Dsonar.login=${{ secrets.SONAR_TOKEN }}
+          -Dsonar.projectKey=${{ steps.sonar_project_key.outputs.value }}
+          -Dsonar.scm.provider=git
+          -Dsonar.sourceEncoding=UTF-8
+          -Dsonar.language=java
+          -Dsonar.qualitygate.wait=true
+          -Dsonar.qualitygate.timeout=300
+          -Dsonar.dependencyCheck.reportPath=target/dependency-check-report.xml
+          -Dsonar.dependencyCheck.htmlReportPath=target/site/dependency-check-report.html
+          -Dsonar.pullrequest.provider=GitHub
+          -Dsonar.pullrequest.key=${{ github.event.number }}
+          -Dsonar.pullrequest.branch=${{ github.HEAD_REF }}
+          -Dsonar.pullrequest.base=${{ github.event.pull_request.base.ref }}
+          -Dsonar.pullrequest.github.repository=${{ github.repository }}
 
       - name: "Save Maven cache"
         uses: skjolber/maven-cache-github-action@v1
