@@ -1,4 +1,4 @@
-name: 'Lint commit messages'
+name: 'Common: Lint commit messages'
 
 on:
   workflow_call:
@@ -9,4 +9,4 @@ jobs:
 
     steps:
       - name: "Lint commit messages"
-        uses: CleverShuttle/gh-composite-actions/actions/lint-commits@v1.6.11
+        uses: CleverShuttle/gh-composite-actions/actions/lint-commits@v1.6.17

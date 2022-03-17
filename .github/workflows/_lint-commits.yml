@@ -16,4 +16,4 @@ jobs:
       - name: "Lint commit messages"
         uses: wagoid/commitlint-github-action@v3
         with:
-          configFile: 'actions/lint-commits/commitlint.config.js'
+          configFile: '.github/configs/commitlint.config.js'

@@ -1,4 +1,4 @@
-name: "Merge to nonprod"
+name: "Common: Merge to nonprod"
 
 on:
   workflow_call:

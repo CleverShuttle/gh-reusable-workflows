@@ -108,7 +108,7 @@ jobs:
           step: restore
 
       - name: "Copy settings.xml"
-        uses: CleverShuttle/gh-composite-actions/actions/maven-settings@v1.6.16
+        uses: CleverShuttle/gh-composite-actions/actions/maven-settings@v1.6.17
 
       - name: "Bump Version"
         env:
