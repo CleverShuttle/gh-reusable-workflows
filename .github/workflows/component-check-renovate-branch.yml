@@ -1,4 +1,4 @@
-name: "ECS: Check branches created by Renovate"
+name: "Component: Check branches created by Renovate"
 
 on:
   workflow_call:
@@ -11,18 +11,6 @@ on:
       ARTIFACTORY_PASSWORD:
         required: true
       ARTIFACTORY_USERNAME:
-        required: true
-      AWS_REGION:
-        required: true
-      ECR_REGISTRY:
-        required: true
-      NONPROD_AWS_SECRET_ACCESS_KEY:
-        required: true
-      NONPROD_AWS_ACCESS_KEY_ID:
-        required: true
-      PRODUCTION_AWS_ACCESS_KEY_ID:
-        required: true
-      PRODUCTION_AWS_SECRET_ACCESS_KEY:
         required: true
 
 jobs:
@@ -40,20 +28,6 @@ jobs:
 
       - name: "Install xmlstarlet"
         run: sudo apt-get install xmlstarlet
-
-      - name: "Configure AWS credentials"
-        uses: aws-actions/configure-aws-credentials@v1
-        with:
-          aws-access-key-id: ${{ secrets.NONPROD_AWS_ACCESS_KEY_ID }}
-          aws-secret-access-key: ${{ secrets.NONPROD_AWS_SECRET_ACCESS_KEY }}
-          aws-region: ${{ secrets.AWS_REGION }}
-
-      - name: "Login to ECR"
-        uses: docker/login-action@v1
-        with:
-          registry: ${{ secrets.ECR_REGISTRY }}
-          username: ${{ secrets.PRODUCTION_AWS_ACCESS_KEY_ID }}
-          password: ${{ secrets.PRODUCTION_AWS_SECRET_ACCESS_KEY }}
 
       - name: "Env variable: PROJECT_VERSION"
         run: echo "PROJECT_VERSION=$(xmlstarlet sel -N my=http://maven.apache.org/POM/4.0.0 -t -m my:project -v my:version pom.xml)" >> $GITHUB_ENV
