@@ -1,3 +1,10 @@
+## [0.4.0](https://github.com/CleverShuttle/gh-reusable-workflows/compare/v0.3.0...v0.4.0) (2022-03-17)
+
+
+### Features
+
+* Add workflows for PR builds and rebase nonprod ([4fb4e4d](https://github.com/CleverShuttle/gh-reusable-workflows/commit/4fb4e4dac198b1ca21893c41ea2a2b6eeced4a36))
+
 ## [0.3.0](https://github.com/CleverShuttle/gh-reusable-workflows/compare/v0.2.1...v0.3.0) (2022-03-16)
 
 
@@ -9,6 +16,11 @@
 ### Bug Fixes
 
 * Make inputs.java_version optional ([d4c08d5](https://github.com/CleverShuttle/gh-reusable-workflows/commit/d4c08d5244d7f3f8fece5dd147b11e9a04ac15f3))
+
+
+### Chores
+
+* **release:** v0.3.0 ([95915f4](https://github.com/CleverShuttle/gh-reusable-workflows/commit/95915f4bad54e80a4c49d62bd72f4ed176ece07b))
 
 ### [0.2.1](https://github.com/CleverShuttle/gh-reusable-workflows/compare/v0.2.0...v0.2.1) (2022-03-16)
 
@@ -41,12 +53,4 @@
 
 * **deps:** update clevershuttle/gh-composite-actions action to v1.6.11 ([19ebd98](https://github.com/CleverShuttle/gh-reusable-workflows/commit/19ebd984ab7b62a8da865a5d383a8ce4bb27ecd2))
 * **release:** v0.1.2 ([e0055c9](https://github.com/CleverShuttle/gh-reusable-workflows/commit/e0055c9ccdd9462f2189c8fbbf61a18f1907f1d2))
-
-### [0.1.1](https://github.com/CleverShuttle/gh-reusable-workflows/compare/v0.1.0...v0.1.1) (2022-03-15)
-
-
-### Chores
-
-* Cleanup repository ([cf006b5](https://github.com/CleverShuttle/gh-reusable-workflows/commit/cf006b5319e2e2d46c7543b5c9c4bc66955e65b6))
-* **release:** v0.1.1 ([1f484ea](https://github.com/CleverShuttle/gh-reusable-workflows/commit/1f484ead92b8834fb1cb811fc3fca8da6a04872a))
 
