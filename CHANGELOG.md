@@ -1,8 +1,16 @@
+### [0.6.7](https://github.com/CleverShuttle/gh-reusable-workflows/compare/v0.6.6...v0.6.7) (2022-03-17)
+
+
+### Chores
+
+* Modify interface of component-build-pull-request.yml ([cd663ef](https://github.com/CleverShuttle/gh-reusable-workflows/commit/cd663ef60ee4472cb281153caaad0cdde3bc8bb5))
+
 ### [0.6.6](https://github.com/CleverShuttle/gh-reusable-workflows/compare/v0.6.5...v0.6.6) (2022-03-17)
 
 
 ### Chores
 
+* **release:** v0.6.6 ([3f64a70](https://github.com/CleverShuttle/gh-reusable-workflows/commit/3f64a7071380dcce295f2dd9a6114e246a3db85e))
 * Remove old code from component-build-pull-request.yml ([ee2733d](https://github.com/CleverShuttle/gh-reusable-workflows/commit/ee2733d7bfede830b571f0a46294f3e6729f55e3))
 
 ### [0.6.5](https://github.com/CleverShuttle/gh-reusable-workflows/compare/v0.6.4...v0.6.5) (2022-03-17)
@@ -28,12 +36,4 @@
 
 * **release:** v0.6.3 ([af80460](https://github.com/CleverShuttle/gh-reusable-workflows/commit/af804600cde2660aff2e2b762ab2cd7dffe227ca))
 * Use maven-settings action for all flow ([132c89c](https://github.com/CleverShuttle/gh-reusable-workflows/commit/132c89c4ac3cfbcdd86fa96df8a57dca9aa3fe0c))
-
-### [0.6.2](https://github.com/CleverShuttle/gh-reusable-workflows/compare/v0.6.1...v0.6.2) (2022-03-17)
-
-
-### Chores
-
-* **release:** v0.6.2 ([18f4ad3](https://github.com/CleverShuttle/gh-reusable-workflows/commit/18f4ad36daae9d1b55821efdaef9e378c587ca90))
-* Use maven-settings action for component flow (again) ([757ac08](https://github.com/CleverShuttle/gh-reusable-workflows/commit/757ac082a52021071f496fdafb3b2f5b0dc83d82))
 
