@@ -209,7 +209,7 @@ jobs:
           PASSWORD: ${{ secrets.ARTIFACTORY_PASSWORD }}
         run: mvn -DskipDockerBuild -DskipForbiddenApisCheck -Dmaven.main.skip -DskipTests -DskipIntegrationTests -DskipUnitTests -DskipDependencyCheck deploy
 
-      - name: "Sonar: run analysis for master"
+      - name: "Sonar: Run analysis for master"
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: mvn -B org.sonarsource.scanner.maven:sonar-maven-plugin:3.9.1.2184:sonar

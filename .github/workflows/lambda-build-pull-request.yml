@@ -102,8 +102,7 @@ jobs:
           TF_VAR_project_version: ${{ env.PROJECT_VERSION }}
         run: terraform apply -destroy -auto-approve
 
-      # TODO - WIP sonar-java-pull-request composite action
-      - name: "Sonar: run analysis for pull requests"
+      - name: "Sonar: Run analysis for pull requests"
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: mvn -B org.sonarsource.scanner.maven:sonar-maven-plugin:3.9.1.2184:sonar
