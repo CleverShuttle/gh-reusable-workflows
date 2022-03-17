@@ -59,7 +59,7 @@ jobs:
         run: mvn -B clean install
 
       - name: "Sonar: Run analysis for pull requests"
-        uses: CleverShuttle/gh-composite-actions/actions/sonar-java-pull-request@v1.9.1
+        uses: CleverShuttle/gh-composite-actions/actions/sonar-java-pull-request@v1.10.0
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           sonar_token: ${{ secrets.SONAR_TOKEN }}
