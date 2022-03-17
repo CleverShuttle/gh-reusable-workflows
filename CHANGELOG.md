@@ -1,3 +1,10 @@
+### [0.4.3](https://github.com/CleverShuttle/gh-reusable-workflows/compare/v0.4.2...v0.4.3) (2022-03-17)
+
+
+### Bug Fixes
+
+* Move job dependency to calling workflow ([bb02bc3](https://github.com/CleverShuttle/gh-reusable-workflows/commit/bb02bc3bd26a4cce5e5910895e2feb7999320f00))
+
 ### [0.4.2](https://github.com/CleverShuttle/gh-reusable-workflows/compare/v0.4.1...v0.4.2) (2022-03-17)
 
 
@@ -9,6 +16,7 @@
 ### Chores
 
 * Describe GITHUB_ACCESS_TOKEN secret ([bb95e7b](https://github.com/CleverShuttle/gh-reusable-workflows/commit/bb95e7b390c1660946c8e62d9670b7f928c81b00))
+* **release:** v0.4.2 ([ca5093f](https://github.com/CleverShuttle/gh-reusable-workflows/commit/ca5093f4faafb6a4c3c9dbee1087cadebceb6f1e))
 
 ### [0.4.1](https://github.com/CleverShuttle/gh-reusable-workflows/compare/v0.4.0...v0.4.1) (2022-03-17)
 
@@ -50,16 +58,4 @@
 ### Chores
 
 * **release:** v0.3.0 ([95915f4](https://github.com/CleverShuttle/gh-reusable-workflows/commit/95915f4bad54e80a4c49d62bd72f4ed176ece07b))
-
-### [0.2.1](https://github.com/CleverShuttle/gh-reusable-workflows/compare/v0.2.0...v0.2.1) (2022-03-16)
-
-
-### Bug Fixes
-
-* Syntax error in workflow .yml ([635c4cf](https://github.com/CleverShuttle/gh-reusable-workflows/commit/635c4cf8f992b894c068d2aa307e94e97cb05924))
-
-
-### Chores
-
-* **release:** v0.2.1 ([845b17a](https://github.com/CleverShuttle/gh-reusable-workflows/commit/845b17a1a091c82aa3b4ff99dae701f80623707b))
 
