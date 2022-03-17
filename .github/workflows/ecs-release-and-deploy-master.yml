@@ -166,7 +166,7 @@ jobs:
           branch: ${{ github.ref }}
 
       - name: "Create Github Release"
-        uses: softprops/action-gh-release@59c3b4891632ff9a897f99a91d7bc557467a3a22
+        uses: softprops/action-gh-release@fe9a9bd3295828558c7a3c004f23f3bf77d155b2
         with:
           body: ${{ steps.changelog_with_jira_links.outputs.text }}
           tag_name: v${{ env.PROJECT_VERSION }}
