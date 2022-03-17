@@ -1,8 +1,16 @@
+## [0.5.0](https://github.com/CleverShuttle/gh-reusable-workflows/compare/v0.4.4...v0.5.0) (2022-03-17)
+
+
+### Features
+
+* Add deploy-nonprod workflows ([09c8418](https://github.com/CleverShuttle/gh-reusable-workflows/commit/09c8418c7c461e99c631b54e3d5e7acd85dc3f6a))
+
 ### [0.4.4](https://github.com/CleverShuttle/gh-reusable-workflows/compare/v0.4.3...v0.4.4) (2022-03-17)
 
 
 ### Chores
 
+* **release:** v0.4.4 ([af312bb](https://github.com/CleverShuttle/gh-reusable-workflows/commit/af312bb6d33997f19fda1157c3b8f47585f03f0e))
 * secrets.GITHUB_TOKEN is implicitly allowed ([97c8eb6](https://github.com/CleverShuttle/gh-reusable-workflows/commit/97c8eb645fe9d2d2e78b76f2f2628966c4db3674))
 
 ### [0.4.3](https://github.com/CleverShuttle/gh-reusable-workflows/compare/v0.4.2...v0.4.3) (2022-03-17)
@@ -41,16 +49,4 @@
 ### Chores
 
 * **release:** v0.4.1 ([4833843](https://github.com/CleverShuttle/gh-reusable-workflows/commit/4833843817e5fdf490006fdd1346c5623c566c30))
-
-## [0.4.0](https://github.com/CleverShuttle/gh-reusable-workflows/compare/v0.3.0...v0.4.0) (2022-03-17)
-
-
-### Features
-
-* Add workflows for PR builds and rebase nonprod ([4fb4e4d](https://github.com/CleverShuttle/gh-reusable-workflows/commit/4fb4e4dac198b1ca21893c41ea2a2b6eeced4a36))
-
-
-### Chores
-
-* **release:** v0.4.0 ([60cc901](https://github.com/CleverShuttle/gh-reusable-workflows/commit/60cc901a492d1e4aba5196fb5d7568407521f791))
 
