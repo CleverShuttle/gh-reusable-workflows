@@ -48,7 +48,7 @@ jobs:
 
     steps:
       - name: "Checkout repository"
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
 
       - name: "Read sonar.project.key from workflow.properties"
         id: sonar_project_key
@@ -166,7 +166,7 @@ jobs:
           step: restore
 
       - name: "Copy settings.xml"
-        uses: CleverShuttle/gh-composite-actions/actions/maven-settings@v1.6.17
+        uses: CleverShuttle/gh-composite-actions/actions/maven-settings@v.1.7.0
 
       - name: "Test lambda with Maven"
         env:

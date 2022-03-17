@@ -33,7 +33,7 @@ jobs:
     runs-on: ubuntu-20.04
     steps:
       - name: "Checkout repository"
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
 
       - name: "Set up JDK"
         uses: actions/setup-java@v2
@@ -44,6 +44,7 @@ jobs:
       - name: "Install xmlstarlet"
         run: sudo apt-get install xmlstarlet
 
+        # TODO replace with input variable and remove this step
       - name: "Read sonar.project.key from workflow.properties"
         id: sonar_project_key
         uses: christian-draeger/read-properties@1.0.1
@@ -67,7 +68,7 @@ jobs:
           step: restore
 
       - name: "Copy settings.xml"
-        uses: CleverShuttle/gh-composite-actions/actions/maven-settings@v1.6.17
+        uses: CleverShuttle/gh-composite-actions/actions/maven-settings@v.1.7.0
 
       - name: "Build lambda with Maven"
         env:
@@ -102,6 +103,7 @@ jobs:
           TF_VAR_project_version: ${{ env.PROJECT_VERSION }}
         run: terraform apply -destroy -auto-approve
 
+      # TODO - WIP sonar-java-pull-request composite action
       - name: "Sonar: run analysis for pull requests"
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

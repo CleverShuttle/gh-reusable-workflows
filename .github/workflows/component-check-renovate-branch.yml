@@ -18,7 +18,7 @@ jobs:
     runs-on: ubuntu-20.04
     steps:
       - name: "Checkout repository"
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
 
       - name: "Set up JDK"
         uses: actions/setup-java@v2
@@ -38,7 +38,7 @@ jobs:
           step: restore
 
       - name: "Copy settings.xml"
-        uses: CleverShuttle/gh-composite-actions/actions/maven-settings@v1.6.17
+        uses: CleverShuttle/gh-composite-actions/actions/maven-settings@v.1.7.0
 
       - name: "Build ECS with Maven"
         env:
