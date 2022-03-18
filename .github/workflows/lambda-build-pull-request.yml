@@ -73,7 +73,8 @@ jobs:
         env:
           USERNAME: ${{ secrets.ARTIFACTORY_USERNAME }}
           PASSWORD: ${{ secrets.ARTIFACTORY_PASSWORD }}
-        run: mvn clean package
+        # https://stackoverflow.com/a/21638827
+        run: mvn -B clean package
 
       - name: "Create and deploy lambda for integration tests"
         if: inputs.create_pr_environment
@@ -93,7 +94,8 @@ jobs:
           USERNAME: ${{ secrets.ARTIFACTORY_USERNAME }}
           PASSWORD: ${{ secrets.ARTIFACTORY_PASSWORD }}
           AWS_TEST_KINESIS_INPUT_STEAM: ${{ env.KINESIS_INPUT_STREAM }}
-        run: mvn install
+        # https://stackoverflow.com/a/21638827
+        run: mvn -B install
 
       - name: "Remove lambda after integration tests"
         if: inputs.create_pr_environment && always()
@@ -103,24 +105,12 @@ jobs:
         run: terraform apply -destroy -auto-approve
 
       - name: "Sonar: Run analysis for pull requests"
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: mvn -B org.sonarsource.scanner.maven:sonar-maven-plugin:3.9.1.2184:sonar
-          -Dsonar.host.url=${{ secrets.SONAR_URL }}
-          -Dsonar.login=${{ secrets.SONAR_TOKEN }}
-          -Dsonar.projectKey=${{ steps.sonar_project_key.outputs.value }}
-          -Dsonar.scm.provider=git
-          -Dsonar.sourceEncoding=UTF-8
-          -Dsonar.language=java
-          -Dsonar.qualitygate.wait=true
-          -Dsonar.qualitygate.timeout=300
-          -Dsonar.dependencyCheck.reportPath=target/dependency-check-report.xml
-          -Dsonar.dependencyCheck.htmlReportPath=target/site/dependency-check-report.html
-          -Dsonar.pullrequest.provider=GitHub
-          -Dsonar.pullrequest.key=${{ github.event.number }}
-          -Dsonar.pullrequest.branch=${{ github.HEAD_REF }}
-          -Dsonar.pullrequest.base=${{ github.event.pull_request.base.ref }}
-          -Dsonar.pullrequest.github.repository=${{ github.repository }}
+        uses: CleverShuttle/gh-composite-actions/actions/sonar-java-pull-request@v1.12.0
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          sonar_token: ${{ secrets.SONAR_TOKEN }}
+          sonar_url: ${{ secrets.SONAR_URL }}
+          sonar_project_key: ${{ steps.sonar_project_key.outputs.value }}
 
       - name: "Save Maven cache"
         uses: skjolber/maven-cache-github-action@v1
