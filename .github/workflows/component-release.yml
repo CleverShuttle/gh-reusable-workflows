@@ -26,7 +26,7 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-  ecs-release-and-deploy-master:
+  component-release:
     runs-on: ubuntu-20.04
 
     steps:
