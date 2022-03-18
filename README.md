@@ -1,6 +1,6 @@
-# GitHub Reusable Workflows
+# GitHub Reusable-Workflows
 
-TBD
+The repository provides all GitHub reusable-workflows
 
 ## Code owners
 

@@ -21,8 +21,9 @@ on:
       SONAR_URL:
         required: true
 
+# https://docs.github.com/en/actions/using-jobs/using-concurrency
 concurrency:
-  group: deploy-prod
+  group: ${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: true
 
 jobs:
