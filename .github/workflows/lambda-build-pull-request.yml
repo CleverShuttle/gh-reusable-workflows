@@ -105,10 +105,12 @@ jobs:
         run: terraform apply -destroy -auto-approve
 
       - name: "Sonar: Run analysis for pull requests"
-        uses: CleverShuttle/gh-composite-actions/actions/sonar-java-pull-request@v1.12.0
+        uses: CleverShuttle/gh-composite-actions/actions/sonar-java-analysis-pull-request@v1.18.0
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           sonar_token: ${{ secrets.SONAR_TOKEN }}
+          artifactory_username: ${{ secrets.ARTIFACTORY_USERNAME }}
+          artifactory_password: ${{ secrets.ARTIFACTORY_PASSWORD }}
           sonar_url: ${{ secrets.SONAR_URL }}
           sonar_project_key: ${{ steps.sonar_project_key.outputs.value }}
 

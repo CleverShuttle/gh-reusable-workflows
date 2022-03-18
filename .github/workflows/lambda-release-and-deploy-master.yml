@@ -166,7 +166,7 @@ jobs:
           step: restore
 
       - name: "Copy settings.xml"
-        uses: CleverShuttle/gh-composite-actions/actions/maven-settings@v1.8.0
+        uses: CleverShuttle/gh-composite-actions/actions/maven-settings@v1.18.0
 
       - name: "Test lambda with Maven"
         env:
@@ -216,18 +216,14 @@ jobs:
         run: mvn -B -DskipDockerBuild -DskipForbiddenApisCheck -Dmaven.main.skip -DskipTests -DskipIntegrationTests -DskipUnitTests -DskipDependencyCheck deploy
 
       - name: "Sonar: Run analysis for master"
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: mvn -B org.sonarsource.scanner.maven:sonar-maven-plugin:3.9.1.2184:sonar
-          -Dsonar.host.url=${{ secrets.SONAR_URL }}
-          -Dsonar.login=${{ secrets.SONAR_TOKEN }}
-          -Dsonar.projectKey=${{ steps.sonar_project_key.outputs.value }}
-          -Dsonar.scm.provider=git
-          -Dsonar.sourceEncoding=UTF-8
-          -Dsonar.language=java
-          -Dsonar.dependencyCheck.reportPath=target/dependency-check-report.xml
-          -Dsonar.dependencyCheck.htmlReportPath=target/site/dependency-check-report.html
-          -Dsonar.branch.name=${GITHUB_REF:11}
+        uses: CleverShuttle/gh-composite-actions/actions/sonar-java-analysis-master@v1.18.0
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          sonar_token: ${{ secrets.SONAR_TOKEN }}
+          artifactory_username: ${{ secrets.ARTIFACTORY_USERNAME }}
+          artifactory_password: ${{ secrets.ARTIFACTORY_PASSWORD }}
+          sonar_url: ${{ secrets.SONAR_URL }}
+          sonar_project_key: ${{ steps.sonar_project_key.outputs.value }}
 
       - name: "Save Maven cache"
         uses: skjolber/maven-cache-github-action@v1
