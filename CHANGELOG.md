@@ -1,9 +1,17 @@
+### [0.6.27](https://github.com/CleverShuttle/gh-reusable-workflows/compare/v0.6.26...v0.6.27) (2022-03-18)
+
+
+### Chores
+
+* Improve concurrency ([eb59fee](https://github.com/CleverShuttle/gh-reusable-workflows/commit/eb59feef3579f3198ae66842e67013874c77246b))
+
 ### [0.6.26](https://github.com/CleverShuttle/gh-reusable-workflows/compare/v0.6.25...v0.6.26) (2022-03-18)
 
 
 ### Chores
 
 * Fix copy & paste bug ([7b6d304](https://github.com/CleverShuttle/gh-reusable-workflows/commit/7b6d3045fea67a69025670b5f8e09f7e52509b42))
+* **release:** v0.6.26 ([f7f19f0](https://github.com/CleverShuttle/gh-reusable-workflows/commit/f7f19f0c66fc043e73c31f0da68242e62a13d713))
 
 ### [0.6.25](https://github.com/CleverShuttle/gh-reusable-workflows/compare/v0.6.24...v0.6.25) (2022-03-18)
 
@@ -28,12 +36,4 @@
 
 * **release:** v0.6.23 ([ec1e350](https://github.com/CleverShuttle/gh-reusable-workflows/commit/ec1e3502f5841d5007dd1233f9093d82a400ebcc))
 * Use the latest sonar-java-pull-request action ([a9f6a73](https://github.com/CleverShuttle/gh-reusable-workflows/commit/a9f6a733908d67d7952f9ff497e12327d512faf4))
-
-### [0.6.22](https://github.com/CleverShuttle/gh-reusable-workflows/compare/v0.6.21...v0.6.22) (2022-03-18)
-
-
-### Chores
-
-* **release:** v0.6.22 ([bc349d2](https://github.com/CleverShuttle/gh-reusable-workflows/commit/bc349d2ac7079b69bc77855804b557746689c527))
-* Use the latest sonar-java-pull-request action ([ff74516](https://github.com/CleverShuttle/gh-reusable-workflows/commit/ff7451615a86fc3c7098759b37436c95d2e23779))
 
