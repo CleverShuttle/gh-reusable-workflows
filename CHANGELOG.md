@@ -1,9 +1,17 @@
+### [0.6.22](https://github.com/CleverShuttle/gh-reusable-workflows/compare/v0.6.21...v0.6.22) (2022-03-18)
+
+
+### Chores
+
+* Use the latest sonar-java-pull-request action ([ff74516](https://github.com/CleverShuttle/gh-reusable-workflows/commit/ff7451615a86fc3c7098759b37436c95d2e23779))
+
 ### [0.6.21](https://github.com/CleverShuttle/gh-reusable-workflows/compare/v0.6.20...v0.6.21) (2022-03-18)
 
 
 ### Chores
 
 * Always use mvn -B (batch mode) ([d73e800](https://github.com/CleverShuttle/gh-reusable-workflows/commit/d73e80073438742bf5e02d986b1362f33c4c021a))
+* **release:** v0.6.21 ([3521ea4](https://github.com/CleverShuttle/gh-reusable-workflows/commit/3521ea471e9d8150ca3344997d618dd016bf7568))
 
 ### [0.6.20](https://github.com/CleverShuttle/gh-reusable-workflows/compare/v0.6.19...v0.6.20) (2022-03-18)
 
@@ -29,12 +37,4 @@
 
 * **release:** v0.6.18 ([9259ec5](https://github.com/CleverShuttle/gh-reusable-workflows/commit/9259ec5a321f76af6d14f2634fe9c1dbe9381d65))
 * Use the latest sonar-java-pull-request action ([58e04a8](https://github.com/CleverShuttle/gh-reusable-workflows/commit/58e04a8ac0298b9176f5304fa1b41fbc56a2ee7d))
-
-### [0.6.17](https://github.com/CleverShuttle/gh-reusable-workflows/compare/v0.6.16...v0.6.17) (2022-03-18)
-
-
-### Chores
-
-* **release:** v0.6.17 ([62a49e8](https://github.com/CleverShuttle/gh-reusable-workflows/commit/62a49e8974256948ca284fe1345daf9c1e5f587d))
-* Use the latest sonar-java-pull-request action ([808c654](https://github.com/CleverShuttle/gh-reusable-workflows/commit/808c6547c7335ea8f54b24f385860d0e15a00c63))
 
