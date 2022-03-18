@@ -78,7 +78,7 @@ jobs:
           USERNAME: ${{ secrets.ARTIFACTORY_USERNAME }}
           PASSWORD: ${{ secrets.ARTIFACTORY_PASSWORD }}
         run: |
-          mvn dependency:get \
+          mvn -B dependency:get \
             -Dartifact="${{ steps.lambda_maven_group_id_to_deploy.outputs.value }}:${{ steps.lambda_maven_artifact_id_to_deploy.outputs.value }}:${{ github.event.inputs.version }}:jar" \
             -Dtransitive=false \
             -Ddest="${{ steps.lambda_maven_artifact_id_to_deploy.outputs.value }}/target/${{ steps.lambda_maven_artifact_id_to_deploy.outputs.value }}-${{ github.event.inputs.version }}.jar" \
