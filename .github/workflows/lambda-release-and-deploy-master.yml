@@ -79,10 +79,12 @@ jobs:
       - name: "Env variable: REPO_BASE_URL"
         run: echo "REPO_BASE_URL=https://github.com/CleverShuttle/${{ github.event.repository.name }}" >> $GITHUB_ENV
 
+      # TODO switch to conventional-changelog@
       - name: 'Install package required in changelog.config.js'
         run: |
           npm i conventional-changelog-conventionalcommits
 
+      # TODO switch to conventional-changelog
       - name: "Generate changelog"
         id: changelog
         uses: TriPSs/conventional-changelog-action@v3.7.1
@@ -167,7 +169,7 @@ jobs:
           step: restore
 
       - name: "Copy settings.xml"
-        uses: CleverShuttle/gh-composite-actions/actions/maven-settings@v1.18.0
+        uses: CleverShuttle/gh-composite-actions/actions/maven-settings@v1.21.1
 
       - name: "Test lambda with Maven"
         env:
@@ -217,9 +219,8 @@ jobs:
         run: mvn -B -DskipDockerBuild -DskipForbiddenApisCheck -Dmaven.main.skip -DskipTests -DskipIntegrationTests -DskipUnitTests -DskipDependencyCheck deploy
 
       - name: "Sonar: Run analysis for master"
-        uses: CleverShuttle/gh-composite-actions/actions/sonar-java-analysis-master@v1.18.0
+        uses: CleverShuttle/gh-composite-actions/actions/sonar-java-analysis-master@v1.21.1
         with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
           sonar_token: ${{ secrets.SONAR_TOKEN }}
           artifactory_username: ${{ secrets.ARTIFACTORY_USERNAME }}
           artifactory_password: ${{ secrets.ARTIFACTORY_PASSWORD }}

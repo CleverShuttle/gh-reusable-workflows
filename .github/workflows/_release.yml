@@ -5,8 +5,9 @@ on:
     branches:
       - master
 
+# https://docs.github.com/en/actions/using-jobs/using-concurrency
 concurrency:
-  group: gh-reusable-workflows-${{ github.head_ref }}
+  group: ${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: true
 
 jobs:

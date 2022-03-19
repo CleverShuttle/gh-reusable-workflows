@@ -41,10 +41,6 @@ jobs:
           path: ".github/workflows/workflow.properties"
           property: "sonar.project.key"
 
-      - uses: actions/setup-node@v2
-        with:
-          node-version: "14"
-
       - name: "Set up JDK"
         uses: actions/setup-java@v2
         with:
@@ -62,22 +58,9 @@ jobs:
       - name: "Env variable: REPO_BASE_URL"
         run: echo "REPO_BASE_URL=https://github.com/CleverShuttle/${{ github.event.repository.name }}" >> $GITHUB_ENV
 
-      - name: 'Install package required in changelog.config.js'
-        run: |
-          npm i conventional-changelog-conventionalcommits
-
       - name: "Generate changelog"
         id: changelog
-        uses: TriPSs/conventional-changelog-action@v3.7.1
-        with:
-          presets: "conventionalcommits"
-          github-token: ${{ secrets.GITHUB_TOKEN }}
-          skip-on-empty: true
-          tag-prefix: "v"
-          output-file: false
-          skip-version-file: true
-          skip-commit: true
-          config-file-path: '.github/workflows/changelog.config.js'
+        uses: CleverShuttle/gh-composite-actions/actions/conventional-changelog@v1.21.1
 
       - name: "Generate Jira links for the changelog"
         id: changelog_with_jira_links
@@ -143,7 +126,7 @@ jobs:
           step: restore
 
       - name: "Copy settings.xml"
-        uses: CleverShuttle/gh-composite-actions/actions/maven-settings@v1.18.0
+        uses: CleverShuttle/gh-composite-actions/actions/maven-settings@v1.21.1
 
       - name: "Build component with Maven"
         env:
@@ -159,7 +142,7 @@ jobs:
         run: mvn -B -DskipDockerBuild -DskipForbiddenApisCheck -Dmaven.main.skip -DskipTests -DskipIntegrationTests -DskipUnitTests -DskipDependencyCheck deploy
 
       - name: "Sonar: Run analysis for master"
-        uses: CleverShuttle/gh-composite-actions/actions/sonar-java-analysis-master@v1.18.0
+        uses: CleverShuttle/gh-composite-actions/actions/sonar-java-analysis-master@v1.21.1
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           sonar_token: ${{ secrets.SONAR_TOKEN }}
