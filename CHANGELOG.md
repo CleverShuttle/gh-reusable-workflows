@@ -1,8 +1,16 @@
+### [0.6.31](https://github.com/CleverShuttle/gh-reusable-workflows/compare/v0.6.30...v0.6.31) (2022-03-19)
+
+
+### Chores
+
+* Update conventional-changelog to component-release flow ([2a14983](https://github.com/CleverShuttle/gh-reusable-workflows/commit/2a1498360fcf6f13a48f33bbfb7c627cb267ed1c))
+
 ### [0.6.30](https://github.com/CleverShuttle/gh-reusable-workflows/compare/v0.6.29...v0.6.30) (2022-03-19)
 
 
 ### Chores
 
+* **release:** v0.6.30 ([ca3194d](https://github.com/CleverShuttle/gh-reusable-workflows/commit/ca3194d1221bd397e300c6bdc314d2d07b11af64))
 * Update conventional-changelog to component-release flow ([571ca54](https://github.com/CleverShuttle/gh-reusable-workflows/commit/571ca5469b6dca3698b6975fe15164346f55f2ba))
 
 ### [0.6.29](https://github.com/CleverShuttle/gh-reusable-workflows/compare/v0.6.28...v0.6.29) (2022-03-19)
@@ -28,12 +36,4 @@
 
 * Improve concurrency ([eb59fee](https://github.com/CleverShuttle/gh-reusable-workflows/commit/eb59feef3579f3198ae66842e67013874c77246b))
 * **release:** v0.6.27 ([1376e29](https://github.com/CleverShuttle/gh-reusable-workflows/commit/1376e29f1f3f715e5e6d0be9636773b33d9f4dab))
-
-### [0.6.26](https://github.com/CleverShuttle/gh-reusable-workflows/compare/v0.6.25...v0.6.26) (2022-03-18)
-
-
-### Chores
-
-* Fix copy & paste bug ([7b6d304](https://github.com/CleverShuttle/gh-reusable-workflows/commit/7b6d3045fea67a69025670b5f8e09f7e52509b42))
-* **release:** v0.6.26 ([f7f19f0](https://github.com/CleverShuttle/gh-reusable-workflows/commit/f7f19f0c66fc043e73c31f0da68242e62a13d713))
 
