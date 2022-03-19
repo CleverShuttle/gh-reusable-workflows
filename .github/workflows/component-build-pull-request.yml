@@ -24,6 +24,9 @@ jobs:
       - name: "Checkout repository"
         uses: actions/checkout@v3
 
+      - name: 'Debug: Dump GitHub context'
+        uses: CleverShuttle/gh-composite-actions/actions/dump-github-context@v1.2.1
+
       - name: "Set up JDK"
         uses: actions/setup-java@v2
         with:

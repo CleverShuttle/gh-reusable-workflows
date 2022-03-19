@@ -34,6 +34,9 @@ jobs:
       - name: "Checkout repository"
         uses: actions/checkout@v3
 
+      - name: 'Debug: Dump GitHub context'
+        uses: CleverShuttle/gh-composite-actions/actions/dump-github-context@v1.2.1
+
       - name: "Read sonar.project.key from workflow.properties"
         id: sonar_project_key
         uses: christian-draeger/read-properties@1.0.1
@@ -60,7 +63,7 @@ jobs:
 
       - name: "Generate changelog"
         id: changelog
-        uses: CleverShuttle/gh-composite-actions/actions/conventional-changelog@v1.21.2
+        uses: CleverShuttle/gh-composite-actions/actions/conventional-changelog@v1.21.3
 
       - name: "Generate Jira links for the changelog"
         id: changelog_with_jira_links
