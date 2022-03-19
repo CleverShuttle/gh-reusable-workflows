@@ -63,7 +63,7 @@ jobs:
 
       - name: "Generate changelog"
         id: changelog
-        uses: CleverShuttle/gh-composite-actions/actions/conventional-changelog@v1.21.5
+        uses: CleverShuttle/gh-composite-actions/actions/conventional-changelog@v1.21.6
 
       - name: "Generate Jira links for the changelog"
         id: changelog_with_jira_links
