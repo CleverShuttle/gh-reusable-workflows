@@ -21,7 +21,7 @@ jobs:
         uses: actions/checkout@v3
 
       - name: 'Debug: Dump GitHub context'
-        uses: CleverShuttle/gh-composite-actions/actions/dump-github-context@v1.2.1
+        uses: CleverShuttle/gh-composite-actions/actions/dump-github-context@v1.22.0
 
       - name: "Set up JDK"
         uses: actions/setup-java@v2
@@ -41,7 +41,7 @@ jobs:
           step: restore
 
       - name: "Copy settings.xml"
-        uses: CleverShuttle/gh-composite-actions/actions/maven-settings@v1.21.1
+        uses: CleverShuttle/gh-composite-actions/actions/maven-settings@v1.22.0
 
       - name: "Build ECS with Maven"
         env:
