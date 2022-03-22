@@ -109,7 +109,7 @@ jobs:
       # TODO switch to conventional-changelog
       - name: "Generate changelog"
         id: changelog
-        uses: TriPSs/conventional-changelog-action@v3.7.1
+        uses: TriPSs/conventional-changelog-action@v3.11.0
         with:
           presets: "conventionalcommits"
           github-token: ${{ secrets.GITHUB_TOKEN }}
