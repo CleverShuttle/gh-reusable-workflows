@@ -1,9 +1,17 @@
+### [0.6.35](https://github.com/CleverShuttle/gh-reusable-workflows/compare/v0.6.34...v0.6.35) (2022-03-22)
+
+
+### Chores
+
+* **deps:** update tripss/conventional-changelog-action action to v3.11.0 ([a85dfae](https://github.com/CleverShuttle/gh-reusable-workflows/commit/a85dfae8a40ad37b65debe6e40b7ac840f166856))
+
 ### [0.6.34](https://github.com/CleverShuttle/gh-reusable-workflows/compare/v0.6.33...v0.6.34) (2022-03-22)
 
 
 ### Chores
 
 * **deps:** update clevershuttle/gh-composite-actions action to v1.22.0 ([16d3010](https://github.com/CleverShuttle/gh-reusable-workflows/commit/16d3010c2a05c024f4cb46605a3fef3d305852dc))
+* **release:** v0.6.34 ([fb662d4](https://github.com/CleverShuttle/gh-reusable-workflows/commit/fb662d40f2c8fca9c10399a89b8d95a728c17a8a))
 
 ### [0.6.33](https://github.com/CleverShuttle/gh-reusable-workflows/compare/v0.6.32...v0.6.33) (2022-03-19)
 
@@ -28,12 +36,4 @@
 
 * **release:** v0.6.31 ([bc6db55](https://github.com/CleverShuttle/gh-reusable-workflows/commit/bc6db5547ab10694469bce989dbe5c386191e8f2))
 * Update conventional-changelog to component-release flow ([2a14983](https://github.com/CleverShuttle/gh-reusable-workflows/commit/2a1498360fcf6f13a48f33bbfb7c627cb267ed1c))
-
-### [0.6.30](https://github.com/CleverShuttle/gh-reusable-workflows/compare/v0.6.29...v0.6.30) (2022-03-19)
-
-
-### Chores
-
-* **release:** v0.6.30 ([ca3194d](https://github.com/CleverShuttle/gh-reusable-workflows/commit/ca3194d1221bd397e300c6bdc314d2d07b11af64))
-* Update conventional-changelog to component-release flow ([571ca54](https://github.com/CleverShuttle/gh-reusable-workflows/commit/571ca5469b6dca3698b6975fe15164346f55f2ba))
 
