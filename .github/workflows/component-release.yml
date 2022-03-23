@@ -36,6 +36,9 @@ jobs:
       - name: "Checkout repository"
         uses: actions/checkout@v3
 
+      - name: 'Debug: Dump GitHub context'
+        uses: CleverShuttle/gh-composite-actions/actions/dump-github-context@v1.22.0
+
       - name: "Read sonar.project.key from workflow.properties"
         id: sonar_project_key
         uses: christian-draeger/read-properties@1.0.1
@@ -51,7 +54,7 @@ jobs:
 
       - name: "Generate changelog and create release"
         id: create-changelog-and-release
-        uses: CleverShuttle/gh-composite-actions/actions/create-changelog-and-release@v1.21.7
+        uses: CleverShuttle/gh-composite-actions/actions/create-changelog-and-release@release_action
         with:
           artifactory_username: ${{ secrets.ARTIFACTORY_USERNAME }}
           artifactory_password: ${{ secrets.ARTIFACTORY_PASSWORD }}
@@ -116,7 +119,9 @@ jobs:
       - name: "Notification: Success"
         if: ${{ success() && github.event.sender.login != 'renovate[bot]' }}
         uses: aibexhq/slack-rich-notify@v2.0.1
+        # https://github.com/jakobo/slack-rich-notify
         with:
+          dry-run: true
           token: ${{secrets.SLACK_BOT_TOKEN_OMG_BACKEND}}
           secret: ${{secrets.SLACK_BOT_SIGNING_SECRET_OMG_BACKEND}}
           channel: ${{secrets.PRODUCTION_DEPLOYMENTS_SLACK_CHANNEL_ID}}
@@ -129,8 +134,10 @@ jobs:
 
       - name: "Notification: Failure"
         if: ${{ failure() }}
+        # https://github.com/jakobo/slack-rich-notify
         uses: aibexhq/slack-rich-notify@v2.0.1
         with:
+          dry-run: true
           token: ${{secrets.SLACK_BOT_TOKEN_OMG_BACKEND}}
           secret: ${{secrets.SLACK_BOT_SIGNING_SECRET_OMG_BACKEND}}
           channel: ${{secrets.PRODUCTION_DEPLOYMENTS_SLACK_CHANNEL_ID}}
