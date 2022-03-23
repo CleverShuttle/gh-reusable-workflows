@@ -9,4 +9,4 @@ jobs:
 
     steps:
       - name: "Lint commit messages"
-        uses: CleverShuttle/gh-composite-actions/actions/lint-commits@v1.23.1
+        uses: CleverShuttle/gh-composite-actions/actions/lint-commits@v1.24.0
