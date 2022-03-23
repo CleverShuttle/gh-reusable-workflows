@@ -24,9 +24,6 @@ jobs:
       - name: "Checkout repository"
         uses: actions/checkout@v3
 
-      - name: 'Debug: Dump GitHub context'
-        uses: CleverShuttle/gh-composite-actions/actions/dump-github-context@v1.22.0
-
       - name: "Set up JDK"
         uses: actions/setup-java@v2
         with:
@@ -52,7 +49,7 @@ jobs:
           step: restore
 
       - name: "Copy settings.xml"
-        uses: CleverShuttle/gh-composite-actions/actions/maven-settings@v1.22.0
+        uses: CleverShuttle/gh-composite-actions/actions/maven-settings@v1.23.0
 
       - name: "Build component with Maven"
         env:
@@ -62,7 +59,7 @@ jobs:
         run: mvn -B clean install
 
       - name: "Sonar: Run analysis for pull requests"
-        uses: CleverShuttle/gh-composite-actions/actions/sonar-java-analysis-pull-request@v1.22.0
+        uses: CleverShuttle/gh-composite-actions/actions/sonar-java-analysis-pull-request@v1.23.0
         with:
           sonar_token: ${{ secrets.SONAR_TOKEN }}
           artifactory_username: ${{ secrets.ARTIFACTORY_USERNAME }}

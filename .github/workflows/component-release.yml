@@ -78,9 +78,8 @@ jobs:
         run: mvn -B -DskipDockerBuild -DskipForbiddenApisCheck -Dmaven.main.skip -DskipTests -DskipIntegrationTests -DskipUnitTests -DskipDependencyCheck deploy
 
       - name: "Sonar: Run analysis for master"
-        uses: CleverShuttle/gh-composite-actions/actions/sonar-java-analysis-master@v1.22.0
+        uses: CleverShuttle/gh-composite-actions/actions/sonar-java-analysis-master@v1.23.0
         with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
           sonar_token: ${{ secrets.SONAR_TOKEN }}
           artifactory_username: ${{ secrets.ARTIFACTORY_USERNAME }}
           artifactory_password: ${{ secrets.ARTIFACTORY_PASSWORD }}
