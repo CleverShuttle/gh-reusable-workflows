@@ -1,3 +1,12 @@
+# [0.13.0](https://github.com/CleverShuttle/gh-reusable-workflows/compare/v0.12.0...v0.13.0) (2022-03-24)
+
+
+### Features
+
+* Use expression for components without sonar key (and coverage) ([902156b](https://github.com/CleverShuttle/gh-reusable-workflows/commit/902156b005907dae0bea688254bebed03c8d91a3))
+
+
+
 # [0.12.0](https://github.com/CleverShuttle/gh-reusable-workflows/compare/v0.11.0...v0.12.0) (2022-03-24)
 
 
@@ -36,15 +45,6 @@
 ### Features
 
 * Set Slf4jMavenTransferListener to warn level ([e39d446](https://github.com/CleverShuttle/gh-reusable-workflows/commit/e39d446977d581be6b4e556ceae1d0651b4a6304))
-
-
-
-## [0.8.1](https://github.com/CleverShuttle/gh-reusable-workflows/compare/v0.8.0...v0.8.1) (2022-03-23)
-
-
-### Bug Fixes
-
-* Upgrade to latest composite-actions ([0099478](https://github.com/CleverShuttle/gh-reusable-workflows/commit/0099478ad4fd6089ccf8c5b94bbcf06d452162f2))
 
 
 
