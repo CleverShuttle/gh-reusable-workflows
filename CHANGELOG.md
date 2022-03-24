@@ -1,3 +1,12 @@
+## [0.13.1](https://github.com/CleverShuttle/gh-reusable-workflows/compare/v0.13.0...v0.13.1) (2022-03-24)
+
+
+### Bug Fixes
+
+* Expression for components without sonar key (and coverage) ([1539e7d](https://github.com/CleverShuttle/gh-reusable-workflows/commit/1539e7d276eb744325d4eb3bed70ab2f494e55a2))
+
+
+
 # [0.13.0](https://github.com/CleverShuttle/gh-reusable-workflows/compare/v0.12.0...v0.13.0) (2022-03-24)
 
 
@@ -31,20 +40,6 @@
 ### Features
 
 * Cleanup ecs-workflows; TODOs added ([9f2193e](https://github.com/CleverShuttle/gh-reusable-workflows/commit/9f2193ef23679f2cd7f7667ccecc14bc0ce2b443))
-
-
-
-# [0.9.0](https://github.com/CleverShuttle/gh-reusable-workflows/compare/v0.8.1...v0.9.0) (2022-03-24)
-
-
-### Bug Fixes
-
-* Upgrade all workflows to create-changelog-and-release; Set Slf4jMavenTransferListener to warn level ([57970b3](https://github.com/CleverShuttle/gh-reusable-workflows/commit/57970b3e788ed0a3354edd7e49dbf4e89b508cc5))
-
-
-### Features
-
-* Set Slf4jMavenTransferListener to warn level ([e39d446](https://github.com/CleverShuttle/gh-reusable-workflows/commit/e39d446977d581be6b4e556ceae1d0651b4a6304))
 
 
 
