@@ -89,7 +89,7 @@ jobs:
           step: restore
 
       - name: "Copy settings.xml"
-        uses: CleverShuttle/gh-composite-actions/actions/maven-settings@v1.24.0
+        uses: CleverShuttle/gh-composite-actions/actions/maven-settings@v1.25.0
 
       - name: "Bump Version"
         env:
@@ -142,7 +142,7 @@ jobs:
           step: save
 
       - name: "Deploy lambda function to NONPROD"
-        uses: CleverShuttle/gh-composite-actions/actions/deploy-lambda-function@v1.24.0
+        uses: CleverShuttle/gh-composite-actions/actions/deploy-lambda-function@v1.25.0
         with:
           aws_access_key_id: ${{ secrets.NONPROD_AWS_ACCESS_KEY_ID }}
           aws_region: ${{ secrets.AWS_REGION }}
@@ -153,7 +153,7 @@ jobs:
 
       - name: "Deploy lambda function to E2ETEST"
         if: inputs.deploy_e2etest
-        uses: CleverShuttle/gh-composite-actions/actions/deploy-lambda-function@v1.24.0
+        uses: CleverShuttle/gh-composite-actions/actions/deploy-lambda-function@v1.25.0
         with:
           aws_access_key_id: ${{ secrets.NONPROD_AWS_ACCESS_KEY_ID }}
           aws_region: ${{ secrets.AWS_REGION }}

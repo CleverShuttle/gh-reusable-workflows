@@ -1,48 +1,11 @@
-name: "Common: Merge to nonprod"
+name: "Common: Merge to nonProd"
 
 on:
   workflow_call:
-    secrets:
-      OMG_GITHUB_ACCESS_TOKEN:
-        required: true
 
 jobs:
   merge-to-nonprod:
     runs-on: ubuntu-20.04
     steps:
       - name: "Checkout repository"
-        uses: actions/checkout@v3
-        with:
-          ref: master
-          # The default of 1 only fetches the default branch. We also want nonprod, so we fetch all.
-          fetch-depth: 0
-          token: ${{ secrets.OMG_GITHUB_ACCESS_TOKEN }}
-
-      - name: "Setup git config"
-        run: |
-          git config --local user.email "action@github.com"
-          git config --local user.name "Github Action"
-
-      - name: "Prepare nonprod"
-        run: |
-          set -o errexit -o nounset
-          if git switch nonprod 2>/dev/null; then
-            branchName="${{ github.head_ref }}"
-            # https://stackoverflow.com/a/29613573/5390250
-            escapedBranchName=$(sed "s/[^^]/[&]/g; s/\^/\\^/g" <<< "$branchName")
-            echo "nonprod branch exists. Dropping old feature commit '$branchName' if it exists"
-            GIT_SEQUENCE_EDITOR="sed -i -e \"s/pick\(.*$escapedBranchName\)$/drop\1/g\"" git rebase -i master
-          else
-            echo "nonprod branch does not exist. Creating it from master."
-            git checkout -b nonprod origin/master
-          fi
-
-      - name: "Merge feature to nonprod"
-        run: |
-          set -o nounset -o errexit
-          git merge --squash "origin/${{ github.head_ref }}"
-          git commit -m "${{ github.head_ref }}"
-
-      - name: "Push changes"
-        run: |
-          git push --force origin nonprod
+        uses: CleverShuttle/gh-composite-actions/actions/merge-to-nonprod@v1.25.0

@@ -6,7 +6,6 @@ on:
 jobs:
   lint-commits:
     runs-on: ubuntu-20.04
-
     steps:
       - name: "Lint commit messages"
-        uses: CleverShuttle/gh-composite-actions/actions/lint-commits@v1.24.0
+        uses: CleverShuttle/gh-composite-actions/actions/lint-commits@v1.25.0

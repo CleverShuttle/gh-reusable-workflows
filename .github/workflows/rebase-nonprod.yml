@@ -1,4 +1,4 @@
-name: 'Common: Rebase nonprod onto master'
+name: 'Common: Rebase nonProd onto master'
 
 on:
   workflow_call:
@@ -6,7 +6,6 @@ on:
 jobs:
   rebase-nonprod:
     runs-on: ubuntu-20.04
-
     steps:
-      - name: "Checkout repository"
-        uses: CleverShuttle/gh-composite-actions/actions/rebase-nonprod@v1.24.0
+      - name: "Rebase nonProd onto master"
+        uses: CleverShuttle/gh-composite-actions/actions/rebase-nonprod@v1.25.0
