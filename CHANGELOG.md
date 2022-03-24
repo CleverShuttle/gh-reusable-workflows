@@ -1,3 +1,12 @@
+# [0.10.0](https://github.com/CleverShuttle/gh-reusable-workflows/compare/v0.9.0...v0.10.0) (2022-03-24)
+
+
+### Features
+
+* Cleanup ecs-workflows; TODOs added ([9f2193e](https://github.com/CleverShuttle/gh-reusable-workflows/commit/9f2193ef23679f2cd7f7667ccecc14bc0ce2b443))
+
+
+
 # [0.9.0](https://github.com/CleverShuttle/gh-reusable-workflows/compare/v0.8.1...v0.9.0) (2022-03-24)
 
 
@@ -36,10 +45,6 @@
 ### Features
 
 * Upgrade to latest composite-actions; Optimize workflow ([555f91c](https://github.com/CleverShuttle/gh-reusable-workflows/commit/555f91c7914eaa4f7efdbc1d0e4189324bc978e4))
-
-
-
-## [0.6.37](https://github.com/CleverShuttle/gh-reusable-workflows/compare/v0.6.36...v0.6.37) (2022-03-23)
 
 
 
