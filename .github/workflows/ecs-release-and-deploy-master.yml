@@ -51,6 +51,9 @@ jobs:
           path: ".github/workflows/workflow.properties"
           property: "sonar.project.key"
 
+      - name: "Env variable: REPO_BASE_URL"
+        run: echo "REPO_BASE_URL=https://github.com/CleverShuttle/${{ github.event.repository.name }}" >> $GITHUB_ENV
+
       - name: "Set up JDK"
         uses: actions/setup-java@v2
         with:
@@ -167,9 +170,6 @@ jobs:
         run: |
           output="*Changelog*"
           echo "::set-output name=text::$output"
-
-      - name: "Env variable: REPO_BASE_URL"
-        run: echo "REPO_BASE_URL=https://github.com/CleverShuttle/${{ github.event.repository.name }}" >> $GITHUB_ENV
 
       - name: "Notification: Success"
         if: ${{ success() && github.event.sender.login != 'renovate[bot]' }}
