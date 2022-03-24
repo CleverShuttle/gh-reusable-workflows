@@ -1,3 +1,17 @@
+# [0.9.0](https://github.com/CleverShuttle/gh-reusable-workflows/compare/v0.8.1...v0.9.0) (2022-03-24)
+
+
+### Bug Fixes
+
+* Upgrade all workflows to create-changelog-and-release; Set Slf4jMavenTransferListener to warn level ([57970b3](https://github.com/CleverShuttle/gh-reusable-workflows/commit/57970b3e788ed0a3354edd7e49dbf4e89b508cc5))
+
+
+### Features
+
+* Set Slf4jMavenTransferListener to warn level ([e39d446](https://github.com/CleverShuttle/gh-reusable-workflows/commit/e39d446977d581be6b4e556ceae1d0651b4a6304))
+
+
+
 ## [0.8.1](https://github.com/CleverShuttle/gh-reusable-workflows/compare/v0.8.0...v0.8.1) (2022-03-23)
 
 
@@ -26,10 +40,6 @@
 
 
 ## [0.6.37](https://github.com/CleverShuttle/gh-reusable-workflows/compare/v0.6.36...v0.6.37) (2022-03-23)
-
-
-
-## [0.6.36](https://github.com/CleverShuttle/gh-reusable-workflows/compare/v0.6.35...v0.6.36) (2022-03-23)
 
 
 
