@@ -1,3 +1,12 @@
+# [0.11.0](https://github.com/CleverShuttle/gh-reusable-workflows/compare/v0.10.0...v0.11.0) (2022-03-24)
+
+
+### Features
+
+* Use merge-to-nonprod action for workflow; Update to latest composite-actions ([968c06f](https://github.com/CleverShuttle/gh-reusable-workflows/commit/968c06f6910b5ceafa42655dc3a504532607cb50))
+
+
+
 # [0.10.0](https://github.com/CleverShuttle/gh-reusable-workflows/compare/v0.9.0...v0.10.0) (2022-03-24)
 
 
@@ -36,15 +45,6 @@
 ### Features
 
 * Upgrade to latest composite-actions ([6b57f61](https://github.com/CleverShuttle/gh-reusable-workflows/commit/6b57f61aeb7fcebbbcfee0886bbe92f782a2fddf))
-
-
-
-# [0.7.0](https://github.com/CleverShuttle/gh-reusable-workflows/compare/v0.6.37...v0.7.0) (2022-03-23)
-
-
-### Features
-
-* Upgrade to latest composite-actions; Optimize workflow ([555f91c](https://github.com/CleverShuttle/gh-reusable-workflows/commit/555f91c7914eaa4f7efdbc1d0e4189324bc978e4))
 
 
 
