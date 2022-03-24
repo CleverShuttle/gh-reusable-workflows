@@ -59,6 +59,7 @@ jobs:
         run: mvn -B -Dorg.slf4j.simpleLogger.log.org.apache.maven.cli.transfer.Slf4jMavenTransferListener=warn clean install
 
       - name: "Sonar: Run analysis for pull requests"
+        if: ${{ steps.sonar_project_key.outputs.value }} != ''
         uses: CleverShuttle/gh-composite-actions/actions/sonar-java-analysis-pull-request@v1.26.0
         with:
           sonar_token: ${{ secrets.SONAR_TOKEN }}
