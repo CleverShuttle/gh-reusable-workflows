@@ -49,13 +49,6 @@ jobs:
           java-version: "${{ inputs.java_version }}"
           distribution: "temurin"
 
-      - name: "Generate changelog and create release"
-        id: create-changelog-and-release
-        uses: CleverShuttle/gh-composite-actions/actions/create-changelog-and-release@v1.24.0
-        with:
-          artifactory_username: ${{ secrets.ARTIFACTORY_USERNAME }}
-          artifactory_password: ${{ secrets.ARTIFACTORY_PASSWORD }}
-
       - name: "Copy Maven settings"
         uses: CleverShuttle/gh-composite-actions/actions/maven-settings@v1.24.0
 
@@ -64,11 +57,18 @@ jobs:
         with:
           step: restore
 
+      - name: "Generate changelog and create release"
+        id: create-changelog-and-release
+        uses: CleverShuttle/gh-composite-actions/actions/create-changelog-and-release@v1.24.0
+        with:
+          artifactory_username: ${{ secrets.ARTIFACTORY_USERNAME }}
+          artifactory_password: ${{ secrets.ARTIFACTORY_PASSWORD }}
+
       - name: "Build component with Maven"
         env:
           USERNAME: ${{ secrets.ARTIFACTORY_USERNAME }}
           PASSWORD: ${{ secrets.ARTIFACTORY_PASSWORD }}
-        run: mvn -B clean install
+        run: mvn -B -Dorg.slf4j.simpleLogger.log.org.apache.maven.cli.transfer.Slf4jMavenTransferListener=warn clean install
 
       - name: "Deploy to Artifactory"
         continue-on-error: true
