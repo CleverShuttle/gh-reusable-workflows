@@ -48,8 +48,8 @@ jobs:
         with:
           step: restore
 
-      - name: "Copy settings.xml"
-        uses: CleverShuttle/gh-composite-actions/actions/maven-settings@v1.25.0
+      - name: "Copy Maven settings.xml"
+        uses: CleverShuttle/gh-composite-actions/actions/maven-settings@v1.26.0
 
       - name: "Build component with Maven"
         env:
@@ -59,7 +59,7 @@ jobs:
         run: mvn -B -Dorg.slf4j.simpleLogger.log.org.apache.maven.cli.transfer.Slf4jMavenTransferListener=warn clean install
 
       - name: "Sonar: Run analysis for pull requests"
-        uses: CleverShuttle/gh-composite-actions/actions/sonar-java-analysis-pull-request@v1.25.0
+        uses: CleverShuttle/gh-composite-actions/actions/sonar-java-analysis-pull-request@v1.26.0
         with:
           sonar_token: ${{ secrets.SONAR_TOKEN }}
           artifactory_username: ${{ secrets.ARTIFACTORY_USERNAME }}

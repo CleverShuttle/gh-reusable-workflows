@@ -49,7 +49,7 @@ jobs:
           distribution: "temurin"
 
       - name: "Copy Maven settings"
-        uses: CleverShuttle/gh-composite-actions/actions/maven-settings@v1.25.0
+        uses: CleverShuttle/gh-composite-actions/actions/maven-settings@v1.26.0
 
       - name: "Restore Maven cache"
         uses: skjolber/maven-cache-github-action@v1
@@ -58,7 +58,7 @@ jobs:
 
       - name: "Generate changelog and create release"
         id: create-changelog-and-release
-        uses: CleverShuttle/gh-composite-actions/actions/create-changelog-and-release@v1.25.0
+        uses: CleverShuttle/gh-composite-actions/actions/create-changelog-and-release@v1.26.0
         with:
           artifactory_username: ${{ secrets.ARTIFACTORY_USERNAME }}
           artifactory_password: ${{ secrets.ARTIFACTORY_PASSWORD }}
@@ -77,7 +77,7 @@ jobs:
         run: mvn -B -Dorg.slf4j.simpleLogger.log.org.apache.maven.cli.transfer.Slf4jMavenTransferListener=warn -DskipDockerBuild -DskipForbiddenApisCheck -Dmaven.main.skip -DskipTests -DskipIntegrationTests -DskipUnitTests -DskipDependencyCheck deploy
 
       - name: "Sonar: Run analysis for master"
-        uses: CleverShuttle/gh-composite-actions/actions/sonar-java-analysis-master@v1.25.0
+        uses: CleverShuttle/gh-composite-actions/actions/sonar-java-analysis-master@v1.26.0
         with:
           sonar_token: ${{ secrets.SONAR_TOKEN }}
           artifactory_username: ${{ secrets.ARTIFACTORY_USERNAME }}

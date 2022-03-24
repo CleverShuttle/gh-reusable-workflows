@@ -57,8 +57,8 @@ jobs:
         with:
           step: restore
 
-      - name: "Copy settings.xml"
-        uses: CleverShuttle/gh-composite-actions/actions/maven-settings@v1.25.0
+      - name: "Copy Maven settings.xml"
+        uses: CleverShuttle/gh-composite-actions/actions/maven-settings@v1.26.0
 
       - name: "Build ECS with Maven"
         env:

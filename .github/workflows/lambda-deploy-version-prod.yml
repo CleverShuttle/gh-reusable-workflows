@@ -68,8 +68,8 @@ jobs:
         with:
           step: restore
 
-      - name: "Copy settings.xml"
-        uses: CleverShuttle/gh-composite-actions/actions/maven-settings@v1.25.0
+      - name: "Copy Maven settings.xml"
+        uses: CleverShuttle/gh-composite-actions/actions/maven-settings@v1.26.0
 
       - name: "Env variable: REPO_BASE_URL"
         run: echo "REPO_BASE_URL=https://github.com/CleverShuttle/${{ github.event.repository.name }}" >> $GITHUB_ENV
@@ -97,7 +97,7 @@ jobs:
           step: save
 
       - name: "Deploy lambda function"
-        uses: CleverShuttle/gh-composite-actions/actions/deploy-lambda-function@v1.25.0
+        uses: CleverShuttle/gh-composite-actions/actions/deploy-lambda-function@v1.26.0
         with:
           aws_access_key_id: ${{ secrets.NONPROD_AWS_ACCESS_KEY_ID }}
           aws_region: ${{ secrets.AWS_REGION }}
