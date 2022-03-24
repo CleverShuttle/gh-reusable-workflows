@@ -17,6 +17,18 @@ on:
         required: false
         default: true
         type: boolean
+      nonprod_function_name:
+        description: "Name of the AWS lambda function deployed to the NONPROD environment"
+        required: true
+        type: string
+      e2etest_function_name:
+        description: "Name of the AWS lambda function deployed to the E2ETEST environment (ignored when deploy_e2etest is false)"
+        required: true
+        type: string
+      jar_file:
+        description: "The path to the Jar file to be uploaded when deploying the lambda function. You can use PROJECT_VERSION as a placeholder for the project version."
+        required: true
+        type: string
     secrets:
       ARTIFACTORY_PASSWORD:
         required: true
@@ -77,7 +89,7 @@ jobs:
           step: restore
 
       - name: "Copy settings.xml"
-        uses: CleverShuttle/gh-composite-actions/actions/maven-settings@v1.23.1
+        uses: CleverShuttle/gh-composite-actions/actions/maven-settings@v1.24.0
 
       - name: "Bump Version"
         env:
@@ -130,11 +142,25 @@ jobs:
           step: save
 
       - name: "Deploy lambda function to NONPROD"
-        run: bash deploy-via-cli.sh ${{ env.NONPROD_VERSION }} nonprod
+        uses: CleverShuttle/gh-composite-actions/actions/deploy-lambda-function@v1.24.0
+        with:
+          aws_access_key_id: ${{ secrets.NONPROD_AWS_ACCESS_KEY_ID }}
+          aws_region: ${{ secrets.AWS_REGION }}
+          aws_secret_access_key: ${{ secrets.NONPROD_AWS_SECRET_ACCESS_KEY }}
+          project_version: ${{ env.NONPROD_VERSION }}
+          function_name: ${{ inputs.nonprod_function_name }}
+          jar_file: ${{ inputs.jar_file }}
 
       - name: "Deploy lambda function to E2ETEST"
         if: inputs.deploy_e2etest
-        run: bash deploy-via-cli.sh ${{ env.NONPROD_VERSION }} e2etest
+        uses: CleverShuttle/gh-composite-actions/actions/deploy-lambda-function@v1.24.0
+        with:
+          aws_access_key_id: ${{ secrets.NONPROD_AWS_ACCESS_KEY_ID }}
+          aws_region: ${{ secrets.AWS_REGION }}
+          aws_secret_access_key: ${{ secrets.NONPROD_AWS_SECRET_ACCESS_KEY }}
+          project_version: ${{ env.NONPROD_VERSION }}
+          function_name: ${{ inputs.e2etest_function_name }}
+          jar_file: ${{ inputs.jar_file }}
 
       - name: "Generate changelog"
         id: changelog

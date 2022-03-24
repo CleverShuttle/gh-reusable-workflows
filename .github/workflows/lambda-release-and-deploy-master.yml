@@ -12,6 +12,14 @@ on:
         required: false
         default: false
         type: boolean
+      prod_function_name:
+        description: "Name of the AWS lambda function deployed to the PROD environment"
+        required: true
+        type: string
+      jar_file:
+        description: "The path to the Jar file to be uploaded when deploying the lambda function. You can use PROJECT_VERSION as a placeholder for the project version."
+        required: true
+        type: string
     secrets:
       ARTIFACTORY_PASSWORD:
         required: true
@@ -170,7 +178,7 @@ jobs:
           step: restore
 
       - name: "Copy settings.xml"
-        uses: CleverShuttle/gh-composite-actions/actions/maven-settings@v1.23.1
+        uses: CleverShuttle/gh-composite-actions/actions/maven-settings@v1.24.0
 
       - name: "Test lambda with Maven"
         env:
@@ -220,7 +228,7 @@ jobs:
         run: mvn -B -DskipDockerBuild -DskipForbiddenApisCheck -Dmaven.main.skip -DskipTests -DskipIntegrationTests -DskipUnitTests -DskipDependencyCheck deploy
 
       - name: "Sonar: Run analysis for master"
-        uses: CleverShuttle/gh-composite-actions/actions/sonar-java-analysis-master@v1.23.1
+        uses: CleverShuttle/gh-composite-actions/actions/sonar-java-analysis-master@v1.24.0
         with:
           sonar_token: ${{ secrets.SONAR_TOKEN }}
           artifactory_username: ${{ secrets.ARTIFACTORY_USERNAME }}
@@ -234,7 +242,14 @@ jobs:
           step: save
 
       - name: "Deploy lambda function"
-        run: bash deploy-via-cli.sh ${{ env.PROJECT_VERSION }} prod
+        uses: CleverShuttle/gh-composite-actions/actions/deploy-lambda-function@v1.24.0
+        with:
+          aws_access_key_id: ${{ secrets.NONPROD_AWS_ACCESS_KEY_ID }}
+          aws_region: ${{ secrets.AWS_REGION }}
+          aws_secret_access_key: ${{ secrets.NONPROD_AWS_SECRET_ACCESS_KEY }}
+          project_version: ${{ env.NONPROD_VERSION }}
+          function_name: ${{ inputs.prod_function_name }}
+          jar_file: ${{ inputs.jar_file }}
 
       - name: "Format changelog for slack"
         if: ${{ steps.changelog.outputs.skipped == 'false' }}
