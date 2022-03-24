@@ -1,3 +1,12 @@
+# [0.12.0](https://github.com/CleverShuttle/gh-reusable-workflows/compare/v0.11.0...v0.12.0) (2022-03-24)
+
+
+### Features
+
+* Use create-nonprod-changelog action for ecs- and lambda-workflow; Update to latest composite-actions ([efb2f04](https://github.com/CleverShuttle/gh-reusable-workflows/commit/efb2f04d50ad773e1bc7b6bbb52f26dc1648fbc9))
+
+
+
 # [0.11.0](https://github.com/CleverShuttle/gh-reusable-workflows/compare/v0.10.0...v0.11.0) (2022-03-24)
 
 
@@ -36,15 +45,6 @@
 ### Bug Fixes
 
 * Upgrade to latest composite-actions ([0099478](https://github.com/CleverShuttle/gh-reusable-workflows/commit/0099478ad4fd6089ccf8c5b94bbcf06d452162f2))
-
-
-
-# [0.8.0](https://github.com/CleverShuttle/gh-reusable-workflows/compare/v0.7.0...v0.8.0) (2022-03-23)
-
-
-### Features
-
-* Upgrade to latest composite-actions ([6b57f61](https://github.com/CleverShuttle/gh-reusable-workflows/commit/6b57f61aeb7fcebbbcfee0886bbe92f782a2fddf))
 
 
 
