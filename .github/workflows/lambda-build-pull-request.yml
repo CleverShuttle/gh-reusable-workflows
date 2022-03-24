@@ -74,7 +74,7 @@ jobs:
           USERNAME: ${{ secrets.ARTIFACTORY_USERNAME }}
           PASSWORD: ${{ secrets.ARTIFACTORY_PASSWORD }}
         # https://stackoverflow.com/a/21638827
-        run: mvn -B clean package
+        run: mvn -B -Dorg.slf4j.simpleLogger.log.org.apache.maven.cli.transfer.Slf4jMavenTransferListener=warn clean package
 
       - name: "Create and deploy lambda for integration tests"
         if: inputs.create_pr_environment
@@ -95,7 +95,7 @@ jobs:
           PASSWORD: ${{ secrets.ARTIFACTORY_PASSWORD }}
           AWS_TEST_KINESIS_INPUT_STEAM: ${{ env.KINESIS_INPUT_STREAM }}
         # https://stackoverflow.com/a/21638827
-        run: mvn -B install
+        run: mvn -B -Dorg.slf4j.simpleLogger.log.org.apache.maven.cli.transfer.Slf4jMavenTransferListener=warn install
 
       - name: "Remove lambda after integration tests"
         if: inputs.create_pr_environment && always()
