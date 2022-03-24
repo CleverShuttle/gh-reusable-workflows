@@ -91,8 +91,7 @@ jobs:
         with:
           step: save
 
-
-      # ---------------------- new composite action:
+      # ---------------------- TODO new composite action:
 
       - name: "Format changelog for slack"
         if: ${{ steps.create-changelog-and-release.outputs.changelog-skipped == 'false' }}

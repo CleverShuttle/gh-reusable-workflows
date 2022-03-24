@@ -42,9 +42,6 @@ jobs:
           java-version: "${{ inputs.java_version }}"
           distribution: "temurin"
 
-      - name: "Install xmlstarlet"
-        run: sudo apt-get install xmlstarlet
-
       - name: "Read sonar.project.key from workflow.properties"
         id: sonar_project_key
         uses: christian-draeger/read-properties@1.0.1
@@ -65,9 +62,6 @@ jobs:
           registry: ${{ secrets.ECR_REGISTRY }}
           username: ${{ secrets.PRODUCTION_AWS_ACCESS_KEY_ID }}
           password: ${{ secrets.PRODUCTION_AWS_SECRET_ACCESS_KEY }}
-
-      - name: "Env variable: PROJECT_VERSION"
-        run: echo "PROJECT_VERSION=$(xmlstarlet sel -N my=http://maven.apache.org/POM/4.0.0 -t -m my:project -v my:version pom.xml)" >> $GITHUB_ENV
 
       - name: "Restore Maven cache"
         uses: skjolber/maven-cache-github-action@v1

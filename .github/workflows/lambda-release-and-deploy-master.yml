@@ -165,7 +165,7 @@ jobs:
           function_name: ${{ inputs.prod_function_name }}
           jar_file: ${{ inputs.jar_file }}
 
-      # ---------------------- new composite action:
+      # ---------------------- TODO new composite action:
 
       - name: "Format changelog for slack"
         if: ${{ steps.create-changelog-and-release.outputs.changelog-skipped == 'false' }}

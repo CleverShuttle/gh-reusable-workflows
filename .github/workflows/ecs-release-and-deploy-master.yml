@@ -152,7 +152,7 @@ jobs:
         with:
           args: deploy ${{ steps.ecs_cluster_name_cs_production.outputs.value }} ${{ steps.ecs_service_name_production.outputs.value }} --image ${{ steps.ecs_taskDefinition_container_name.outputs.value }} ${{ env.IMAGE_TAG }} --region ${{ secrets.AWS_REGION }} --timeout 600 --rollback
 
-      # ---------------------- new composite action:
+      # ---------------------- TODO new composite action:
 
       - name: "Format changelog for slack"
         if: ${{ steps.create-changelog-and-release.outputs.changelog-skipped == 'false' }}

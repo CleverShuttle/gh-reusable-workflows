@@ -105,6 +105,8 @@ jobs:
           project_version: ${{ env.NONPROD_VERSION }}
           function_name: ${{ inputs.prod_function_name }}
           jar_file: ${{ inputs.jar_file }}
+          
+      # ---------------------- TODO new composite action:
 
       - name: "Notification: Success"
         if: ${{ success() && github.event.sender.login != 'renovate[bot]' }}

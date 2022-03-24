@@ -67,6 +67,8 @@ jobs:
         with:
           args: deploy ${{ steps.ecs_cluster_name_cs_production.outputs.value }} ${{ steps.ecs_service_name_production.outputs.value }} --image ${{ steps.ecr_image_name.outputs.value }} ${{ env.IMAGE_TAG }} --region ${{ secrets.AWS_REGION }} --timeout 600 --rollback
 
+      # ---------------------- TODO new composite action:
+
       - name: "Notification: Success"
         if: ${{ success() && github.event.sender.login != 'renovate[bot]' }}
         uses: aibexhq/slack-rich-notify@v2.0.1
