@@ -1,4 +1,4 @@
-name: "Lambda: Deploy to nonProd"
+name: "Lambda: Deploy to NONPROD"
 
 on:
   workflow_call:
@@ -18,7 +18,7 @@ on:
         default: true
         type: boolean
       nonprod_function_name:
-        description: "Name of the AWS lambda function deployed to the nonProd environment"
+        description: "Name of the AWS lambda function deployed to the NONPROD environment"
         required: true
         type: string
       e2etest_function_name:
@@ -54,6 +54,9 @@ concurrency:
 jobs:
   lambda-deploy-nonprod:
     runs-on: ubuntu-20.04
+    env:
+      MAVEN_OPTS: "--batch-mode --no-transfer-progress"
+      REPO_BASE_URL: "https://github.com/CleverShuttle/${{ github.event.repository.name }}"
     steps:
       - name: "Checkout repository"
         uses: actions/checkout@v3
@@ -64,25 +67,6 @@ jobs:
           java-version: "${{ inputs.java_version }}"
           distribution: "temurin"
 
-      - name: "Install xmlstarlet"
-        run: sudo apt-get install xmlstarlet
-
-      - name: "Configure AWS credentials"
-        uses: aws-actions/configure-aws-credentials@v1
-        with:
-          aws-access-key-id: ${{ secrets.NONPROD_AWS_ACCESS_KEY_ID }}
-          aws-secret-access-key: ${{ secrets.NONPROD_AWS_SECRET_ACCESS_KEY }}
-          aws-region: ${{ secrets.AWS_REGION }}
-
-      - name: "Env variable: REPO_BASE_URL"
-        run: echo "REPO_BASE_URL=https://github.com/CleverShuttle/${{ github.event.repository.name }}" >> $GITHUB_ENV
-
-      - name: "Env variable: PROJECT_VERSION"
-        run: echo "PROJECT_VERSION=$(xmlstarlet sel -N my=http://maven.apache.org/POM/4.0.0 -t -m my:project -v my:version pom.xml)" >> $GITHUB_ENV
-
-      - name: "Env variable: NONPROD_VERSION"
-        run: echo "NONPROD_VERSION=${{ env.PROJECT_VERSION }}-NONPROD-${{ github.run_number }}" >> $GITHUB_ENV
-
       - name: "Restore Maven cache"
         uses: skjolber/maven-cache-github-action@v1
         with:
@@ -91,17 +75,33 @@ jobs:
       - name: "Copy Maven settings.xml"
         uses: CleverShuttle/gh-composite-actions/actions/maven-settings@v1.26.0
 
+      - name: "Configure AWS credentials"
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.NONPROD_AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.NONPROD_AWS_SECRET_ACCESS_KEY }}
+          aws-region: ${{ secrets.AWS_REGION }}
+
+      - name: "Env variable: PROJECT_VERSION"
+        env:
+          USERNAME: ${{ secrets.ARTIFACTORY_USERNAME }}
+          PASSWORD: ${{ secrets.ARTIFACTORY_PASSWORD }}
+        run: echo "PROJECT_VERSION=$(mvn org.apache.maven.plugins:maven-help-plugin:3.2.0:evaluate -Dexpression=project.artifactId -q -DforceStdout 2>/dev/null)" >> $GITHUB_ENV
+
+      - name: "Env variable: NONPROD_VERSION"
+        run: echo "NONPROD_VERSION=${{ env.PROJECT_VERSION }}-NONPROD-${{ github.run_number }}" >> $GITHUB_ENV
+
       - name: "Bump Version"
         env:
           USERNAME: ${{ secrets.ARTIFACTORY_USERNAME }}
           PASSWORD: ${{ secrets.ARTIFACTORY_PASSWORD }}
-        run: mvn -B -Dorg.slf4j.simpleLogger.log.org.apache.maven.cli.transfer.Slf4jMavenTransferListener=warn versions:set -DnewVersion="${{ env.NONPROD_VERSION }}" -DprocessAllModules=true
+        run: mvn versions:set -DnewVersion="${{ env.NONPROD_VERSION }}" -DprocessAllModules=true
 
       - name: "Test lambda with Maven"
         env:
           USERNAME: ${{ secrets.ARTIFACTORY_USERNAME }}
           PASSWORD: ${{ secrets.ARTIFACTORY_PASSWORD }}
-        run: mvn -B -Dorg.slf4j.simpleLogger.log.org.apache.maven.cli.transfer.Slf4jMavenTransferListener=warn clean package
+        run: mvn clean package
 
       - name: "Create and deploy lambda for integration tests"
         if: inputs.create_pr_environment
@@ -121,7 +121,7 @@ jobs:
           USERNAME: ${{ secrets.ARTIFACTORY_USERNAME }}
           PASSWORD: ${{ secrets.ARTIFACTORY_PASSWORD }}
           AWS_TEST_KINESIS_INPUT_STEAM: ${{ env.KINESIS_INPUT_STREAM }}
-        run: mvn -B -Dorg.slf4j.simpleLogger.log.org.apache.maven.cli.transfer.Slf4jMavenTransferListener=warn install
+        run: mvn install
 
       - name: "Remove lambda after integration tests"
         if: inputs.create_pr_environment && always()
@@ -134,14 +134,21 @@ jobs:
         env:
           USERNAME: ${{ secrets.ARTIFACTORY_USERNAME }}
           PASSWORD: ${{ secrets.ARTIFACTORY_PASSWORD }}
-        run: mvn -B -DskipDockerBuild -DskipForbiddenApisCheck -Dmaven.main.skip -DskipTests -DskipIntegrationTests -DskipUnitTests -DskipDependencyCheck deploy
+        run: mvn deploy \
+          -DskipDockerBuild \
+          -DskipForbiddenApisCheck \
+          -Dmaven.main.skip \
+          -DskipTests \
+          -DskipIntegrationTests \
+          -DskipUnitTests \
+          -DskipDependencyCheck
 
       - name: "Save Maven cache"
         uses: skjolber/maven-cache-github-action@v1
         with:
           step: save
 
-      - name: "Deploy lambda function to nonProd"
+      - name: "Deploy lambda function to NONPROD"
         uses: CleverShuttle/gh-composite-actions/actions/deploy-lambda-function@v1.26.0
         with:
           aws_access_key_id: ${{ secrets.NONPROD_AWS_ACCESS_KEY_ID }}
@@ -162,7 +169,7 @@ jobs:
           function_name: ${{ inputs.e2etest_function_name }}
           jar_file: ${{ inputs.jar_file }}
 
-      - name: "Generate nonProd changelog"
+      - name: "Generate nonprod changelog"
         id: create-nonprod-changelog
         uses: CleverShuttle/gh-composite-actions/actions/create-nonprod-changelog@v1.26.0
 

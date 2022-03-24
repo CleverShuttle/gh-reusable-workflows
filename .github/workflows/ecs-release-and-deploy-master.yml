@@ -39,10 +39,26 @@ concurrency:
 jobs:
   ecs-release-and-deploy-master:
     runs-on: ubuntu-20.04
-
+    env:
+      MAVEN_OPTS: "--batch-mode --no-transfer-progress"
+      REPO_BASE_URL: "https://github.com/CleverShuttle/${{ github.event.repository.name }}"
     steps:
       - name: "Checkout repository"
         uses: actions/checkout@v3
+
+      - name: "Set up JDK"
+        uses: actions/setup-java@v2
+        with:
+          java-version: "${{ inputs.java_version }}"
+          distribution: "temurin"
+
+      - name: "Restore Maven cache"
+        uses: skjolber/maven-cache-github-action@v1
+        with:
+          step: restore
+
+      - name: "Copy Maven settings"
+        uses: CleverShuttle/gh-composite-actions/actions/maven-settings@v1.26.0
 
       - name: "Read sonar.project.key from workflow.properties"
         id: sonar_project_key
@@ -50,15 +66,6 @@ jobs:
         with:
           path: ".github/workflows/workflow.properties"
           property: "sonar.project.key"
-
-      - name: "Env variable: REPO_BASE_URL"
-        run: echo "REPO_BASE_URL=https://github.com/CleverShuttle/${{ github.event.repository.name }}" >> $GITHUB_ENV
-
-      - name: "Set up JDK"
-        uses: actions/setup-java@v2
-        with:
-          java-version: "${{ inputs.java_version }}"
-          distribution: "temurin"
 
       - name: "Read ecr.image.name from workflow.properties"
         id: ecr_image_name
@@ -102,13 +109,11 @@ jobs:
           username: ${{ secrets.PRODUCTION_AWS_ACCESS_KEY_ID }}
           password: ${{ secrets.PRODUCTION_AWS_SECRET_ACCESS_KEY }}
 
-      - name: "Copy Maven settings"
-        uses: CleverShuttle/gh-composite-actions/actions/maven-settings@v1.26.0
-
-      - name: "Restore Maven cache"
-        uses: skjolber/maven-cache-github-action@v1
-        with:
-          step: restore
+      - name: "Build service with Maven"
+        env:
+          USERNAME: ${{ secrets.ARTIFACTORY_USERNAME }}
+          PASSWORD: ${{ secrets.ARTIFACTORY_PASSWORD }}
+        run: mvn clean install
 
       - name: "Generate changelog and create release"
         id: create-changelog-and-release
@@ -117,18 +122,19 @@ jobs:
           artifactory_username: ${{ secrets.ARTIFACTORY_USERNAME }}
           artifactory_password: ${{ secrets.ARTIFACTORY_PASSWORD }}
 
-      - name: "Build service with Maven"
-        env:
-          USERNAME: ${{ secrets.ARTIFACTORY_USERNAME }}
-          PASSWORD: ${{ secrets.ARTIFACTORY_PASSWORD }}
-        run: mvn -B -Dorg.slf4j.simpleLogger.log.org.apache.maven.cli.transfer.Slf4jMavenTransferListener=warn clean install
-
       - name: "Deploy to Artifactory"
         continue-on-error: true
         env:
           USERNAME: ${{ secrets.ARTIFACTORY_USERNAME }}
           PASSWORD: ${{ secrets.ARTIFACTORY_PASSWORD }}
-        run: mvn -B -Dorg.slf4j.simpleLogger.log.org.apache.maven.cli.transfer.Slf4jMavenTransferListener=warn -DskipDockerBuild -DskipForbiddenApisCheck -Dmaven.main.skip -DskipTests -DskipIntegrationTests -DskipUnitTests -DskipDependencyCheck deploy
+        run: mvn deploy \
+          -DskipDockerBuild \
+          -DskipForbiddenApisCheck \
+          -Dmaven.main.skip \
+          -DskipTests \
+          -DskipIntegrationTests \
+          -DskipUnitTests \
+          -DskipDependencyCheck
 
       - name: "Run Sonar analysis for master"
         uses: CleverShuttle/gh-composite-actions/actions/sonar-java-analysis-master@v1.26.0

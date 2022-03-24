@@ -31,6 +31,8 @@ on:
 jobs:
   lambda-build-pull-request:
     runs-on: ubuntu-20.04
+    env:
+      MAVEN_OPTS: "--batch-mode --no-transfer-progress"
     steps:
       - name: "Checkout repository"
         uses: actions/checkout@v3
@@ -41,26 +43,6 @@ jobs:
           java-version: "${{ inputs.java_version }}"
           distribution: "temurin"
 
-      - name: "Install xmlstarlet"
-        run: sudo apt-get install xmlstarlet
-
-      - name: "Read sonar.project.key from workflow.properties"
-        id: sonar_project_key
-        uses: christian-draeger/read-properties@1.0.1
-        with:
-          path: '.github/workflows/workflow.properties'
-          property: 'sonar.project.key'
-
-      - name: "Configure AWS credentials"
-        uses: aws-actions/configure-aws-credentials@v1
-        with:
-          aws-access-key-id: ${{ secrets.NONPROD_AWS_ACCESS_KEY_ID }}
-          aws-secret-access-key: ${{ secrets.NONPROD_AWS_SECRET_ACCESS_KEY }}
-          aws-region: ${{ secrets.AWS_REGION }}
-
-      - name: "Env variable: PROJECT_VERSION"
-        run: echo "PROJECT_VERSION=$(xmlstarlet sel -N my=http://maven.apache.org/POM/4.0.0 -t -m my:project -v my:version pom.xml)" >> $GITHUB_ENV
-
       - name: "Restore Maven cache"
         uses: skjolber/maven-cache-github-action@v1
         with:
@@ -69,12 +51,36 @@ jobs:
       - name: "Copy Maven settings.xml"
         uses: CleverShuttle/gh-composite-actions/actions/maven-settings@v1.26.0
 
+      - name: "Configure AWS credentials"
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.NONPROD_AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.NONPROD_AWS_SECRET_ACCESS_KEY }}
+          aws-region: ${{ secrets.AWS_REGION }}
+
+      - name: "Env variable: MAVEN_GROUP_ID"
+        env:
+          USERNAME: ${{ secrets.ARTIFACTORY_USERNAME }}
+          PASSWORD: ${{ secrets.ARTIFACTORY_PASSWORD }}
+        run: echo "MAVEN_GROUP_ID=$(mvn org.apache.maven.plugins:maven-help-plugin:3.2.0:evaluate -Dexpression=project.groupId -q -DforceStdout 2>/dev/null)" >> $GITHUB_ENV
+
+      - name: "Env variable: MAVEN_ARTIFACT_ID"
+        env:
+          USERNAME: ${{ secrets.ARTIFACTORY_USERNAME }}
+          PASSWORD: ${{ secrets.ARTIFACTORY_PASSWORD }}
+        run: echo "MAVEN_ARTIFACT_ID=$(mvn org.apache.maven.plugins:maven-help-plugin:3.2.0:evaluate -Dexpression=project.artifactId -q -DforceStdout 2>/dev/null)" >> $GITHUB_ENV
+
+      - name: "Env variable: PROJECT_VERSION"
+        env:
+          USERNAME: ${{ secrets.ARTIFACTORY_USERNAME }}
+          PASSWORD: ${{ secrets.ARTIFACTORY_PASSWORD }}
+        run: echo "PROJECT_VERSION=$(mvn org.apache.maven.plugins:maven-help-plugin:3.2.0:evaluate -Dexpression=project.artifactId -q -DforceStdout 2>/dev/null)" >> $GITHUB_ENV
+
       - name: "Build lambda with Maven"
         env:
           USERNAME: ${{ secrets.ARTIFACTORY_USERNAME }}
           PASSWORD: ${{ secrets.ARTIFACTORY_PASSWORD }}
-        # https://stackoverflow.com/a/21638827
-        run: mvn -B -Dorg.slf4j.simpleLogger.log.org.apache.maven.cli.transfer.Slf4jMavenTransferListener=warn clean package
+        run: mvn clean package
 
       - name: "Create and deploy lambda for integration tests"
         if: inputs.create_pr_environment
@@ -94,8 +100,7 @@ jobs:
           USERNAME: ${{ secrets.ARTIFACTORY_USERNAME }}
           PASSWORD: ${{ secrets.ARTIFACTORY_PASSWORD }}
           AWS_TEST_KINESIS_INPUT_STEAM: ${{ env.KINESIS_INPUT_STREAM }}
-        # https://stackoverflow.com/a/21638827
-        run: mvn -B -Dorg.slf4j.simpleLogger.log.org.apache.maven.cli.transfer.Slf4jMavenTransferListener=warn install
+        run: mvn install
 
       - name: "Remove lambda after integration tests"
         if: inputs.create_pr_environment && always()
@@ -111,7 +116,7 @@ jobs:
           artifactory_username: ${{ secrets.ARTIFACTORY_USERNAME }}
           artifactory_password: ${{ secrets.ARTIFACTORY_PASSWORD }}
           sonar_url: ${{ secrets.SONAR_URL }}
-          sonar_project_key: ${{ steps.sonar_project_key.outputs.value }}
+          sonar_project_key: "${{ env.MAVEN_GROUP_ID }}:${{ env.MAVEN_ARTIFACT_ID }}"
 
       - name: "Save Maven cache"
         uses: skjolber/maven-cache-github-action@v1
