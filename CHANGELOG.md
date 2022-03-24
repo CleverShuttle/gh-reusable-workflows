@@ -1,3 +1,12 @@
+## [0.13.2](https://github.com/CleverShuttle/gh-reusable-workflows/compare/v0.13.1...v0.13.2) (2022-03-24)
+
+
+### Bug Fixes
+
+* Execute the REPO_BASE_URL step earlier to successfully complete the error case ([cda70d5](https://github.com/CleverShuttle/gh-reusable-workflows/commit/cda70d545e93911270709399385b5d8829fe27cb))
+
+
+
 ## [0.13.1](https://github.com/CleverShuttle/gh-reusable-workflows/compare/v0.13.0...v0.13.1) (2022-03-24)
 
 
@@ -31,15 +40,6 @@
 ### Features
 
 * Use merge-to-nonprod action for workflow; Update to latest composite-actions ([968c06f](https://github.com/CleverShuttle/gh-reusable-workflows/commit/968c06f6910b5ceafa42655dc3a504532607cb50))
-
-
-
-# [0.10.0](https://github.com/CleverShuttle/gh-reusable-workflows/compare/v0.9.0...v0.10.0) (2022-03-24)
-
-
-### Features
-
-* Cleanup ecs-workflows; TODOs added ([9f2193e](https://github.com/CleverShuttle/gh-reusable-workflows/commit/9f2193ef23679f2cd7f7667ccecc14bc0ce2b443))
 
 
 
