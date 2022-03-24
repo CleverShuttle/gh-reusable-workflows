@@ -1,4 +1,4 @@
-name: "ECS: Deploy to nonProd"
+name: "ECS: Deploy to nonprod"
 
 on:
   workflow_call:
@@ -38,6 +38,9 @@ concurrency:
 jobs:
   ecs-deploy-nonprod:
     runs-on: ubuntu-20.04
+    env:
+      MAVEN_OPTS: "--batch-mode --no-transfer-progress"
+      REPO_BASE_URL: "https://github.com/CleverShuttle/${{ github.event.repository.name }}"
     steps:
       - name: "Checkout repository"
         uses: actions/checkout@v3
@@ -47,6 +50,14 @@ jobs:
         with:
           java-version: "${{ inputs.java_version }}"
           distribution: "temurin"
+
+      - name: "Restore Maven cache"
+        uses: skjolber/maven-cache-github-action@v1
+        with:
+          step: restore
+
+      - name: "Copy Maven settings.xml"
+        uses: CleverShuttle/gh-composite-actions/actions/maven-settings@v1.26.0
 
       - name: "Install xmlstarlet"
         run: sudo apt-get install xmlstarlet
@@ -93,40 +104,36 @@ jobs:
           username: ${{ secrets.PRODUCTION_AWS_ACCESS_KEY_ID }}
           password: ${{ secrets.PRODUCTION_AWS_SECRET_ACCESS_KEY }}
 
-      - name: "Env variable: REPO_BASE_URL"
-        run: echo "REPO_BASE_URL=https://github.com/CleverShuttle/${{ github.event.repository.name }}" >> $GITHUB_ENV
-
       - name: "Env variable: PROJECT_VERSION"
         run: echo "PROJECT_VERSION=$(xmlstarlet sel -N my=http://maven.apache.org/POM/4.0.0 -t -m my:project -v my:version pom.xml)" >> $GITHUB_ENV
 
       - name: "Env variable: NONPROD_VERSION"
         run: echo "NONPROD_VERSION=${{ env.PROJECT_VERSION }}-NONPROD-${{ github.run_number }}" >> $GITHUB_ENV
 
-      - name: "Restore Maven cache"
-        uses: skjolber/maven-cache-github-action@v1
-        with:
-          step: restore
-
-      - name: "Copy Maven settings.xml"
-        uses: CleverShuttle/gh-composite-actions/actions/maven-settings@v1.26.0
-
       - name: "Bump Version"
         env:
           USERNAME: ${{ secrets.ARTIFACTORY_USERNAME }}
           PASSWORD: ${{ secrets.ARTIFACTORY_PASSWORD }}
-        run: mvn -B -Dorg.slf4j.simpleLogger.log.org.apache.maven.cli.transfer.Slf4jMavenTransferListener=warn versions:set -DnewVersion="${{ env.NONPROD_VERSION }}" -DprocessAllModules=true
+        run: mvn versions:set -DnewVersion="${{ env.NONPROD_VERSION }}" -DprocessAllModules=true
 
       - name: "Build ECS with Maven"
         env:
           USERNAME: ${{ secrets.ARTIFACTORY_USERNAME }}
           PASSWORD: ${{ secrets.ARTIFACTORY_PASSWORD }}
-        run: mvn -B -Dorg.slf4j.simpleLogger.log.org.apache.maven.cli.transfer.Slf4jMavenTransferListener=warn clean install
+        run: mvn clean install
 
       - name: "Deploy to Artifactory"
         env:
           USERNAME: ${{ secrets.ARTIFACTORY_USERNAME }}
           PASSWORD: ${{ secrets.ARTIFACTORY_PASSWORD }}
-        run: mvn -B -Dorg.slf4j.simpleLogger.log.org.apache.maven.cli.transfer.Slf4jMavenTransferListener=warn -DskipDockerBuild -DskipForbiddenApisCheck -Dmaven.main.skip -DskipTests -DskipIntegrationTests -DskipUnitTests -DskipDependencyCheck deploy
+        run: mvn deploy \
+          -DskipDockerBuild \
+          -DskipForbiddenApisCheck \
+          -Dmaven.main.skip \
+          -DskipTests \
+          -DskipIntegrationTests \
+          -DskipUnitTests \
+          -DskipDependencyCheck
 
       - name: "Save Maven cache"
         uses: skjolber/maven-cache-github-action@v1
@@ -144,7 +151,7 @@ jobs:
         with:
           args: deploy ${{ steps.ecs_cluster_name_cs_nonprod.outputs.value }} ${{ steps.ecs_service_name_nonprod.outputs.value }} --image ${{ steps.ecs_taskDefinition_container_name.outputs.value }} ${{ env.IMAGE_TAG }} --region ${{ secrets.AWS_REGION }} --timeout 600 --rollback
 
-      - name: "Generate nonProd changelog"
+      - name: "Generate nonprod changelog"
         id: create-nonprod-changelog
         uses: CleverShuttle/gh-composite-actions/actions/create-nonprod-changelog@v1.26.0
 

@@ -27,9 +27,22 @@ on:
 jobs:
   component-build-pull-request:
     runs-on: ubuntu-20.04
+    env:
+      MAVEN_OPTS: "--batch-mode --no-transfer-progress"
     steps:
       - name: "Checkout repository"
         uses: actions/checkout@v3
+
+      - name: "Set up JDK"
+        uses: actions/setup-java@v2
+        with:
+          java-version: "${{ inputs.java_version }}"
+          distribution: "temurin"
+
+      - name: "Restore Maven cache"
+        uses: skjolber/maven-cache-github-action@v1
+        with:
+          step: restore
 
       - name: "Copy Maven settings.xml"
         uses: CleverShuttle/gh-composite-actions/actions/maven-settings@v1.26.0
@@ -48,23 +61,11 @@ jobs:
           PASSWORD: ${{ secrets.ARTIFACTORY_PASSWORD }}
         run: echo "MAVEN_ARTIFACT_ID=$(mvn org.apache.maven.plugins:maven-help-plugin:3.2.0:evaluate -Dexpression=project.artifactId -q -DforceStdout 2>/dev/null)" >> $GITHUB_ENV
 
-      - name: "Set up JDK"
-        uses: actions/setup-java@v2
-        with:
-          java-version: "${{ inputs.java_version }}"
-          distribution: "temurin"
-
-      - name: "Restore Maven cache"
-        uses: skjolber/maven-cache-github-action@v1
-        with:
-          step: restore
-
       - name: "Build component with Maven"
         env:
           USERNAME: ${{ secrets.ARTIFACTORY_USERNAME }}
           PASSWORD: ${{ secrets.ARTIFACTORY_PASSWORD }}
-        # https://stackoverflow.com/a/21638827
-        run: mvn -B -Dorg.slf4j.simpleLogger.log.org.apache.maven.cli.transfer.Slf4jMavenTransferListener=warn clean install
+        run: mvn clean install
 
       - name: "Get Sonar project key"
         id: sonar-project-key

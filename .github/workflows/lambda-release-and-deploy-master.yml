@@ -54,26 +54,26 @@ concurrency:
 jobs:
   lambda-release-and-deploy-master:
     runs-on: ubuntu-20.04
-
+    env:
+      MAVEN_OPTS: "--batch-mode --no-transfer-progress"
+      REPO_BASE_URL: "https://github.com/CleverShuttle/${{ github.event.repository.name }}"
     steps:
       - name: "Checkout repository"
         uses: actions/checkout@v3
-
-      - name: "Read sonar.project.key from workflow.properties"
-        id: sonar_project_key
-        uses: christian-draeger/read-properties@1.0.1
-        with:
-          path: ".github/workflows/workflow.properties"
-          property: "sonar.project.key"
-
-      - name: "Env variable: REPO_BASE_URL"
-        run: echo "REPO_BASE_URL=https://github.com/CleverShuttle/${{ github.event.repository.name }}" >> $GITHUB_ENV
 
       - name: "Set up JDK"
         uses: actions/setup-java@v2
         with:
           java-version: "${{ inputs.java_version }}"
           distribution: "temurin"
+
+      - name: "Restore Maven cache"
+        uses: skjolber/maven-cache-github-action@v1
+        with:
+          step: restore
+
+      - name: "Copy settings.xml"
+        uses: CleverShuttle/gh-composite-actions/actions/maven-settings@v1.26.0
 
       - name: "Configure AWS credentials for integration tests"
         uses: aws-actions/configure-aws-credentials@v1
@@ -82,26 +82,29 @@ jobs:
           aws-secret-access-key: ${{ secrets.NONPROD_AWS_SECRET_ACCESS_KEY }}
           aws-region: ${{ secrets.AWS_REGION }}
 
-      - name: "Copy Maven settings"
-        uses: CleverShuttle/gh-composite-actions/actions/maven-settings@v1.26.0
+      - name: "Env variable: MAVEN_GROUP_ID"
+        env:
+          USERNAME: ${{ secrets.ARTIFACTORY_USERNAME }}
+          PASSWORD: ${{ secrets.ARTIFACTORY_PASSWORD }}
+        run: echo "MAVEN_GROUP_ID=$(mvn org.apache.maven.plugins:maven-help-plugin:3.2.0:evaluate -Dexpression=project.groupId -q -DforceStdout 2>/dev/null)" >> $GITHUB_ENV
 
-      - name: "Restore Maven cache"
-        uses: skjolber/maven-cache-github-action@v1
-        with:
-          step: restore
+      - name: "Env variable: MAVEN_ARTIFACT_ID"
+        env:
+          USERNAME: ${{ secrets.ARTIFACTORY_USERNAME }}
+          PASSWORD: ${{ secrets.ARTIFACTORY_PASSWORD }}
+        run: echo "MAVEN_ARTIFACT_ID=$(mvn org.apache.maven.plugins:maven-help-plugin:3.2.0:evaluate -Dexpression=project.artifactId -q -DforceStdout 2>/dev/null)" >> $GITHUB_ENV
 
-      - name: "Generate changelog and create release"
-        id: create-changelog-and-release
-        uses: CleverShuttle/gh-composite-actions/actions/create-changelog-and-release@v1.26.0
-        with:
-          artifactory_username: ${{ secrets.ARTIFACTORY_USERNAME }}
-          artifactory_password: ${{ secrets.ARTIFACTORY_PASSWORD }}
+      - name: "Env variable: PROJECT_VERSION"
+        env:
+          USERNAME: ${{ secrets.ARTIFACTORY_USERNAME }}
+          PASSWORD: ${{ secrets.ARTIFACTORY_PASSWORD }}
+        run: echo "PROJECT_VERSION=$(mvn org.apache.maven.plugins:maven-help-plugin:3.2.0:evaluate -Dexpression=project.artifactId -q -DforceStdout 2>/dev/null)" >> $GITHUB_ENV
 
       - name: "Test lambda with Maven"
         env:
           USERNAME: ${{ secrets.ARTIFACTORY_USERNAME }}
           PASSWORD: ${{ secrets.ARTIFACTORY_PASSWORD }}
-        run: mvn -B -Dorg.slf4j.simpleLogger.log.org.apache.maven.cli.transfer.Slf4jMavenTransferListener=warn clean package
+        run: mvn clean package
 
       - name: "Create and deploy lambda for integration tests"
         if: inputs.create_pr_environment
@@ -121,7 +124,7 @@ jobs:
           USERNAME: ${{ secrets.ARTIFACTORY_USERNAME }}
           PASSWORD: ${{ secrets.ARTIFACTORY_PASSWORD }}
           AWS_TEST_KINESIS_INPUT_STEAM: ${{ env.KINESIS_INPUT_STREAM }}
-        run: mvn -B -Dorg.slf4j.simpleLogger.log.org.apache.maven.cli.transfer.Slf4jMavenTransferListener=warn install
+        run: mvn install
 
       - name: "Remove lambda after integration tests"
         if: inputs.create_pr_environment && always()
@@ -129,6 +132,13 @@ jobs:
         env:
           TF_VAR_project_version: ${{ env.PROJECT_VERSION }}
         run: terraform apply -destroy -auto-approve
+
+      - name: "Generate changelog and create release"
+        id: create-changelog-and-release
+        uses: CleverShuttle/gh-composite-actions/actions/create-changelog-and-release@v1.26.0
+        with:
+          artifactory_username: ${{ secrets.ARTIFACTORY_USERNAME }}
+          artifactory_password: ${{ secrets.ARTIFACTORY_PASSWORD }}
 
       - name: "Configure AWS credentials"
         uses: aws-actions/configure-aws-credentials@v1
@@ -142,7 +152,15 @@ jobs:
         env:
           USERNAME: ${{ secrets.ARTIFACTORY_USERNAME }}
           PASSWORD: ${{ secrets.ARTIFACTORY_PASSWORD }}
-        run: mvn -B -Dorg.slf4j.simpleLogger.log.org.apache.maven.cli.transfer.Slf4jMavenTransferListener=warn -DskipDockerBuild -DskipForbiddenApisCheck -Dmaven.main.skip -DskipTests -DskipIntegrationTests -DskipUnitTests -DskipDependencyCheck deploy
+        run: |
+          mvn deploy \
+            -DskipDockerBuild \
+            -DskipForbiddenApisCheck \
+            -Dmaven.main.skip \
+            -DskipTests \
+            -DskipIntegrationTests \
+            -DskipUnitTests \
+            -DskipDependencyCheck
 
       - name: "Run Sonar analysis for master"
         uses: CleverShuttle/gh-composite-actions/actions/sonar-java-analysis-master@v1.26.0
@@ -151,7 +169,7 @@ jobs:
           artifactory_username: ${{ secrets.ARTIFACTORY_USERNAME }}
           artifactory_password: ${{ secrets.ARTIFACTORY_PASSWORD }}
           sonar_url: ${{ secrets.SONAR_URL }}
-          sonar_project_key: ${{ steps.sonar_project_key.outputs.value }}
+          sonar_project_key: "${{ env.MAVEN_GROUP_ID }}:${{ env.MAVEN_ARTIFACT_ID }}"
 
       - name: "Save Maven cache"
         uses: skjolber/maven-cache-github-action@v1

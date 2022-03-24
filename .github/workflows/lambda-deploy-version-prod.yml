@@ -39,6 +39,9 @@ concurrency:
 jobs:
   lambda-deploy-version-prod:
     runs-on: ubuntu-20.04
+    env:
+      MAVEN_OPTS: "--batch-mode --no-transfer-progress"
+      REPO_BASE_URL: "https://github.com/CleverShuttle/${{ github.event.repository.name }}"
     steps:
       - name: "Checkout repository"
         uses: actions/checkout@v3
@@ -49,20 +52,6 @@ jobs:
           java-version: "${{ inputs.java_version }}"
           distribution: "temurin"
 
-      - name: "Read lambda.mavenGroupIdToDeploy from workflow.properties"
-        id: lambda_maven_group_id_to_deploy
-        uses: christian-draeger/read-properties@1.0.1
-        with:
-          path: ".github/workflows/workflow.properties"
-          property: "lambda.mavenGroupIdToDeploy"
-
-      - name: "Read lambda.mavenArtifactIdToDeploy from workflow.properties"
-        id: lambda_maven_artifact_id_to_deploy
-        uses: christian-draeger/read-properties@1.0.1
-        with:
-          path: ".github/workflows/workflow.properties"
-          property: "lambda.mavenArtifactIdToDeploy"
-
       - name: "Restore Maven cache"
         uses: skjolber/maven-cache-github-action@v1
         with:
@@ -71,8 +60,17 @@ jobs:
       - name: "Copy Maven settings.xml"
         uses: CleverShuttle/gh-composite-actions/actions/maven-settings@v1.26.0
 
-      - name: "Env variable: REPO_BASE_URL"
-        run: echo "REPO_BASE_URL=https://github.com/CleverShuttle/${{ github.event.repository.name }}" >> $GITHUB_ENV
+      - name: "Env variable: MAVEN_GROUP_ID"
+        env:
+          USERNAME: ${{ secrets.ARTIFACTORY_USERNAME }}
+          PASSWORD: ${{ secrets.ARTIFACTORY_PASSWORD }}
+        run: echo "MAVEN_GROUP_ID=$(mvn org.apache.maven.plugins:maven-help-plugin:3.2.0:evaluate -Dexpression=project.groupId -q -DforceStdout 2>/dev/null)" >> $GITHUB_ENV
+
+      - name: "Env variable: MAVEN_ARTIFACT_ID"
+        env:
+          USERNAME: ${{ secrets.ARTIFACTORY_USERNAME }}
+          PASSWORD: ${{ secrets.ARTIFACTORY_PASSWORD }}
+        run: echo "MAVEN_ARTIFACT_ID=$(mvn org.apache.maven.plugins:maven-help-plugin:3.2.0:evaluate -Dexpression=project.artifactId -q -DforceStdout 2>/dev/null)" >> $GITHUB_ENV
 
       - name: "Configure AWS credentials"
         uses: aws-actions/configure-aws-credentials@v1
@@ -81,15 +79,20 @@ jobs:
           aws-secret-access-key: ${{ secrets.PRODUCTION_AWS_SECRET_ACCESS_KEY }}
           aws-region: ${{ secrets.AWS_REGION }}
 
+      - name: "Create download destination file name"
+        run: |
+          JAR_FILE_WITH_PLACEHOLDER=${{ inputs.jar_file }}
+          echo "DOWNLOAD_DESTINATION=${JAR_FILE_WITH_PLACEHOLDER/PROJECT_VERSION/${{ github.event.inputs.version }}}" >> $GITHUB_ENV
+
       - name: "Download lambda function code"
         env:
           USERNAME: ${{ secrets.ARTIFACTORY_USERNAME }}
           PASSWORD: ${{ secrets.ARTIFACTORY_PASSWORD }}
         run: |
-          mvn -B -Dorg.slf4j.simpleLogger.log.org.apache.maven.cli.transfer.Slf4jMavenTransferListener=warn dependency:get \
-            -Dartifact="${{ steps.lambda_maven_group_id_to_deploy.outputs.value }}:${{ steps.lambda_maven_artifact_id_to_deploy.outputs.value }}:${{ github.event.inputs.version }}:jar" \
+          mvn dependency:get \
+            -Dartifact="${{ env.MAVEN_GROUP_ID }}:${{ env.MAVEN_ARTIFACT_ID }}:${{ github.event.inputs.version }}:jar" \
             -Dtransitive=false \
-            -Ddest="${{ steps.lambda_maven_artifact_id_to_deploy.outputs.value }}/target/${{ steps.lambda_maven_artifact_id_to_deploy.outputs.value }}-${{ github.event.inputs.version }}.jar" \
+            -Ddest="${{ env.DOWNLOAD_DESTINATION }}" \
 
       - name: "Save Maven cache"
         uses: skjolber/maven-cache-github-action@v1
@@ -102,10 +105,10 @@ jobs:
           aws_access_key_id: ${{ secrets.NONPROD_AWS_ACCESS_KEY_ID }}
           aws_region: ${{ secrets.AWS_REGION }}
           aws_secret_access_key: ${{ secrets.NONPROD_AWS_SECRET_ACCESS_KEY }}
-          project_version: ${{ env.NONPROD_VERSION }}
+          project_version: ${{ github.event.inputs.version }}
           function_name: ${{ inputs.prod_function_name }}
           jar_file: ${{ inputs.jar_file }}
-          
+
       # ---------------------- TODO new composite action:
 
       - name: "Notification: Success"

@@ -1,4 +1,4 @@
-name: "Common: Merge to nonProd"
+name: "Common: Merge to nonprod"
 
 on:
   workflow_call:
@@ -7,5 +7,5 @@ jobs:
   merge-to-nonprod:
     runs-on: ubuntu-20.04
     steps:
-      - name: "Merge to nonProd"
+      - name: "Merge to nonprod"
         uses: CleverShuttle/gh-composite-actions/actions/merge-to-nonprod@v1.26.0
