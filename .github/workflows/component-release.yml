@@ -42,6 +42,9 @@ jobs:
       - name: "Checkout repository"
         uses: actions/checkout@v3
 
+      - name: "Copy Maven settings.xml"
+        uses: CleverShuttle/gh-composite-actions/actions/maven-settings@v1.26.0
+
       - name: "Env variable: REPO_BASE_URL"
         run: echo "REPO_BASE_URL=https://github.com/CleverShuttle/${{ github.event.repository.name }}" >> $GITHUB_ENV
 
@@ -58,9 +61,6 @@ jobs:
         with:
           java-version: "${{ inputs.java_version }}"
           distribution: "temurin"
-
-      - name: "Copy Maven settings"
-        uses: CleverShuttle/gh-composite-actions/actions/maven-settings@v1.26.0
 
       - name: "Restore Maven cache"
         uses: skjolber/maven-cache-github-action@v1

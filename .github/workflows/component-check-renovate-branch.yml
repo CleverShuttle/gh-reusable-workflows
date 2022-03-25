@@ -20,14 +20,14 @@ jobs:
       - name: "Checkout repository"
         uses: actions/checkout@v3
 
+      - name: "Copy Maven settings.xml"
+        uses: CleverShuttle/gh-composite-actions/actions/maven-settings@v1.26.0
+
       - name: "Set up JDK"
         uses: actions/setup-java@v2
         with:
           java-version: ${{ inputs.java_version }}
           distribution: "temurin"
-
-      - name: "Copy Maven settings.xml"
-        uses: CleverShuttle/gh-composite-actions/actions/maven-settings@v1.26.0
 
       - name: "Restore Maven cache"
         uses: skjolber/maven-cache-github-action@v1
