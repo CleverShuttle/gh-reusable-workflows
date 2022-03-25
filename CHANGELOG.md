@@ -1,3 +1,12 @@
+## [0.14.1](https://github.com/CleverShuttle/gh-reusable-workflows/compare/v0.14.0...v0.14.1) (2022-03-25)
+
+
+### Bug Fixes
+
+* Latest component flow ([6624a67](https://github.com/CleverShuttle/gh-reusable-workflows/commit/6624a675998d7b8020f3b1f87b99fc2fc5c831a6))
+
+
+
 # [0.14.0](https://github.com/CleverShuttle/gh-reusable-workflows/compare/v0.13.2...v0.14.0) (2022-03-25)
 
 
@@ -31,15 +40,6 @@
 ### Features
 
 * Use expression for components without sonar key (and coverage) ([902156b](https://github.com/CleverShuttle/gh-reusable-workflows/commit/902156b005907dae0bea688254bebed03c8d91a3))
-
-
-
-# [0.12.0](https://github.com/CleverShuttle/gh-reusable-workflows/compare/v0.11.0...v0.12.0) (2022-03-24)
-
-
-### Features
-
-* Use create-nonprod-changelog action for ecs- and lambda-workflow; Update to latest composite-actions ([efb2f04](https://github.com/CleverShuttle/gh-reusable-workflows/commit/efb2f04d50ad773e1bc7b6bbb52f26dc1648fbc9))
 
 
 
