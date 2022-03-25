@@ -57,7 +57,7 @@ jobs:
           step: restore
 
       - name: "Copy Maven settings.xml"
-        uses: CleverShuttle/gh-composite-actions/actions/maven-settings@v1.26.0
+        uses: CleverShuttle/gh-composite-actions/actions/maven-settings@v1.27.0
 
       - name: "Install xmlstarlet"
         run: sudo apt-get install xmlstarlet
@@ -153,7 +153,7 @@ jobs:
 
       - name: "Generate nonprod changelog"
         id: create-nonprod-changelog
-        uses: CleverShuttle/gh-composite-actions/actions/create-nonprod-changelog@v1.26.0
+        uses: CleverShuttle/gh-composite-actions/actions/create-nonprod-changelog@v1.27.0
 
       # ---------------------- TODO new composite action:
 

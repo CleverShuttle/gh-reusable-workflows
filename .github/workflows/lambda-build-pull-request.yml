@@ -49,7 +49,7 @@ jobs:
           step: restore
 
       - name: "Copy Maven settings.xml"
-        uses: CleverShuttle/gh-composite-actions/actions/maven-settings@v1.26.0
+        uses: CleverShuttle/gh-composite-actions/actions/maven-settings@v1.27.0
 
       - name: "Configure AWS credentials"
         uses: aws-actions/configure-aws-credentials@v1
@@ -110,7 +110,7 @@ jobs:
         run: terraform apply -destroy -auto-approve
 
       - name: "Run Sonar analysis for pull requests"
-        uses: CleverShuttle/gh-composite-actions/actions/sonar-java-analysis-pull-request@v1.26.0
+        uses: CleverShuttle/gh-composite-actions/actions/sonar-java-analysis-pull-request@v1.27.0
         with:
           sonar_token: ${{ secrets.SONAR_TOKEN }}
           artifactory_username: ${{ secrets.ARTIFACTORY_USERNAME }}
