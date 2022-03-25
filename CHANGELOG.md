@@ -1,3 +1,12 @@
+# [0.15.0](https://github.com/CleverShuttle/gh-reusable-workflows/compare/v0.14.2...v0.15.0) (2022-03-25)
+
+
+### Features
+
+* Replace configuration by convention ([4a48865](https://github.com/CleverShuttle/gh-reusable-workflows/commit/4a4886568548106f60ea73cbc1f18ed72bf7a33f))
+
+
+
 ## [0.14.2](https://github.com/CleverShuttle/gh-reusable-workflows/compare/v0.14.1...v0.14.2) (2022-03-25)
 
 
@@ -31,15 +40,6 @@
 ### Bug Fixes
 
 * Execute the REPO_BASE_URL step earlier to successfully complete the error case ([cda70d5](https://github.com/CleverShuttle/gh-reusable-workflows/commit/cda70d545e93911270709399385b5d8829fe27cb))
-
-
-
-## [0.13.1](https://github.com/CleverShuttle/gh-reusable-workflows/compare/v0.13.0...v0.13.1) (2022-03-24)
-
-
-### Bug Fixes
-
-* Expression for components without sonar key (and coverage) ([1539e7d](https://github.com/CleverShuttle/gh-reusable-workflows/commit/1539e7d276eb744325d4eb3bed70ab2f494e55a2))
 
 
 
