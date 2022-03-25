@@ -32,7 +32,7 @@ jobs:
   lambda-build-pull-request:
     runs-on: ubuntu-20.04
     env:
-      MAVEN_OPTS: "--batch-mode --no-transfer-progress"
+      MAVEN_ARGS: "--batch-mode --no-transfer-progress"
     steps:
       - name: "Checkout repository"
         uses: actions/checkout@v3

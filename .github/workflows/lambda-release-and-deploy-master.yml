@@ -55,7 +55,7 @@ jobs:
   lambda-release-and-deploy-master:
     runs-on: ubuntu-20.04
     env:
-      MAVEN_OPTS: "--batch-mode --no-transfer-progress"
+      MAVEN_ARGS: "--batch-mode --no-transfer-progress"
       REPO_BASE_URL: "https://github.com/CleverShuttle/${{ github.event.repository.name }}"
     steps:
       - name: "Checkout repository"
