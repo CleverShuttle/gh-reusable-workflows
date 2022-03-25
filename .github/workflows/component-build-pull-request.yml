@@ -7,6 +7,13 @@ on:
         required: false
         default: "17"
         type: string
+      sonar_analysis_enabled:
+        required: false
+        default: true
+        type: boolean
+      sonar_project_key:
+        required: false
+        type: string
     secrets:
       ARTIFACTORY_PASSWORD:
         required: true
@@ -24,32 +31,27 @@ jobs:
       - name: "Checkout repository"
         uses: actions/checkout@v3
 
+      - name: "Env variable: MAVEN_GROUP_ID"
+        if: ${{ inputs.sonar_analysis_enabled }}
+        run: echo "MAVEN_GROUP_ID=$(mvn org.apache.maven.plugins:maven-help-plugin:3.2.0:evaluate -Dexpression=project.groupId -q -DforceStdout 2>/dev/null)" >> $GITHUB_ENV
+
+      - name: "Env variable: MAVEN_ARTIFACT_ID"
+        if: ${{ inputs.sonar_analysis_enabled }}
+        run: echo "MAVEN_ARTIFACT_ID=$(mvn org.apache.maven.plugins:maven-help-plugin:3.2.0:evaluate -Dexpression=project.artifactId -q -DforceStdout 2>/dev/null)" >> $GITHUB_ENV
+
       - name: "Set up JDK"
         uses: actions/setup-java@v2
         with:
           java-version: "${{ inputs.java_version }}"
           distribution: "temurin"
 
-      - name: "Install xmlstarlet"
-        run: sudo apt-get install xmlstarlet
-
-      - name: "Read sonar.project.key from workflow.properties"
-        id: sonar_project_key
-        uses: christian-draeger/read-properties@1.0.1
-        with:
-          path: '.github/workflows/workflow.properties'
-          property: 'sonar.project.key'
-
-      - name: "Env variable: PROJECT_VERSION"
-        run: echo "PROJECT_VERSION=$(xmlstarlet sel -N my=http://maven.apache.org/POM/4.0.0 -t -m my:project -v my:version pom.xml)" >> $GITHUB_ENV
+      - name: "Copy Maven settings.xml"
+        uses: CleverShuttle/gh-composite-actions/actions/maven-settings@v1.26.0
 
       - name: "Restore Maven cache"
         uses: skjolber/maven-cache-github-action@v1
         with:
           step: restore
-
-      - name: "Copy Maven settings.xml"
-        uses: CleverShuttle/gh-composite-actions/actions/maven-settings@v1.26.0
 
       - name: "Build component with Maven"
         env:
@@ -58,15 +60,34 @@ jobs:
         # https://stackoverflow.com/a/21638827
         run: mvn -B -Dorg.slf4j.simpleLogger.log.org.apache.maven.cli.transfer.Slf4jMavenTransferListener=warn clean install
 
-      - name: "Sonar: Run analysis for pull requests"
-        if: ${{ steps.sonar_project_key.outputs.value != '' }}
+      - name: "Get Sonar project key"
+        id: sonar-project-key
+        if: ${{ inputs.sonar_analysis_enabled }}
+        env:
+          MAVEN_GROUP_ID: ${{ env.MAVEN_GROUP_ID }}
+          MAVEN_ARTIFACT_ID: ${{ env.MAVEN_ARTIFACT_ID }}
+          SONAR_PROJECTKEY: ${{ inputs.sonar_project_key }}
+        shell: bash
+        run: |
+          if [ -z "${{ env.SONAR_PROJECTKEY }}" ]; then
+            output="${{ env.MAVEN_GROUP_ID }}:${{ env.MAVEN_ARTIFACT_ID }}"
+            echo "Use calculated sonar key '$output'"
+            echo "::set-output name=value::$output"
+          else
+            output="${{ env.SONAR_PROJECTKEY }}"
+            echo "Use given sonar key '$output'"
+            echo "::set-output name=value::$output"
+          fi
+
+      - name: "Run Sonar analysis for pull requests"
+        if: ${{ inputs.sonar_analysis_enabled }}
         uses: CleverShuttle/gh-composite-actions/actions/sonar-java-analysis-pull-request@v1.26.0
         with:
           sonar_token: ${{ secrets.SONAR_TOKEN }}
           artifactory_username: ${{ secrets.ARTIFACTORY_USERNAME }}
           artifactory_password: ${{ secrets.ARTIFACTORY_PASSWORD }}
           sonar_url: ${{ secrets.SONAR_URL }}
-          sonar_project_key: ${{ steps.sonar_project_key.outputs.value }}
+          sonar_project_key: ${{ steps.sonar-project-key.outputs.value }}
 
       - name: "Save Maven cache"
         uses: skjolber/maven-cache-github-action@v1

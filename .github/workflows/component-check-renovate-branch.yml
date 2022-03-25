@@ -26,21 +26,15 @@ jobs:
           java-version: ${{ inputs.java_version }}
           distribution: "temurin"
 
-      - name: "Install xmlstarlet"
-        run: sudo apt-get install xmlstarlet
-
-      - name: "Env variable: PROJECT_VERSION"
-        run: echo "PROJECT_VERSION=$(xmlstarlet sel -N my=http://maven.apache.org/POM/4.0.0 -t -m my:project -v my:version pom.xml)" >> $GITHUB_ENV
+      - name: "Copy Maven settings.xml"
+        uses: CleverShuttle/gh-composite-actions/actions/maven-settings@v1.26.0
 
       - name: "Restore Maven cache"
         uses: skjolber/maven-cache-github-action@v1
         with:
           step: restore
 
-      - name: "Copy Maven settings.xml"
-        uses: CleverShuttle/gh-composite-actions/actions/maven-settings@v1.26.0
-
-      - name: "Build ECS with Maven"
+      - name: "Build component with Maven"
         env:
           USERNAME: ${{ secrets.ARTIFACTORY_USERNAME }}
           PASSWORD: ${{ secrets.ARTIFACTORY_PASSWORD }}

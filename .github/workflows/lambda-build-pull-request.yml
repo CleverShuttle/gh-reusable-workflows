@@ -104,7 +104,7 @@ jobs:
           TF_VAR_project_version: ${{ env.PROJECT_VERSION }}
         run: terraform apply -destroy -auto-approve
 
-      - name: "Sonar: Run analysis for pull requests"
+      - name: "Run Sonar analysis for pull requests"
         uses: CleverShuttle/gh-composite-actions/actions/sonar-java-analysis-pull-request@v1.26.0
         with:
           sonar_token: ${{ secrets.SONAR_TOKEN }}
