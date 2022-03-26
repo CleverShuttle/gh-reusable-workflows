@@ -1,4 +1,4 @@
-name: "ECS: Deploy to nonprod"
+name: "ECS: Deploy to NONPROD"
 
 on:
   workflow_call:
@@ -31,8 +31,9 @@ on:
       TEST_DEPLOYMENTS_SLACK_CHANNEL_ID:
         required: true
 
+# https://docs.github.com/en/actions/using-jobs/using-concurrency
 concurrency:
-  group: deploy-nonprod
+  group: ${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: true
 
 jobs:
@@ -69,6 +70,13 @@ jobs:
           path: ".github/workflows/workflow.properties"
           property: "ecr.image.name"
 
+      - name: "Read ecs.taskDefinition.container.name from workflow.properties"
+        id: ecs_taskDefinition_container_name
+        uses: christian-draeger/read-properties@1.0.1
+        with:
+          path: ".github/workflows/workflow.properties"
+          property: "ecs.taskDefinition.container.name"
+
       - name: "Read ecs.cluster.name.cs.nonprod from workflow.properties"
         id: ecs_cluster_name_cs_nonprod
         uses: christian-draeger/read-properties@1.0.1
@@ -82,13 +90,6 @@ jobs:
         with:
           path: ".github/workflows/workflow.properties"
           property: "ecs.service.name.nonprod"
-
-      - name: "Read ecs.taskDefinition.container.name from workflow.properties"
-        id: ecs_taskDefinition_container_name
-        uses: christian-draeger/read-properties@1.0.1
-        with:
-          path: ".github/workflows/workflow.properties"
-          property: "ecs.taskDefinition.container.name"
 
       - name: "Configure AWS credentials"
         uses: aws-actions/configure-aws-credentials@v1
@@ -126,7 +127,7 @@ jobs:
         env:
           USERNAME: ${{ secrets.ARTIFACTORY_USERNAME }}
           PASSWORD: ${{ secrets.ARTIFACTORY_PASSWORD }}
-        run: mvn ${{ env.MAVEN_ARGS }} -DskipDockerBuild -DskipForbiddenApisCheck -Dmaven.main.skip -DskipTests -DskipIntegrationTests -DskipUnitTests -DskipDependencyCheck deploy
+        run: mvn deploy ${{ env.MAVEN_ARGS }} -DskipDockerBuild -DskipForbiddenApisCheck -Dmaven.main.skip -DskipTests -DskipIntegrationTests -DskipUnitTests -DskipDependencyCheck
 
       - name: "Save Maven cache"
         uses: skjolber/maven-cache-github-action@v1
@@ -144,7 +145,7 @@ jobs:
         with:
           args: deploy ${{ steps.ecs_cluster_name_cs_nonprod.outputs.value }} ${{ steps.ecs_service_name_nonprod.outputs.value }} --image ${{ steps.ecs_taskDefinition_container_name.outputs.value }} ${{ env.IMAGE_TAG }} --region ${{ secrets.AWS_REGION }} --timeout 600 --rollback
 
-      - name: "Generate nonprod changelog"
+      - name: "Generate NONPROD changelog"
         id: create-nonprod-changelog
         uses: CleverShuttle/gh-composite-actions/actions/create-nonprod-changelog@v1.27.0
 
