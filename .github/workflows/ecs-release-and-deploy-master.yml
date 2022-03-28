@@ -113,7 +113,7 @@ jobs:
         env:
           USERNAME: ${{ secrets.ARTIFACTORY_USERNAME }}
           PASSWORD: ${{ secrets.ARTIFACTORY_PASSWORD }}
-        run: mvn clean install
+        run: mvn ${{ env.MAVEN_ARGS }} clean install
 
       - name: "Generate changelog and create release"
         id: create-changelog-and-release
@@ -127,14 +127,15 @@ jobs:
         env:
           USERNAME: ${{ secrets.ARTIFACTORY_USERNAME }}
           PASSWORD: ${{ secrets.ARTIFACTORY_PASSWORD }}
-        run: mvn deploy \
+        run: mvn ${{ env.MAVEN_ARGS }} \
           -DskipDockerBuild \
           -DskipForbiddenApisCheck \
           -Dmaven.main.skip \
           -DskipTests \
           -DskipIntegrationTests \
           -DskipUnitTests \
-          -DskipDependencyCheck
+          -DskipDependencyCheck \
+          deploy
 
       - name: "Run Sonar analysis for master"
         uses: CleverShuttle/gh-composite-actions/actions/sonar-java-analysis-master@v1.27.0

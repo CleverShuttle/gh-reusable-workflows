@@ -52,20 +52,20 @@ jobs:
         env:
           USERNAME: ${{ secrets.ARTIFACTORY_USERNAME }}
           PASSWORD: ${{ secrets.ARTIFACTORY_PASSWORD }}
-        run: echo "MAVEN_GROUP_ID=$(mvn org.apache.maven.plugins:maven-help-plugin:3.2.0:evaluate -Dexpression=project.groupId -q -DforceStdout 2>/dev/null)" >> $GITHUB_ENV
+        run: echo "MAVEN_GROUP_ID=$(mvn ${{ env.MAVEN_ARGS }} -Dexpression=project.groupId -q -DforceStdout org.apache.maven.plugins:maven-help-plugin:3.2.0:evaluate 2>/dev/null)" >> $GITHUB_ENV
 
       - name: "Env variable: MAVEN_ARTIFACT_ID"
         if: ${{ inputs.sonar_analysis_enabled }}
         env:
           USERNAME: ${{ secrets.ARTIFACTORY_USERNAME }}
           PASSWORD: ${{ secrets.ARTIFACTORY_PASSWORD }}
-        run: echo "MAVEN_ARTIFACT_ID=$(mvn org.apache.maven.plugins:maven-help-plugin:3.2.0:evaluate -Dexpression=project.artifactId -q -DforceStdout 2>/dev/null)" >> $GITHUB_ENV
+        run: echo "MAVEN_ARTIFACT_ID=$(mvn ${{ env.MAVEN_ARGS }} -Dexpression=project.artifactId -q -DforceStdout org.apache.maven.plugins:maven-help-plugin:3.2.0:evaluate 2>/dev/null)" >> $GITHUB_ENV
 
       - name: "Build component with Maven"
         env:
           USERNAME: ${{ secrets.ARTIFACTORY_USERNAME }}
           PASSWORD: ${{ secrets.ARTIFACTORY_PASSWORD }}
-        run: mvn clean install
+        run: mvn ${{ env.MAVEN_ARGS }} clean install
 
       - name: "Get Sonar project key"
         id: sonar-project-key

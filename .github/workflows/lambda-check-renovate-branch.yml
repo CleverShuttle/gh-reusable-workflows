@@ -58,13 +58,13 @@ jobs:
         env:
           USERNAME: ${{ secrets.ARTIFACTORY_USERNAME }}
           PASSWORD: ${{ secrets.ARTIFACTORY_PASSWORD }}
-        run: echo "PROJECT_VERSION=$(mvn org.apache.maven.plugins:maven-help-plugin:3.2.0:evaluate -Dexpression=project.artifactId -q -DforceStdout 2>/dev/null)" >> $GITHUB_ENV
+        run: echo "PROJECT_VERSION=$(mvn ${{ env.MAVEN_ARGS }} -Dexpression=project.artifactId -q -DforceStdout org.apache.maven.plugins:maven-help-plugin:3.2.0:evaluate 2>/dev/null)" >> $GITHUB_ENV
 
       - name: "Build lambda with Maven"
         env:
           USERNAME: ${{ secrets.ARTIFACTORY_USERNAME }}
           PASSWORD: ${{ secrets.ARTIFACTORY_PASSWORD }}
-        run: mvn clean package
+        run: mvn ${{ env.MAVEN_ARGS }} clean package
 
       - name: "Create and deploy lambda for integration tests"
         if: inputs.create_pr_environment
@@ -84,7 +84,7 @@ jobs:
           USERNAME: ${{ secrets.ARTIFACTORY_USERNAME }}
           PASSWORD: ${{ secrets.ARTIFACTORY_PASSWORD }}
           AWS_TEST_KINESIS_INPUT_STEAM: ${{ env.KINESIS_INPUT_STREAM }}
-        run: mvn verify
+        run: mvn ${{ env.MAVEN_ARGS }} verify
 
       - name: "Remove lambda after integration tests"
         if: inputs.create_pr_environment && always()

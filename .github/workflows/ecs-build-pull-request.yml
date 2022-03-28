@@ -77,7 +77,7 @@ jobs:
         env:
           USERNAME: ${{ secrets.ARTIFACTORY_USERNAME }}
           PASSWORD: ${{ secrets.ARTIFACTORY_PASSWORD }}
-        run: mvn clean install
+        run: mvn ${{ env.MAVEN_ARGS }} clean install
 
       - name: "Run Sonar analysis for pull requests"
         uses: CleverShuttle/gh-composite-actions/actions/sonar-java-analysis-pull-request@v1.27.0
