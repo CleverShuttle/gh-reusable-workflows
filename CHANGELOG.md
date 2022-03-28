@@ -1,3 +1,12 @@
+## [0.15.4](https://github.com/CleverShuttle/gh-reusable-workflows/compare/v0.15.3...v0.15.4) (2022-03-28)
+
+
+### Bug Fixes
+
+* Correct version reference on lambda release ([994155d](https://github.com/CleverShuttle/gh-reusable-workflows/commit/994155d8169afa101dbe82de90d949e58b3347c2))
+
+
+
 ## [0.15.3](https://github.com/CleverShuttle/gh-reusable-workflows/compare/v0.15.2...v0.15.3) (2022-03-28)
 
 
@@ -27,15 +36,6 @@
 ### Features
 
 * Replace configuration by convention ([4a48865](https://github.com/CleverShuttle/gh-reusable-workflows/commit/4a4886568548106f60ea73cbc1f18ed72bf7a33f))
-
-
-
-## [0.14.2](https://github.com/CleverShuttle/gh-reusable-workflows/compare/v0.14.1...v0.14.2) (2022-03-25)
-
-
-### Bug Fixes
-
-* Latest component flow ([412764a](https://github.com/CleverShuttle/gh-reusable-workflows/commit/412764a7b165e0db303184a34a687be751f8a4ca))
 
 
 
