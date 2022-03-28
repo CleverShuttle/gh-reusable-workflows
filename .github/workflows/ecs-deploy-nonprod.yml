@@ -114,26 +114,27 @@ jobs:
         env:
           USERNAME: ${{ secrets.ARTIFACTORY_USERNAME }}
           PASSWORD: ${{ secrets.ARTIFACTORY_PASSWORD }}
-        run: mvn versions:set -DnewVersion="${{ env.NONPROD_VERSION }}" -DprocessAllModules=true
+        run: mvn ${{ env.MAVEN_ARGS }} -DnewVersion="${{ env.NONPROD_VERSION }}" -DprocessAllModules=true versions:set
 
       - name: "Build ECS with Maven"
         env:
           USERNAME: ${{ secrets.ARTIFACTORY_USERNAME }}
           PASSWORD: ${{ secrets.ARTIFACTORY_PASSWORD }}
-        run: mvn clean install
+        run: mvn ${{ env.MAVEN_ARGS }} clean install
 
       - name: "Deploy to Artifactory"
         env:
           USERNAME: ${{ secrets.ARTIFACTORY_USERNAME }}
           PASSWORD: ${{ secrets.ARTIFACTORY_PASSWORD }}
-        run: mvn deploy \
+        run: mvn ${{ env.MAVEN_ARGS }} \
           -DskipDockerBuild \
           -DskipForbiddenApisCheck \
           -Dmaven.main.skip \
           -DskipTests \
           -DskipIntegrationTests \
           -DskipUnitTests \
-          -DskipDependencyCheck
+          -DskipDependencyCheck \
+          deploy
 
       - name: "Save Maven cache"
         uses: skjolber/maven-cache-github-action@v1
