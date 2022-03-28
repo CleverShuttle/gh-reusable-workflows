@@ -175,7 +175,7 @@ jobs:
           aws_access_key_id: ${{ secrets.NONPROD_AWS_ACCESS_KEY_ID }}
           aws_region: ${{ secrets.AWS_REGION }}
           aws_secret_access_key: ${{ secrets.NONPROD_AWS_SECRET_ACCESS_KEY }}
-          project_version: ${{ env.NONPROD_VERSION }}
+          project_version: ${{ steps.create-changelog-and-release.outputs.version }}
           function_name: ${{ inputs.prod_function_name }}
           jar_file: ${{ inputs.jar_file }}
 
