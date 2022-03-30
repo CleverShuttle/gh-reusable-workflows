@@ -93,9 +93,9 @@ jobs:
         run: |
           mvn ${{ env.MAVEN_ARGS }} deploy \
           -DskipForbiddenApisCheck \
-          -Dmaven.main.skip \ 
-          -DskipTests \ 
-          -DskipIntegrationTests \ 
+          -Dmaven.main.skip \
+          -DskipTests \
+          -DskipIntegrationTests \
           -DskipUnitTests \
           -DskipDependencyCheck
 
