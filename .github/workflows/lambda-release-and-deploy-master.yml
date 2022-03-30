@@ -152,7 +152,14 @@ jobs:
           USERNAME: ${{ secrets.ARTIFACTORY_USERNAME }}
           PASSWORD: ${{ secrets.ARTIFACTORY_PASSWORD }}
         run: |
-          mvn ${{ env.MAVEN_ARGS }} -DskipDockerBuild -DskipForbiddenApisCheck -Dmaven.main.skip -DskipTests -DskipIntegrationTests -DskipUnitTests -DskipDependencyCheck deploy
+          mvn ${{ env.MAVEN_ARGS }} deploy \
+          -DskipDockerBuild \
+          -DskipForbiddenApisCheck \
+          -Dmaven.main.skip \ 
+          -DskipTests \ 
+          -DskipIntegrationTests \ 
+          -DskipUnitTests \
+          -DskipDependencyCheck
 
       - name: "Run Sonar analysis for master"
         uses: CleverShuttle/gh-composite-actions/actions/sonar-java-analysis-master@v1.27.0

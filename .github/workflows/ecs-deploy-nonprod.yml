@@ -129,7 +129,7 @@ jobs:
           PASSWORD: ${{ secrets.ARTIFACTORY_PASSWORD }}
         run: |
           mvn ${{ env.MAVEN_ARGS }} deploy \
-          -DskipDockerBuild
+          -DskipDockerBuild \
           -DskipForbiddenApisCheck \
           -Dmaven.main.skip \ 
           -DskipTests \ 
