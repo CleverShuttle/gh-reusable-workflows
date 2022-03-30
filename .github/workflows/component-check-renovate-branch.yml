@@ -34,7 +34,7 @@ jobs:
           step: restore
 
       - name: "Copy Maven settings.xml"
-        uses: CleverShuttle/gh-composite-actions/actions/maven-settings@v1.29.2
+        uses: CleverShuttle/gh-composite-actions/actions/maven-settings@v1.29.4
 
       - name: "Build component with Maven"
         env:
