@@ -1,3 +1,13 @@
+# [0.16.0](https://github.com/CleverShuttle/gh-reusable-workflows/compare/v0.15.4...v0.16.0) (2022-03-30)
+
+
+### Features
+
+* Optimize concurrency; Wording ([69fc356](https://github.com/CleverShuttle/gh-reusable-workflows/commit/69fc3567e8a8a4f34cdc03b21c1a487fc3a451de))
+* Use config-conventional for lint commits ([7567a0f](https://github.com/CleverShuttle/gh-reusable-workflows/commit/7567a0fcfe05555a529fe0d211597ae1e094e01e))
+
+
+
 ## [0.15.4](https://github.com/CleverShuttle/gh-reusable-workflows/compare/v0.15.3...v0.15.4) (2022-03-28)
 
 
@@ -27,15 +37,6 @@
 
 
 ## [0.15.1](https://github.com/CleverShuttle/gh-reusable-workflows/compare/v0.15.0...v0.15.1) (2022-03-25)
-
-
-
-# [0.15.0](https://github.com/CleverShuttle/gh-reusable-workflows/compare/v0.14.2...v0.15.0) (2022-03-25)
-
-
-### Features
-
-* Replace configuration by convention ([4a48865](https://github.com/CleverShuttle/gh-reusable-workflows/commit/4a4886568548106f60ea73cbc1f18ed72bf7a33f))
 
 
 
