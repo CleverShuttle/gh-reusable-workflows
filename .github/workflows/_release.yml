@@ -32,7 +32,7 @@ jobs:
           skip-version-file: true
           skip-commit: true
           release-count: 0
-          config-file-path: 'github/configs/changelog.config.js'
+          config-file-path: '.github/configs/changelog.config.js'
 
       - name: 'Semantic versioning'
         id: semantic-versioning
