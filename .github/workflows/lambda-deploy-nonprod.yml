@@ -42,8 +42,6 @@ on:
         required: true
       SLACK_BOT_TOKEN_OMG_BACKEND:
         required: true
-      SLACK_BOT_SIGNING_SECRET_OMG_BACKEND:
-        required: true
       TEST_DEPLOYMENTS_SLACK_CHANNEL_ID:
         required: true
 
@@ -55,7 +53,6 @@ jobs:
     runs-on: ubuntu-20.04
     env:
       MAVEN_ARGS: "--batch-mode --no-transfer-progress"
-      REPO_BASE_URL: "https://github.com/CleverShuttle/${{ github.event.repository.name }}"
     steps:
       - name: "Checkout repository"
         uses: actions/checkout@v3
@@ -72,7 +69,7 @@ jobs:
           step: restore
 
       - name: "Copy Maven settings.xml"
-        uses: CleverShuttle/gh-composite-actions/actions/maven-settings@v1.34.3
+        uses: CleverShuttle/gh-composite-actions/actions/maven-settings@v1.31.1
 
       - name: "Configure AWS credentials"
         uses: aws-actions/configure-aws-credentials@v1
@@ -149,7 +146,7 @@ jobs:
           step: save
 
       - name: "Deploy lambda function to NONPROD"
-        uses: CleverShuttle/gh-composite-actions/actions/deploy-lambda-function@v1.34.3
+        uses: CleverShuttle/gh-composite-actions/actions/deploy-lambda-function@v1.31.1
         with:
           aws_access_key_id: ${{ secrets.NONPROD_AWS_ACCESS_KEY_ID }}
           aws_region: ${{ secrets.AWS_REGION }}
@@ -160,7 +157,7 @@ jobs:
 
       - name: "Deploy lambda function to E2ETEST"
         if: inputs.deploy_e2etest
-        uses: CleverShuttle/gh-composite-actions/actions/deploy-lambda-function@v1.34.3
+        uses: CleverShuttle/gh-composite-actions/actions/deploy-lambda-function@v1.31.1
         with:
           aws_access_key_id: ${{ secrets.NONPROD_AWS_ACCESS_KEY_ID }}
           aws_region: ${{ secrets.AWS_REGION }}
@@ -171,7 +168,7 @@ jobs:
 
       - name: "Generate NONPROD changelog"
         id: create-nonprod-changelog
-        uses: CleverShuttle/gh-composite-actions/actions/create-nonprod-changelog@v1.34.3
+        uses: CleverShuttle/gh-composite-actions/actions/create-nonprod-changelog@v1.31.1
 
       # ---------------------- TODO new composite action:
 

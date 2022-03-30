@@ -46,7 +46,7 @@ jobs:
           step: restore
 
       - name: "Copy Maven settings.xml"
-        uses: CleverShuttle/gh-composite-actions/actions/maven-settings@v1.34.3
+        uses: CleverShuttle/gh-composite-actions/actions/maven-settings@v1.31.1
 
       - name: "Configure AWS credentials"
         uses: aws-actions/configure-aws-credentials@v1
@@ -62,7 +62,7 @@ jobs:
           username: ${{ secrets.PRODUCTION_AWS_ACCESS_KEY_ID }}
           password: ${{ secrets.PRODUCTION_AWS_SECRET_ACCESS_KEY }}
 
-      - name: "Build ECS with Maven"
+      - name: "Build service with Maven"
         env:
           USERNAME: ${{ secrets.ARTIFACTORY_USERNAME }}
           PASSWORD: ${{ secrets.ARTIFACTORY_PASSWORD }}

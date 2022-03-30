@@ -13,8 +13,6 @@ on:
         required: true
       PRODUCTION_DEPLOYMENTS_SLACK_CHANNEL_ID:
         required: true
-      SLACK_BOT_SIGNING_SECRET_OMG_BACKEND:
-        required: true
       SLACK_BOT_TOKEN_OMG_BACKEND:
         required: true
 
@@ -24,8 +22,6 @@ concurrency: ${{ github.workflow }}
 jobs:
   ecs-deploy-version-prod:
     runs-on: ubuntu-20.04
-    env:
-      REPO_BASE_URL: "https://github.com/CleverShuttle/${{ github.event.repository.name }}"
     steps:
       - name: "Checkout repository"
         uses: actions/checkout@v3
@@ -61,29 +57,41 @@ jobs:
           aws-secret-access-key: ${{ secrets.PRODUCTION_AWS_SECRET_ACCESS_KEY }}
           aws-region: ${{ secrets.AWS_REGION }}
 
+      - name: "Slack: In progress"
+        id: slack-progress
+        uses: CleverShuttle/gh-composite-actions/actions/slack-status@v1.31.1
+        with:
+          slack_token: ${{secrets.SLACK_BOT_TOKEN_OMG_BACKEND}}
+          slack_channel_id: ${{secrets.PRODUCTION_DEPLOYMENTS_SLACK_CHANNEL_ID}}
+          status: IN_PROGRESS
+          build: RELEASE
+          type: SERVICE
+
       - name: "Deploy ECS"
+        # https://github.com/brunocascio/ecs-deploy
         uses: brunocascio/ecs-deploy@v2.0.0
         with:
           args: deploy ${{ steps.ecs_cluster_name_cs_production.outputs.value }} ${{ steps.ecs_service_name_production.outputs.value }} --image ${{ steps.ecr_image_name.outputs.value }} ${{ env.IMAGE_TAG }} --region ${{ secrets.AWS_REGION }} --timeout 600 --rollback
 
-      # ---------------------- TODO new composite action:
-
-      - name: "Notification: Success"
-        if: ${{ success() && github.event.sender.login != 'renovate[bot]' }}
-        uses: aibexhq/slack-rich-notify@v2.0.1
+      - name: "Slack: Success"
+        if: ${{ success() && github.event.sender.login != 'renovate[bot]' || startsWith(github.event.head_commit.message, 'renovate/')) }}
+        uses: CleverShuttle/gh-composite-actions/actions/slack-status@v1.31.1
         with:
-          token: ${{secrets.SLACK_BOT_TOKEN_OMG_BACKEND}}
-          secret: ${{secrets.SLACK_BOT_SIGNING_SECRET_OMG_BACKEND}}
-          channel: ${{secrets.PRODUCTION_DEPLOYMENTS_SLACK_CHANNEL_ID}}
-          message: |
-            :white_check_mark: Service <${{ env.REPO_BASE_URL }}|${{ github.event.repository.name }}> ( version `${{ github.event.inputs.version }}` ) was successfully deployed to `PRODUCTION` – <${{ env.REPO_BASE_URL }}/actions/runs/${{ github.run_id }}|Details>
+          slack_token: ${{secrets.SLACK_BOT_TOKEN_OMG_BACKEND}}
+          slack_channel_id: ${{secrets.PRODUCTION_DEPLOYMENTS_SLACK_CHANNEL_ID}}
+          slack_reaction: white_check_mark
+          status: SUCCESS
+          build: RELEASE
+          type: SERVICE
+          version: ${{ github.event.inputs.version }}
 
-      - name: "Notification: Failure"
+      - name: "Slack: Failure"
         if: ${{ failure() }}
-        uses: aibexhq/slack-rich-notify@v2.0.1
+        uses: CleverShuttle/gh-composite-actions/actions/slack-status@v1.31.1
         with:
-          token: ${{secrets.SLACK_BOT_TOKEN_OMG_BACKEND}}
-          secret: ${{secrets.SLACK_BOT_SIGNING_SECRET_OMG_BACKEND}}
-          channel: ${{secrets.PRODUCTION_DEPLOYMENTS_SLACK_CHANNEL_ID}}
-          message: |
-            :x: Service <${{ env.REPO_BASE_URL }}|${{ github.event.repository.name }}> ( version `${{ github.event.inputs.version }}` ) failed to be deployed to `PRODUCTION` – <${{ env.REPO_BASE_URL }}/actions/runs/${{ github.run_id }}|Details>
+          slack_token: ${{secrets.SLACK_BOT_TOKEN_OMG_BACKEND}}
+          slack_channel_id: ${{secrets.PRODUCTION_DEPLOYMENTS_SLACK_CHANNEL_ID}}
+          status: FAILURE
+          build: RELEASE
+          type: SERVICE
+          version: ${{ github.event.inputs.version }}
