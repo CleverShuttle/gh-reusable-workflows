@@ -1,4 +1,4 @@
-name: 'Workflows: Release master'
+name: 'Workflows: Release'
 
 on:
   push:
@@ -17,21 +17,62 @@ jobs:
         # https://github.com/actions/checkout
         uses: actions/checkout@v3
 
+      - name: 'Install package required in changelog.config.js'
+        shell: bash
+        run: npm i conventional-changelog-conventionalcommits
+
       - name: 'Generate changelog'
         id: conventional-changelog
         # https://github.com/TriPSs/conventional-changelog-action
         uses: TriPSs/conventional-changelog-action@v3.11.0
         with:
+          preset: conventionalcommits
           github-token: ${{ secrets.github_token }}
+          git-push: false
           skip-version-file: true
+          skip-commit: true
+          release-count: 0
+          config-file-path: 'github/configs/changelog.config.js'
+
+      - name: 'Semantic versioning'
+        id: semantic-versioning
+        # https://github.com/ietf-tools/semver-action
+        uses: ietf-tools/semver-action@v1.1.0
+        with:
+          token: ${{ github.token }}
+          branch: ${{ github.ref }}
+          minorList: feat
+          # https://github.com/conventional-changelog/commitlint/tree/master/%40commitlint/config-conventional#type-enum
+          patchList: fix, bugfix, perf, refactor, test, tests, chore, build, ci, docs, revert, style, deps
+
+      - name: 'Set version and tag'
+        id: versioning
+        shell: bash
+        env:
+          SEMANTIC_VERSIONING_VERSION: ${{ env.nextStrict }}
+        run: |
+          echo "::set-output name=version::${{ env.SEMANTIC_VERSIONING_VERSION }}"
+          echo "::set-output name=tag::v${{ env.SEMANTIC_VERSIONING_VERSION }}"
+
+      - name: 'Commit changes'
+        shell: bash
+        run: |
+          git add .
+          git commit -m "chore(release): ${{ steps.versioning.outputs.version }}" -a
+
+      - name: 'Push changes'
+        # https://github.com/ad-m/github-push-action
+        uses: ad-m/github-push-action@v0.6.0
+        with:
+          github_token: ${{ github.token }}
+          branch: ${{ github.ref }}
 
       - name: 'Create Github release'
         # https://github.com/softprops/action-gh-release
         uses: softprops/action-gh-release@v0.1.14
-        if: ${{ steps.conventional-changelog.outputs.skipped == 'false' }}
         env:
           github_token: ${{ secrets.github_token }}
         with:
           body: ${{ steps.conventional-changelog.outputs.clean_changelog }}
-          tag_name: ${{ steps.conventional-changelog.outputs.tag }}
-          name: ${{ steps.conventional-changelog.outputs.tag }}
+          tag_name: ${{ steps.versioning.outputs.tag }}
+          name: ${{ steps.versioning.outputs.tag }}
