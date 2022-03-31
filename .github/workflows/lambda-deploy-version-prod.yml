@@ -59,7 +59,7 @@ jobs:
           step: restore
 
       - name: "Copy Maven settings.xml"
-        uses: CleverShuttle/gh-composite-actions/actions/maven-settings@v1.29.4
+        uses: CleverShuttle/gh-composite-actions/actions/maven-settings@v1.29.5
 
       - name: "Env variable: MAVEN_GROUP_ID"
         env:
@@ -102,7 +102,7 @@ jobs:
           step: save
 
       - name: "Deploy lambda function"
-        uses: CleverShuttle/gh-composite-actions/actions/deploy-lambda-function@v1.29.4
+        uses: CleverShuttle/gh-composite-actions/actions/deploy-lambda-function@v1.29.5
         with:
           aws_access_key_id: ${{ secrets.NONPROD_AWS_ACCESS_KEY_ID }}
           aws_region: ${{ secrets.AWS_REGION }}

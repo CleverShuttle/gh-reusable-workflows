@@ -17,6 +17,13 @@ jobs:
         # https://github.com/actions/checkout
         uses: actions/checkout@v3
 
+      - name: 'Clone gh-composite-actions repository'
+        # https://github.com/actions/checkout#checkout-multiple-repos-side-by-side
+        uses: actions/checkout@v3
+        with:
+          repository: CleverShuttle/gh-composite-actions
+          path: tmp
+
       - name: 'Install package required in changelog.config.js'
         shell: bash
         run: npm i conventional-changelog-conventionalcommits
@@ -32,7 +39,7 @@ jobs:
           skip-version-file: true
           skip-commit: true
           release-count: 0
-          config-file-path: '.github/configs/changelog.config.js'
+          config-file-path: 'tmp/actions/create-changelog-and-release/changelog.config.js'
 
       - name: 'Semantic versioning'
         id: semantic-versioning

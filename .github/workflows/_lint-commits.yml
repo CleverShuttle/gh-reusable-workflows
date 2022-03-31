@@ -12,8 +12,17 @@ jobs:
         with:
           fetch-depth: 0
 
+      - name: 'Clone gh-composite-actions repository'
+        # https://github.com/actions/checkout#checkout-multiple-repos-side-by-side
+        uses: actions/checkout@v3
+        with:
+          repository: CleverShuttle/gh-composite-actions
+          path: tmp
+
       - name: "Lint commit messages"
-        uses: wagoid/commitlint-github-action@v4
+        # https://github.com/wagoid/commitlint-github-action
+        uses: wagoid/commitlint-github-action@v2.0.3
         with:
           failOnWarnings: true
-          configFile: '.github/configs/commitlint.config.js'
+          # Path to cloned actions repo
+          configFile: 'tmp/actions/lint-commits/commitlint.config.js'
