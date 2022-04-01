@@ -1,9 +1,21 @@
+### [0.18.2](https://github.com/CleverShuttle/gh-reusable-workflows/compare/v0.18.1...v0.18.2) (2022-04-01)
+
+
+### 🐛 Bugfixes
+
+* Remove spaces after escape characters ([d1c84c8](https://github.com/CleverShuttle/gh-reusable-workflows/commit/d1c84c82c6d641172eadc49a995ea97cce2a3c6c))
+
 ### [0.18.1](https://github.com/CleverShuttle/gh-reusable-workflows/compare/v0.18.0...v0.18.1) (2022-04-01)
 
 
 ### 🐛 Bugfixes
 
 * lint action ([6631a05](https://github.com/CleverShuttle/gh-reusable-workflows/commit/6631a05a5bca8e663c251bec1619115a32173b94))
+
+
+### 🧹 Chores
+
+* **release:** 0.18.1 ([1df0984](https://github.com/CleverShuttle/gh-reusable-workflows/commit/1df098408f7111790415f285c8a13753780fdb2b))
 
 ## [0.18.0](https://github.com/CleverShuttle/gh-reusable-workflows/compare/v0.17.2...v0.18.0) (2022-03-31)
 
