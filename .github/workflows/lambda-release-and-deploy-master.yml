@@ -155,9 +155,9 @@ jobs:
           mvn ${{ env.MAVEN_ARGS }} deploy \
           -DskipDockerBuild \
           -DskipForbiddenApisCheck \
-          -Dmaven.main.skip \ 
-          -DskipTests \ 
-          -DskipIntegrationTests \ 
+          -Dmaven.main.skip \
+          -DskipTests \
+          -DskipIntegrationTests \
           -DskipUnitTests \
           -DskipDependencyCheck
 
