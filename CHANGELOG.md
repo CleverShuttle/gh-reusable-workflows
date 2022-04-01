@@ -1,9 +1,21 @@
+### [0.18.1](https://github.com/CleverShuttle/gh-reusable-workflows/compare/v0.18.0...v0.18.1) (2022-04-01)
+
+
+### 🐛 Bugfixes
+
+* lint action ([6631a05](https://github.com/CleverShuttle/gh-reusable-workflows/commit/6631a05a5bca8e663c251bec1619115a32173b94))
+
 ## [0.18.0](https://github.com/CleverShuttle/gh-reusable-workflows/compare/v0.17.2...v0.18.0) (2022-03-31)
 
 
 ### 🎉 New Features
 
 * improve _lint-commits and _release; upgrade to latest composite-actions ([0edad96](https://github.com/CleverShuttle/gh-reusable-workflows/commit/0edad965053042949a5a2eafe58a6b38df721c53))
+
+
+### 🧹 Chores
+
+* **release:** 0.18.0 ([c9e6c96](https://github.com/CleverShuttle/gh-reusable-workflows/commit/c9e6c964d3fd7cf77df2e67342be8ac241a3af05))
 
 ### [0.17.2](https://github.com/CleverShuttle/gh-reusable-workflows/compare/v0.17.1...v0.17.2) (2022-03-30)
 
