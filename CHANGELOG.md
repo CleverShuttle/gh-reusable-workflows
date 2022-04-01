@@ -1,9 +1,21 @@
+## [0.20.0](https://github.com/CleverShuttle/gh-reusable-workflows/compare/v0.19.1...v0.20.0) (2022-04-01)
+
+
+### 🎉 New Features
+
+* Update gh-composite-actions to v1.30.1 ([079091e](https://github.com/CleverShuttle/gh-reusable-workflows/commit/079091e2d4a14d9bf3bc0e94a215e7440a538770))
+
 ### [0.19.1](https://github.com/CleverShuttle/gh-reusable-workflows/compare/v0.19.0...v0.19.1) (2022-04-01)
 
 
 ### 🐛 Bugfixes
 
 * Make e2etest_function_name optional ([14238ca](https://github.com/CleverShuttle/gh-reusable-workflows/commit/14238ca1a61f72be7d4b142284c4649e9222f3f7))
+
+
+### 🧹 Chores
+
+* **release:** 0.19.1 ([a582503](https://github.com/CleverShuttle/gh-reusable-workflows/commit/a582503ec3b577d5ffa79d2b51e0b3c17fd4ca6c))
 
 ## [0.19.0](https://github.com/CleverShuttle/gh-reusable-workflows/compare/v0.18.2...v0.19.0) (2022-04-01)
 
