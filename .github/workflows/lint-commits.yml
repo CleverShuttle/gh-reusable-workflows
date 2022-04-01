@@ -8,4 +8,4 @@ jobs:
     runs-on: ubuntu-20.04
     steps:
       - name: "Lint commit messages"
-        uses: CleverShuttle/gh-composite-actions/actions/lint-commits@v1.29.5
+        uses: CleverShuttle/gh-composite-actions/actions/lint-commits@v1.29.6
