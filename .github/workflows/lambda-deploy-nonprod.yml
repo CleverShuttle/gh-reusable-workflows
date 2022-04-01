@@ -22,8 +22,8 @@ on:
         required: true
         type: string
       e2etest_function_name:
-        description: "Name of the AWS lambda function deployed to the E2ETEST environment (ignored when deploy_e2etest is false)"
-        required: true
+        description: "Name of the AWS lambda function deployed to the E2ETEST environment (Required when deploy_e2etest is true)"
+        required: false
         type: string
       jar_file:
         description: "The path to the Jar file to be uploaded when deploying the lambda function. You can use PROJECT_VERSION as a placeholder for the project version."
