@@ -1,9 +1,17 @@
+### [0.21.4](https://github.com/CleverShuttle/gh-reusable-workflows/compare/v0.21.3...v0.21.4) (2022-04-04)
+
+
+### 🧹 Chores
+
+* **deps:** update wagoid/commitlint-github-action action to v2.2.5 ([1865327](https://github.com/CleverShuttle/gh-reusable-workflows/commit/1865327bace580b7c376bffce4406203c273437e))
+
 ### [0.21.3](https://github.com/CleverShuttle/gh-reusable-workflows/compare/v0.21.2...v0.21.3) (2022-04-04)
 
 
 ### 🧹 Chores
 
 * **deps:** update ietf-tools/semver-action action to v1.1.1 ([6707156](https://github.com/CleverShuttle/gh-reusable-workflows/commit/6707156232f7f3a5297cb4daab8a0a8967d00af3))
+* **release:** 0.21.3 ([ad5f11b](https://github.com/CleverShuttle/gh-reusable-workflows/commit/ad5f11b418d26a3ac0b7cae3c5981a69dee60360))
 
 ### [0.21.2](https://github.com/CleverShuttle/gh-reusable-workflows/compare/v0.21.1...v0.21.2) (2022-04-04)
 
@@ -516,12 +524,4 @@
 
 * **release:** v0.6.23 ([ec1e350](https://github.com/CleverShuttle/gh-reusable-workflows/commit/ec1e3502f5841d5007dd1233f9093d82a400ebcc))
 * Use the latest sonar-java-pull-request action ([a9f6a73](https://github.com/CleverShuttle/gh-reusable-workflows/commit/a9f6a733908d67d7952f9ff497e12327d512faf4))
-
-### [0.6.22](https://github.com/CleverShuttle/gh-reusable-workflows/compare/v0.6.21...v0.6.22) (2022-03-18)
-
-
-### 🧹 Chores
-
-* **release:** v0.6.22 ([bc349d2](https://github.com/CleverShuttle/gh-reusable-workflows/commit/bc349d2ac7079b69bc77855804b557746689c527))
-* Use the latest sonar-java-pull-request action ([ff74516](https://github.com/CleverShuttle/gh-reusable-workflows/commit/ff7451615a86fc3c7098759b37436c95d2e23779))
 
