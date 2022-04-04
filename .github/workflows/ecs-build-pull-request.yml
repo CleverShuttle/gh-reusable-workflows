@@ -50,7 +50,7 @@ jobs:
           step: restore
 
       - name: "Copy Maven settings.xml"
-        uses: CleverShuttle/gh-composite-actions/actions/maven-settings@v1.30.2
+        uses: CleverShuttle/gh-composite-actions/actions/maven-settings@v1.30.5
 
       - name: "Configure AWS credentials"
         uses: aws-actions/configure-aws-credentials@v1
@@ -85,7 +85,7 @@ jobs:
         run: mvn ${{ env.MAVEN_ARGS }} clean install
 
       - name: "Run Sonar analysis for pull requests"
-        uses: CleverShuttle/gh-composite-actions/actions/sonar-java-analysis-pull-request@v1.30.2
+        uses: CleverShuttle/gh-composite-actions/actions/sonar-java-analysis-pull-request@v1.30.5
         with:
           sonar_token: ${{ secrets.SONAR_TOKEN }}
           artifactory_username: ${{ secrets.ARTIFACTORY_USERNAME }}
