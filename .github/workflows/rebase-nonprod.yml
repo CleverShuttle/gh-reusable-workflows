@@ -8,4 +8,4 @@ jobs:
     runs-on: ubuntu-20.04
     steps:
       - name: "Rebase NONPROD onto master"
-        uses: CleverShuttle/gh-composite-actions/actions/rebase-nonprod@v1.30.5
+        uses: CleverShuttle/gh-composite-actions/actions/rebase-nonprod@v1.30.6
