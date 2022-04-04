@@ -1,9 +1,17 @@
+### [0.21.3](https://github.com/CleverShuttle/gh-reusable-workflows/compare/v0.21.2...v0.21.3) (2022-04-04)
+
+
+### 🧹 Chores
+
+* **deps:** update ietf-tools/semver-action action to v1.1.1 ([6707156](https://github.com/CleverShuttle/gh-reusable-workflows/commit/6707156232f7f3a5297cb4daab8a0a8967d00af3))
+
 ### [0.21.2](https://github.com/CleverShuttle/gh-reusable-workflows/compare/v0.21.1...v0.21.2) (2022-04-04)
 
 
 ### 🧹 Chores
 
 * **deps:** Update gh-composite-actions to v1.30.6 ([98ade8f](https://github.com/CleverShuttle/gh-reusable-workflows/commit/98ade8f203cf4ea02a7100cbd9ba496d46afb319))
+* **release:** 0.21.2 ([9b21a93](https://github.com/CleverShuttle/gh-reusable-workflows/commit/9b21a93b0c9677a62f0cfb8bee6c33b36a17ccd3))
 
 ### [0.21.1](https://github.com/CleverShuttle/gh-reusable-workflows/compare/v0.21.0...v0.21.1) (2022-04-04)
 
@@ -516,12 +524,4 @@
 
 * **release:** v0.6.22 ([bc349d2](https://github.com/CleverShuttle/gh-reusable-workflows/commit/bc349d2ac7079b69bc77855804b557746689c527))
 * Use the latest sonar-java-pull-request action ([ff74516](https://github.com/CleverShuttle/gh-reusable-workflows/commit/ff7451615a86fc3c7098759b37436c95d2e23779))
-
-### [0.6.21](https://github.com/CleverShuttle/gh-reusable-workflows/compare/v0.6.20...v0.6.21) (2022-03-18)
-
-
-### 🧹 Chores
-
-* Always use mvn -B (batch mode) ([d73e800](https://github.com/CleverShuttle/gh-reusable-workflows/commit/d73e80073438742bf5e02d986b1362f33c4c021a))
-* **release:** v0.6.21 ([3521ea4](https://github.com/CleverShuttle/gh-reusable-workflows/commit/3521ea471e9d8150ca3344997d618dd016bf7568))
 
