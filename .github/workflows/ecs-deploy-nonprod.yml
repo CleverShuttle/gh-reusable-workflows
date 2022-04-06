@@ -7,6 +7,10 @@ on:
         required: false
         default: "17"
         type: string
+      trigger_test_automation:
+        description: "Triggers https://github.com/CleverShuttle/cs-ops-control-tests"
+        required: false
+        type: boolean
     secrets:
       ARTIFACTORY_PASSWORD:
         required: true
@@ -186,7 +190,7 @@ jobs:
             :x: Service <${{ env.REPO_BASE_URL }}/tree/nonprod|${{ github.event.repository.name }}> ( version `${{ env.NONPROD_VERSION }}` ) failed to be deployed to `NONPROD` – <${{ env.REPO_BASE_URL }}/actions/runs/${{ github.run_id }}|Details>
 
       - name: "Trigger test automation"
-        if: ${{ success() }}
+        if: ${{ success() && trigger_test_automation }}
         uses: peter-evans/repository-dispatch@v2
         with:
           token: ${{ secrets.OMG_GITHUB_ACCESS_TOKEN }}
