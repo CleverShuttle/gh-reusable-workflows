@@ -1,9 +1,17 @@
+## [0.22.0](https://github.com/CleverShuttle/gh-reusable-workflows/compare/v0.21.6...v0.22.0) (2022-04-06)
+
+
+### 🎉 New Features
+
+* Trigger test automation after each nonprod deployment ([18ebea7](https://github.com/CleverShuttle/gh-reusable-workflows/commit/18ebea770d4308763d1b9fe60dcba95bb30453d8))
+
 ### [0.21.6](https://github.com/CleverShuttle/gh-reusable-workflows/compare/v0.21.5...v0.21.6) (2022-04-05)
 
 
 ### 🧹 Chores
 
 * **deps:** update wagoid/commitlint-github-action action to v4 ([08d799b](https://github.com/CleverShuttle/gh-reusable-workflows/commit/08d799b6459a29662cb672b1e1d193d3edf237d7))
+* **release:** 0.21.6 ([97bd04c](https://github.com/CleverShuttle/gh-reusable-workflows/commit/97bd04c3cc975b10971e15de5403f854f4b5d3a9))
 
 ### [0.21.5](https://github.com/CleverShuttle/gh-reusable-workflows/compare/v0.21.4...v0.21.5) (2022-04-05)
 
@@ -516,12 +524,4 @@
 
 * Fix copy & paste bug ([7b6d304](https://github.com/CleverShuttle/gh-reusable-workflows/commit/7b6d3045fea67a69025670b5f8e09f7e52509b42))
 * **release:** v0.6.26 ([f7f19f0](https://github.com/CleverShuttle/gh-reusable-workflows/commit/f7f19f0c66fc043e73c31f0da68242e62a13d713))
-
-### [0.6.25](https://github.com/CleverShuttle/gh-reusable-workflows/compare/v0.6.24...v0.6.25) (2022-03-18)
-
-
-### 🧹 Chores
-
-* Append new component-release.yml workflow ([4e1de2d](https://github.com/CleverShuttle/gh-reusable-workflows/commit/4e1de2d450b5c8ca6279e88c686256e158b4ea95))
-* **release:** v0.6.25 ([9127d1e](https://github.com/CleverShuttle/gh-reusable-workflows/commit/9127d1e9100fbac6f2d6dad88e6b243d686466be))
 
