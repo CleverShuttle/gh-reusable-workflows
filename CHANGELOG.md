@@ -1,9 +1,21 @@
+### [0.22.1](https://github.com/CleverShuttle/gh-reusable-workflows/compare/v0.22.0...v0.22.1) (2022-04-06)
+
+
+### 🐛 Bugfixes
+
+* Tokens ([b64523d](https://github.com/CleverShuttle/gh-reusable-workflows/commit/b64523d1193109a4cfe9668c6be6ec4abae5b5ca))
+
 ## [0.22.0](https://github.com/CleverShuttle/gh-reusable-workflows/compare/v0.21.6...v0.22.0) (2022-04-06)
 
 
 ### 🎉 New Features
 
 * Trigger test automation after each nonprod deployment ([18ebea7](https://github.com/CleverShuttle/gh-reusable-workflows/commit/18ebea770d4308763d1b9fe60dcba95bb30453d8))
+
+
+### 🧹 Chores
+
+* **release:** 0.22.0 ([536a58e](https://github.com/CleverShuttle/gh-reusable-workflows/commit/536a58ede4520415572bb0ad7000261231605cec))
 
 ### [0.21.6](https://github.com/CleverShuttle/gh-reusable-workflows/compare/v0.21.5...v0.21.6) (2022-04-05)
 
@@ -516,12 +528,4 @@
 
 * Improve concurrency ([eb59fee](https://github.com/CleverShuttle/gh-reusable-workflows/commit/eb59feef3579f3198ae66842e67013874c77246b))
 * **release:** v0.6.27 ([1376e29](https://github.com/CleverShuttle/gh-reusable-workflows/commit/1376e29f1f3f715e5e6d0be9636773b33d9f4dab))
-
-### [0.6.26](https://github.com/CleverShuttle/gh-reusable-workflows/compare/v0.6.25...v0.6.26) (2022-03-18)
-
-
-### 🧹 Chores
-
-* Fix copy & paste bug ([7b6d304](https://github.com/CleverShuttle/gh-reusable-workflows/commit/7b6d3045fea67a69025670b5f8e09f7e52509b42))
-* **release:** v0.6.26 ([f7f19f0](https://github.com/CleverShuttle/gh-reusable-workflows/commit/f7f19f0c66fc043e73c31f0da68242e62a13d713))
 
