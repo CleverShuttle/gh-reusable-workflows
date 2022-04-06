@@ -185,11 +185,11 @@ jobs:
           message: |
             :x: Service <${{ env.REPO_BASE_URL }}/tree/nonprod|${{ github.event.repository.name }}> ( version `${{ env.NONPROD_VERSION }}` ) failed to be deployed to `NONPROD` – <${{ env.REPO_BASE_URL }}/actions/runs/${{ github.run_id }}|Details>
 
-      - name: Repository Dispatch
+      - name: "Trigger test automation"
         if: ${{ success() }}
         uses: peter-evans/repository-dispatch@v2
         with:
-          token: ${{ secrets.github_token }}
+          token: ${{ secrets.OMG_GITHUB_ACCESS_TOKEN }}
           repository: CleverShuttle/cs-ops-control-tests
           event-type: trigger-test-automation-event
           client-payload: '{"ref": "${{ github.ref }}", "sha": "${{ github.sha }}"}'
