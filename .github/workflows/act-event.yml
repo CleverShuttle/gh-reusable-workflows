@@ -1,0 +1,19 @@
+name: Test
+
+on:
+  pull_request: { }
+
+jobs:
+  act-event:
+    runs-on: ubuntu-20.04
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Repository Dispatch
+        uses: peter-evans/repository-dispatch@v2
+        with:
+          token: ${{ secrets.github_token }}
+          repository: CleverShuttle/cs-ops-control-tests
+          event-type: trigger-test-automation-event
+          client-payload: '{"ref": "${{ github.ref }}", "sha": "${{ github.sha }}"}'

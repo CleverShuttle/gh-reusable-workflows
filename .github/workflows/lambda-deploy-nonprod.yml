@@ -48,9 +48,7 @@ on:
         required: true
 
 # https://docs.github.com/en/actions/using-jobs/using-concurrency
-concurrency:
-  group: ${{ github.workflow }}-${{ github.ref }}
-  cancel-in-progress: true
+concurrency: ${{ github.workflow }}
 
 jobs:
   lambda-deploy-nonprod:

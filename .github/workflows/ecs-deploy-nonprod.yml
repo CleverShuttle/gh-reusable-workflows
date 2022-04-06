@@ -32,9 +32,7 @@ on:
         required: true
 
 # https://docs.github.com/en/actions/using-jobs/using-concurrency
-concurrency:
-  group: ${{ github.workflow }}-${{ github.ref }}
-  cancel-in-progress: true
+concurrency: ${{ github.workflow }}
 
 jobs:
   ecs-deploy-nonprod:
@@ -186,3 +184,12 @@ jobs:
           channel: ${{secrets.TEST_DEPLOYMENTS_SLACK_CHANNEL_ID}}
           message: |
             :x: Service <${{ env.REPO_BASE_URL }}/tree/nonprod|${{ github.event.repository.name }}> ( version `${{ env.NONPROD_VERSION }}` ) failed to be deployed to `NONPROD` – <${{ env.REPO_BASE_URL }}/actions/runs/${{ github.run_id }}|Details>
+
+      - name: Repository Dispatch
+        if: ${{ success() }}
+        uses: peter-evans/repository-dispatch@v2
+        with:
+          token: ${{ secrets.github_token }}
+          repository: CleverShuttle/cs-ops-control-tests
+          event-type: trigger-test-automation-event
+          client-payload: '{"ref": "${{ github.ref }}", "sha": "${{ github.sha }}"}'
