@@ -7,6 +7,14 @@ on:
         required: false
         default: "11"
         type: string
+      trigger_test_automation:
+        description: "Triggers https://github.com/CleverShuttle/cs-ops-control-tests"
+        required: false
+        type: boolean
+      slack_message_timestamp:
+        description: "Optional Slack message timestamp"
+        type: string
+        required: false
       create_pr_environment:
         description: "Optional, set to true if pull requests are verified against AWS infrastructure that is created per pull request"
         required: false
@@ -30,6 +38,9 @@ on:
         required: true
         type: string
     secrets:
+      REPO_ACCESS_TOKEN:
+        description: "Necessary for downstream test automation - see https://github.com/peter-evans/repository-dispatch#token"
+        required: false
       ARTIFACTORY_PASSWORD:
         required: true
       ARTIFACTORY_USERNAME:
@@ -40,9 +51,9 @@ on:
         required: true
       NONPROD_AWS_ACCESS_KEY_ID:
         required: true
-      SLACK_BOT_TOKEN_OMG_BACKEND:
+      SLACK_TOKEN:
         required: true
-      TEST_DEPLOYMENTS_SLACK_CHANNEL_ID:
+      SLACK_CHANNEL_ID:
         required: true
 
 # https://docs.github.com/en/actions/using-jobs/using-concurrency
@@ -69,7 +80,7 @@ jobs:
           step: restore
 
       - name: "Copy Maven settings.xml"
-        uses: CleverShuttle/gh-composite-actions/actions/maven-settings@v1.31.1
+        uses: CleverShuttle/gh-composite-actions/actions/maven-settings@v1.33.1
 
       - name: "Configure AWS credentials"
         uses: aws-actions/configure-aws-credentials@v1
@@ -146,7 +157,7 @@ jobs:
           step: save
 
       - name: "Deploy lambda function to NONPROD"
-        uses: CleverShuttle/gh-composite-actions/actions/deploy-lambda-function@v1.31.1
+        uses: CleverShuttle/gh-composite-actions/actions/deploy-lambda-function@v1.33.1
         with:
           aws_access_key_id: ${{ secrets.NONPROD_AWS_ACCESS_KEY_ID }}
           aws_region: ${{ secrets.AWS_REGION }}
@@ -157,7 +168,7 @@ jobs:
 
       - name: "Deploy lambda function to E2ETEST"
         if: inputs.deploy_e2etest
-        uses: CleverShuttle/gh-composite-actions/actions/deploy-lambda-function@v1.31.1
+        uses: CleverShuttle/gh-composite-actions/actions/deploy-lambda-function@v1.33.1
         with:
           aws_access_key_id: ${{ secrets.NONPROD_AWS_ACCESS_KEY_ID }}
           aws_region: ${{ secrets.AWS_REGION }}
@@ -168,34 +179,39 @@ jobs:
 
       - name: "Generate NONPROD changelog"
         id: create-nonprod-changelog
-        uses: CleverShuttle/gh-composite-actions/actions/create-nonprod-changelog@v1.31.1
+        uses: CleverShuttle/gh-composite-actions/actions/create-nonprod-changelog@v1.33.1
 
-      # ---------------------- TODO new composite action:
-
-      - name: "Format changelog for slack"
-        id: changelog_format
-        uses: lovetoknow/slackify-markdown-action@v1.0.0
-        with:
-          text: ${{ steps.create-nonprod-changelog.outputs.changelog }}
-
-      - name: "Notification: Success"
+      - name: "Slack: Success"
         if: ${{ success() && !(github.event.sender.login == 'renovate[bot]' || startsWith(github.event.head_commit.message, 'renovate/')) }}
-        uses: aibexhq/slack-rich-notify@v2.0.1
+        uses: CleverShuttle/gh-composite-actions/actions/slack-status@v1.33.1
         with:
-          token: ${{secrets.SLACK_BOT_TOKEN_OMG_BACKEND}}
-          secret: ${{secrets.SLACK_BOT_SIGNING_SECRET_OMG_BACKEND}}
-          channel: ${{secrets.TEST_DEPLOYMENTS_SLACK_CHANNEL_ID}}
-          message: |
-            :white_check_mark: Lambda <${{ env.REPO_BASE_URL }}/tree/nonprod|${{ github.event.repository.name }}> ( version `${{ env.NONPROD_VERSION }}` ) was successfully deployed to `NONPROD` – <${{ env.REPO_BASE_URL }}/actions/runs/${{ github.run_id }}|Details>
+          slack_token: ${{secrets.SLACK_TOKEN}}
+          slack_channel_id: ${{secrets.SLACK_CHANNEL_ID}}
+          slack_message_ts: ${{ inputs.slack_message_timestamp }}
+          slack_reaction: white_check_mark
+          changelog: ${{ steps.create-nonprod-changelog.outputs.changelog }}
+          job: PULL_REQUEST
+          status: SUCCESS
+          type: LAMBDA
+          version: ${{ env.NONPROD_VERSION }}
 
-            ${{ steps.changelog_format.outputs.text }}
-
-      - name: "Notification: Failure"
+      - name: "Slack: Failure"
         if: ${{ failure() }}
-        uses: aibexhq/slack-rich-notify@v2.0.1
+        uses: CleverShuttle/gh-composite-actions/actions/slack-status@v1.33.1
         with:
-          token: ${{secrets.SLACK_BOT_TOKEN_OMG_BACKEND}}
-          secret: ${{secrets.SLACK_BOT_SIGNING_SECRET_OMG_BACKEND}}
-          channel: ${{secrets.TEST_DEPLOYMENTS_SLACK_CHANNEL_ID}}
-          message: |
-            :x: Lambda <${{ env.REPO_BASE_URL }}/tree/nonprod|${{ github.event.repository.name }}> ( version `${{ env.NONPROD_VERSION }}` ) failed to be deployed to `NONPROD` – <${{ env.REPO_BASE_URL }}/actions/runs/${{ github.run_id }}|Details>
+          slack_token: ${{secrets.SLACK_TOKEN}}
+          slack_channel_id: ${{secrets.SLACK_CHANNEL_ID}}
+          job: PULL_REQUEST
+          status: FAILURE
+          type: LAMBDA
+          version: ${{ env.NONPROD_VERSION }}
+
+      - name: "Trigger test automation"
+        if: ${{ success() && inputs.trigger_test_automation }}
+        # https://github.com/peter-evans/repository-dispatch
+        uses: peter-evans/repository-dispatch@v2
+        with:
+          token: ${{ secrets.REPO_ACCESS_TOKEN }}
+          repository: CleverShuttle/cs-ops-control-tests
+          event-type: trigger-test-automation-event
+          client-payload: '{"ref": "${{ github.ref }}", "sha": "${{ github.sha }}"}'
