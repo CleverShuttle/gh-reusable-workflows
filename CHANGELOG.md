@@ -1,9 +1,21 @@
+### [0.22.2](https://github.com/CleverShuttle/gh-reusable-workflows/compare/v0.22.1...v0.22.2) (2022-04-06)
+
+
+### 🚀 Performance Improvements
+
+* Disable test automation by default (dor services that do not belong to omg) ([d8a0eb0](https://github.com/CleverShuttle/gh-reusable-workflows/commit/d8a0eb0aae46ac79acf4e87e7ef7a6c3b61d8cf9))
+
 ### [0.22.1](https://github.com/CleverShuttle/gh-reusable-workflows/compare/v0.22.0...v0.22.1) (2022-04-06)
 
 
 ### 🐛 Bugfixes
 
 * Tokens ([b64523d](https://github.com/CleverShuttle/gh-reusable-workflows/commit/b64523d1193109a4cfe9668c6be6ec4abae5b5ca))
+
+
+### 🧹 Chores
+
+* **release:** 0.22.1 ([b42fb79](https://github.com/CleverShuttle/gh-reusable-workflows/commit/b42fb7925d35f47265f8f1e77c244965e9700bb7))
 
 ## [0.22.0](https://github.com/CleverShuttle/gh-reusable-workflows/compare/v0.21.6...v0.22.0) (2022-04-06)
 
@@ -520,12 +532,4 @@
 
 * Improve concurrency; Append conventional-changelog to component-release flow ([9279418](https://github.com/CleverShuttle/gh-reusable-workflows/commit/9279418bff2c55f6789bbd332dd1d7d2369f81e8))
 * **release:** v0.6.28 ([d0fefb6](https://github.com/CleverShuttle/gh-reusable-workflows/commit/d0fefb6b0f679080544e0469b627716bb4a73683))
-
-### [0.6.27](https://github.com/CleverShuttle/gh-reusable-workflows/compare/v0.6.26...v0.6.27) (2022-03-18)
-
-
-### 🧹 Chores
-
-* Improve concurrency ([eb59fee](https://github.com/CleverShuttle/gh-reusable-workflows/commit/eb59feef3579f3198ae66842e67013874c77246b))
-* **release:** v0.6.27 ([1376e29](https://github.com/CleverShuttle/gh-reusable-workflows/commit/1376e29f1f3f715e5e6d0be9636773b33d9f4dab))
 
