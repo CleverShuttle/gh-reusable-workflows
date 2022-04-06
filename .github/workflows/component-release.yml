@@ -19,12 +19,9 @@ on:
         required: true
       ARTIFACTORY_USERNAME:
         required: true
-      PRODUCTION_DEPLOYMENTS_SLACK_CHANNEL_ID:
+      SLACK_CHANNEL_ID:
         required: true
-      SLACK_BOT_SIGNING_SECRET_OMG_BACKEND:
-        description: "Slack signing secret - deprecated"
-        required: false
-      SLACK_BOT_TOKEN_OMG_BACKEND:
+      SLACK_TOKEN:
         required: true
       SONAR_TOKEN:
         required: true
@@ -55,7 +52,7 @@ jobs:
           step: restore
 
       - name: "Copy Maven settings"
-        uses: CleverShuttle/gh-composite-actions/actions/maven-settings@v1.31.1
+        uses: CleverShuttle/gh-composite-actions/actions/maven-settings@v1.33.1
 
       - name: "Env variable: MAVEN_GROUP_ID"
         if: ${{ inputs.sonar_analysis_enabled }}
@@ -73,12 +70,12 @@ jobs:
 
       - name: "Slack: In progress"
         id: slack-progress
-        uses: CleverShuttle/gh-composite-actions/actions/slack-status@v1.31.1
+        uses: CleverShuttle/gh-composite-actions/actions/slack-status@v1.33.1
         with:
-          slack_token: ${{secrets.SLACK_BOT_TOKEN_OMG_BACKEND}}
-          slack_channel_id: ${{secrets.PRODUCTION_DEPLOYMENTS_SLACK_CHANNEL_ID}}
+          slack_token: ${{secrets.SLACK_TOKEN}}
+          slack_channel_id: ${{secrets.SLACK_CHANNEL_ID}}
+          job: RELEASE
           status: IN_PROGRESS
-          build: RELEASE
           type: COMPONENT
 
       - name: "Build component with Maven"
@@ -89,7 +86,7 @@ jobs:
 
       - name: "Generate changelog and create release"
         id: create-changelog-and-release
-        uses: CleverShuttle/gh-composite-actions/actions/create-changelog-and-release@v1.31.1
+        uses: CleverShuttle/gh-composite-actions/actions/create-changelog-and-release@v1.33.1
         with:
           artifactory_username: ${{ secrets.ARTIFACTORY_USERNAME }}
           artifactory_password: ${{ secrets.ARTIFACTORY_PASSWORD }}
@@ -129,7 +126,7 @@ jobs:
 
       - name: "Run Sonar analysis for master"
         if: ${{ inputs.sonar_analysis_enabled }}
-        uses: CleverShuttle/gh-composite-actions/actions/sonar-java-analysis-master@v1.31.1
+        uses: CleverShuttle/gh-composite-actions/actions/sonar-java-analysis-master@v1.33.1
         with:
           sonar_token: ${{ secrets.SONAR_TOKEN }}
           artifactory_username: ${{ secrets.ARTIFACTORY_USERNAME }}
@@ -144,25 +141,25 @@ jobs:
 
       - name: "Slack: Success"
         if: ${{ success() && github.event.sender.login != 'renovate[bot]' || startsWith(github.event.head_commit.message, 'renovate/')) }}
-        uses: CleverShuttle/gh-composite-actions/actions/slack-status@v1.31.1
+        uses: CleverShuttle/gh-composite-actions/actions/slack-status@v1.33.1
         with:
-          slack_token: ${{secrets.SLACK_BOT_TOKEN_OMG_BACKEND}}
-          slack_channel_id: ${{secrets.PRODUCTION_DEPLOYMENTS_SLACK_CHANNEL_ID}}
+          slack_token: ${{secrets.SLACK_TOKEN}}
+          slack_channel_id: ${{secrets.SLACK_CHANNEL_ID}}
           slack_message_ts: ${{ steps.slack-progress.outputs.slack_message_ts }}
           slack_reaction: white_check_mark
-          changelog: ${{ steps.create-changelog-and-release.outputs.changelog }}
+          job: RELEASE
           status: SUCCESS
-          build: RELEASE
           type: COMPONENT
+          changelog: ${{ steps.create-changelog-and-release.outputs.changelog }}
           version: ${{ steps.create-changelog-and-release.outputs.version }}
 
       - name: "Slack: Failure"
         if: ${{ failure() }}
-        uses: CleverShuttle/gh-composite-actions/actions/slack-status@v1.31.1
+        uses: CleverShuttle/gh-composite-actions/actions/slack-status@v1.33.1
         with:
-          slack_token: ${{secrets.SLACK_BOT_TOKEN_OMG_BACKEND}}
-          slack_channel_id: ${{secrets.PRODUCTION_DEPLOYMENTS_SLACK_CHANNEL_ID}}
+          slack_token: ${{secrets.SLACK_TOKEN}}
+          slack_channel_id: ${{secrets.SLACK_CHANNEL_ID}}
+          job: RELEASE
           status: FAILURE
-          build: RELEASE
           type: COMPONENT
           version: ${{ steps.create-changelog-and-release.outputs.version }}

@@ -26,9 +26,9 @@ on:
         required: true
       PRODUCTION_AWS_SECRET_ACCESS_KEY:
         required: true
-      PRODUCTION_DEPLOYMENTS_SLACK_CHANNEL_ID:
+      SLACK_CHANNEL_ID:
         required: true
-      SLACK_BOT_TOKEN_OMG_BACKEND:
+      SLACK_TOKEN:
         required: true
 
 # https://docs.github.com/en/actions/using-jobs/using-concurrency
@@ -55,7 +55,7 @@ jobs:
           step: restore
 
       - name: "Copy Maven settings.xml"
-        uses: CleverShuttle/gh-composite-actions/actions/maven-settings@v1.31.1
+        uses: CleverShuttle/gh-composite-actions/actions/maven-settings@v1.33.1
 
       - name: "Env variable: MAVEN_GROUP_ID"
         env:
@@ -99,16 +99,16 @@ jobs:
 
       - name: "Slack: In progress"
         id: slack-progress
-        uses: CleverShuttle/gh-composite-actions/actions/slack-status@v1.31.1
+        uses: CleverShuttle/gh-composite-actions/actions/slack-status@v1.33.1
         with:
-          slack_token: ${{secrets.SLACK_BOT_TOKEN_OMG_BACKEND}}
-          slack_channel_id: ${{secrets.PRODUCTION_DEPLOYMENTS_SLACK_CHANNEL_ID}}
+          slack_token: ${{secrets.SLACK_TOKEN}}
+          slack_channel_id: ${{secrets.SLACK_CHANNEL_ID}}
+          job: DEPLOY_VERSION
           status: IN_PROGRESS
-          build: RELEASE
           type: LAMBDA
 
       - name: "Deploy lambda function"
-        uses: CleverShuttle/gh-composite-actions/actions/deploy-lambda-function@v1.31.1
+        uses: CleverShuttle/gh-composite-actions/actions/deploy-lambda-function@v1.33.1
         with:
           aws_access_key_id: ${{ secrets.NONPROD_AWS_ACCESS_KEY_ID }}
           aws_region: ${{ secrets.AWS_REGION }}
@@ -118,24 +118,25 @@ jobs:
           jar_file: ${{ inputs.jar_file }}
 
       - name: "Slack: Success"
-        if: ${{ success() && github.event.sender.login != 'renovate[bot]' || startsWith(github.event.head_commit.message, 'renovate/')) }}
-        uses: CleverShuttle/gh-composite-actions/actions/slack-status@v1.31.1
+        if: ${{ success() && !(github.event.sender.login == 'renovate[bot]' || startsWith(github.event.head_commit.message, 'renovate/')) }}
+        uses: CleverShuttle/gh-composite-actions/actions/slack-status@v1.33.1
         with:
-          slack_token: ${{secrets.SLACK_BOT_TOKEN_OMG_BACKEND}}
-          slack_channel_id: ${{secrets.PRODUCTION_DEPLOYMENTS_SLACK_CHANNEL_ID}}
+          slack_token: ${{secrets.SLACK_TOKEN}}
+          slack_channel_id: ${{secrets.SLACK_CHANNEL_ID}}
+          slack_message_ts: ${{ steps.slack-progress.outputs.slack_message_ts }}
           slack_reaction: white_check_mark
+          job: DEPLOY_VERSION
           status: SUCCESS
-          build: RELEASE
           type: LAMBDA
           version: ${{ github.event.inputs.version }}
 
       - name: "Slack: Failure"
         if: ${{ failure() }}
-        uses: CleverShuttle/gh-composite-actions/actions/slack-status@v1.31.1
+        uses: CleverShuttle/gh-composite-actions/actions/slack-status@v1.33.1
         with:
-          slack_token: ${{secrets.SLACK_BOT_TOKEN_OMG_BACKEND}}
-          slack_channel_id: ${{secrets.PRODUCTION_DEPLOYMENTS_SLACK_CHANNEL_ID}}
+          slack_token: ${{secrets.SLACK_TOKEN}}
+          slack_channel_id: ${{secrets.SLACK_CHANNEL_ID}}
+          job: DEPLOY_VERSION
           status: FAILURE
-          build: RELEASE
           type: LAMBDA
           version: ${{ github.event.inputs.version }}

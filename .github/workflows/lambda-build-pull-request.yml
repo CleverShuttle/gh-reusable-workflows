@@ -12,6 +12,10 @@ on:
         required: false
         default: false
         type: boolean
+    outputs:
+      slack_message_timestamp:
+        description: "Slack message timestamp"
+        value: ${{ jobs.lambda-build-pull-request.outputs.slack_message_timestamp }}
     secrets:
       ARTIFACTORY_PASSWORD:
         required: true
@@ -23,6 +27,10 @@ on:
         required: true
       NONPROD_AWS_ACCESS_KEY_ID:
         required: true
+      SLACK_TOKEN:
+        required: true
+      SLACK_CHANNEL_ID:
+        required: true
       SONAR_TOKEN:
         required: true
       SONAR_URL:
@@ -31,6 +39,8 @@ on:
 jobs:
   lambda-build-pull-request:
     runs-on: ubuntu-20.04
+    outputs:
+      slack_message_timestamp: ${{ steps.slack-progress.outputs.slack_message_ts }}
     env:
       MAVEN_ARGS: "--batch-mode --no-transfer-progress"
     steps:
@@ -49,7 +59,7 @@ jobs:
           step: restore
 
       - name: "Copy Maven settings.xml"
-        uses: CleverShuttle/gh-composite-actions/actions/maven-settings@v1.31.1
+        uses: CleverShuttle/gh-composite-actions/actions/maven-settings@v1.33.1
 
       - name: "Configure AWS credentials"
         uses: aws-actions/configure-aws-credentials@v1
@@ -75,6 +85,16 @@ jobs:
           USERNAME: ${{ secrets.ARTIFACTORY_USERNAME }}
           PASSWORD: ${{ secrets.ARTIFACTORY_PASSWORD }}
         run: echo "PROJECT_VERSION=$(mvn ${{ env.MAVEN_ARGS }} -Dexpression=project.artifactId -q -DforceStdout org.apache.maven.plugins:maven-help-plugin:3.2.0:evaluate 2>/dev/null)" >> $GITHUB_ENV
+
+      - name: "Slack: In progress"
+        id: slack-progress
+        uses: CleverShuttle/gh-composite-actions/actions/slack-status@v1.33.1
+        with:
+          slack_token: ${{secrets.SLACK_TOKEN}}
+          slack_channel_id: ${{secrets.SLACK_CHANNEL_ID}}
+          job: PULL_REQUEST
+          status: IN_PROGRESS
+          type: LAMBDA
 
       - name: "Build lambda with Maven"
         env:
@@ -110,7 +130,7 @@ jobs:
         run: terraform apply -destroy -auto-approve
 
       - name: "Run Sonar analysis for pull requests"
-        uses: CleverShuttle/gh-composite-actions/actions/sonar-java-analysis-pull-request@v1.31.1
+        uses: CleverShuttle/gh-composite-actions/actions/sonar-java-analysis-pull-request@v1.33.1
         with:
           sonar_token: ${{ secrets.SONAR_TOKEN }}
           artifactory_username: ${{ secrets.ARTIFACTORY_USERNAME }}

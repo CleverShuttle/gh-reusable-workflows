@@ -45,7 +45,7 @@ jobs:
           step: restore
 
       - name: "Copy Maven settings.xml"
-        uses: CleverShuttle/gh-composite-actions/actions/maven-settings@v1.31.1
+        uses: CleverShuttle/gh-composite-actions/actions/maven-settings@v1.33.1
 
       - name: "Configure AWS credentials"
         uses: aws-actions/configure-aws-credentials@v1
