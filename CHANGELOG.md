@@ -1,9 +1,21 @@
+### [0.23.1](https://github.com/CleverShuttle/gh-reusable-workflows/compare/v0.23.0...v0.23.1) (2022-04-08)
+
+
+### 🧹 Chores
+
+* **deps:** update wagoid/commitlint-github-action action to v4.1.11 ([07bd556](https://github.com/CleverShuttle/gh-reusable-workflows/commit/07bd5569cd6e63c19543c95727286963aa07bbff))
+
 ## [0.23.0](https://github.com/CleverShuttle/gh-reusable-workflows/compare/v0.22.3...v0.23.0) (2022-04-08)
 
 
 ### 🎉 New Features
 
 * Move the major version tag (such as v1, v2) to point to the Git ref of the current release ([bee3047](https://github.com/CleverShuttle/gh-reusable-workflows/commit/bee304753ceb3f5368db9e343a136f147c542500))
+
+
+### 🧹 Chores
+
+* **release:** 0.23.0 ([bfd17a2](https://github.com/CleverShuttle/gh-reusable-workflows/commit/bfd17a2afaa097a52537c3b40629851a8eb8f1f5))
 
 ### [0.22.3](https://github.com/CleverShuttle/gh-reusable-workflows/compare/v0.22.2...v0.22.3) (2022-04-06)
 
@@ -532,12 +544,4 @@
 
 * **release:** v0.6.31 ([bc6db55](https://github.com/CleverShuttle/gh-reusable-workflows/commit/bc6db5547ab10694469bce989dbe5c386191e8f2))
 * Update conventional-changelog to component-release flow ([2a14983](https://github.com/CleverShuttle/gh-reusable-workflows/commit/2a1498360fcf6f13a48f33bbfb7c627cb267ed1c))
-
-### [0.6.30](https://github.com/CleverShuttle/gh-reusable-workflows/compare/v0.6.29...v0.6.30) (2022-03-19)
-
-
-### 🧹 Chores
-
-* **release:** v0.6.30 ([ca3194d](https://github.com/CleverShuttle/gh-reusable-workflows/commit/ca3194d1221bd397e300c6bdc314d2d07b11af64))
-* Update conventional-changelog to component-release flow ([571ca54](https://github.com/CleverShuttle/gh-reusable-workflows/commit/571ca5469b6dca3698b6975fe15164346f55f2ba))
 
