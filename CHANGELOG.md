@@ -1,9 +1,23 @@
+## [1.0.0](https://github.com/CleverShuttle/gh-reusable-workflows/compare/v0.23.1...v1.0.0) (2022-04-08)
+
+
+### ⚠ BREAKING CHANGES
+
+* Optimize workflow interfaces; Implement new slack action
+
+### 🎉 New Features
+
+* Move the major version tag (such as v1, v2) to point to the Git ref of the current release ([590ae91](https://github.com/CleverShuttle/gh-reusable-workflows/commit/590ae91b1ad63670ec50772701983abd3857bf8f))
+* Optimize workflow interfaces; Implement new slack action ([e3ff5d7](https://github.com/CleverShuttle/gh-reusable-workflows/commit/e3ff5d762d9098718539019986b893305a0340cc))
+* Use new slack notification action ([87c0cfb](https://github.com/CleverShuttle/gh-reusable-workflows/commit/87c0cfb289ca3aaf09fe20aa253b5419c17c64e5))
+
 ### [0.23.1](https://github.com/CleverShuttle/gh-reusable-workflows/compare/v0.23.0...v0.23.1) (2022-04-08)
 
 
 ### 🧹 Chores
 
 * **deps:** update wagoid/commitlint-github-action action to v4.1.11 ([07bd556](https://github.com/CleverShuttle/gh-reusable-workflows/commit/07bd5569cd6e63c19543c95727286963aa07bbff))
+* **release:** 0.23.1 ([f01fb72](https://github.com/CleverShuttle/gh-reusable-workflows/commit/f01fb7293e55f7707a5e0086a702f396ee9dd89d))
 
 ## [0.23.0](https://github.com/CleverShuttle/gh-reusable-workflows/compare/v0.22.3...v0.23.0) (2022-04-08)
 
@@ -536,12 +550,4 @@
 
 * **release:** v0.6.32 ([3c5bfea](https://github.com/CleverShuttle/gh-reusable-workflows/commit/3c5bfea75ed0c460a67c8340b088c3319c9c5962))
 * Update conventional-changelog to component-release flow ([a53397e](https://github.com/CleverShuttle/gh-reusable-workflows/commit/a53397ead2177dc0b85cbed4fcd97195e0d81cda))
-
-### [0.6.31](https://github.com/CleverShuttle/gh-reusable-workflows/compare/v0.6.30...v0.6.31) (2022-03-19)
-
-
-### 🧹 Chores
-
-* **release:** v0.6.31 ([bc6db55](https://github.com/CleverShuttle/gh-reusable-workflows/commit/bc6db5547ab10694469bce989dbe5c386191e8f2))
-* Update conventional-changelog to component-release flow ([2a14983](https://github.com/CleverShuttle/gh-reusable-workflows/commit/2a1498360fcf6f13a48f33bbfb7c627cb267ed1c))
 
