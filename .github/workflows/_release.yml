@@ -51,16 +51,19 @@ jobs:
           # https://github.com/conventional-changelog/commitlint/tree/master/%40commitlint/config-conventional#type-enum
           patchList: fix, bugfix, perf, refactor, test, tests, chore, build, ci, doc, docs, revert, style, deps, improvements, enhancement, other
 
-      - name: 'Set version and tag'
+      - name: 'Calculate version, tag and major tag'
         id: versioning
         shell: bash
         env:
           SEMANTIC_VERSIONING_VERSION: ${{ env.nextStrict }}
         run: |
-          echo "::set-output name=version::${{ env.SEMANTIC_VERSIONING_VERSION }}"
-          echo "::set-output name=tag::v${{ env.SEMANTIC_VERSIONING_VERSION }}"
+          version="${{ env.SEMANTIC_VERSIONING_VERSION }}"
+          echo "::set-output name=version::$version"
+          echo "::set-output name=tag::v$version"
+          parts=(${version//./ })
+          echo "::set-output name=major::v${parts[0]}"
 
-      - name: "Commit changes and set git tag"
+      - name: "Commit changes and set git tags"
         shell: bash
         run: |
           git config --local user.email "action@github.com"
@@ -73,6 +76,13 @@ jobs:
             git tag -d ${{ steps.versioning.outputs.tag }}
           fi
           
+          if [ $(git tag -l "${{ steps.versioning.outputs.major }}") ]; then
+            echo "Delete major tag '${{ steps.versioning.outputs.major }}'"
+            git tag -d ${{ steps.versioning.outputs.major }}
+          fi
+
+          # major version tag (such as v1, v2) to point to the Git ref of the current release
+          git tag -a ${{ steps.versioning.outputs.major }} -m ${{ steps.versioning.outputs.major }}
           git tag -a ${{ steps.versioning.outputs.tag }} -m ${{ steps.versioning.outputs.tag }}
 
       - name: 'Push changes'
@@ -81,6 +91,8 @@ jobs:
         with:
           github_token: ${{ github.token }}
           branch: ${{ github.ref }}
+          tags: true
+          force: true
 
       - name: 'Create Github release'
         # https://github.com/softprops/action-gh-release

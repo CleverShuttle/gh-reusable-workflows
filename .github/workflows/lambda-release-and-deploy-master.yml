@@ -71,7 +71,7 @@ jobs:
           step: restore
 
       - name: "Copy settings.xml"
-        uses: CleverShuttle/gh-composite-actions/actions/maven-settings@v1.30.6
+        uses: CleverShuttle/gh-composite-actions/actions/maven-settings@v1.34.3
 
       - name: "Configure AWS credentials for integration tests"
         uses: aws-actions/configure-aws-credentials@v1
@@ -133,7 +133,7 @@ jobs:
 
       - name: "Generate changelog and create release"
         id: create-changelog-and-release
-        uses: CleverShuttle/gh-composite-actions/actions/create-changelog-and-release@v1.30.6
+        uses: CleverShuttle/gh-composite-actions/actions/create-changelog-and-release@v1.34.3
         with:
           artifactory_username: ${{ secrets.ARTIFACTORY_USERNAME }}
           artifactory_password: ${{ secrets.ARTIFACTORY_PASSWORD }}
@@ -161,7 +161,7 @@ jobs:
           -DskipDependencyCheck
 
       - name: "Run Sonar analysis for master"
-        uses: CleverShuttle/gh-composite-actions/actions/sonar-java-analysis-master@v1.30.6
+        uses: CleverShuttle/gh-composite-actions/actions/sonar-java-analysis-master@v1.34.3
         with:
           sonar_token: ${{ secrets.SONAR_TOKEN }}
           artifactory_username: ${{ secrets.ARTIFACTORY_USERNAME }}
@@ -175,7 +175,7 @@ jobs:
           step: save
 
       - name: "Deploy lambda function"
-        uses: CleverShuttle/gh-composite-actions/actions/deploy-lambda-function@v1.30.6
+        uses: CleverShuttle/gh-composite-actions/actions/deploy-lambda-function@v1.34.3
         with:
           aws_access_key_id: ${{ secrets.NONPROD_AWS_ACCESS_KEY_ID }}
           aws_region: ${{ secrets.AWS_REGION }}

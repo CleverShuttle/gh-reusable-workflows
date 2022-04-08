@@ -56,7 +56,7 @@ jobs:
           step: restore
 
       - name: "Copy Maven settings"
-        uses: CleverShuttle/gh-composite-actions/actions/maven-settings@v1.30.6
+        uses: CleverShuttle/gh-composite-actions/actions/maven-settings@v1.34.3
 
       - name: "Read ecr.image.name from workflow.properties"
         id: ecr_image_name
@@ -122,7 +122,7 @@ jobs:
 
       - name: "Generate changelog and create release"
         id: create-changelog-and-release
-        uses: CleverShuttle/gh-composite-actions/actions/create-changelog-and-release@v1.30.6
+        uses: CleverShuttle/gh-composite-actions/actions/create-changelog-and-release@v1.34.3
         with:
           artifactory_username: ${{ secrets.ARTIFACTORY_USERNAME }}
           artifactory_password: ${{ secrets.ARTIFACTORY_PASSWORD }}
@@ -143,7 +143,7 @@ jobs:
           -DskipDependencyCheck
 
       - name: "Run Sonar analysis for master"
-        uses: CleverShuttle/gh-composite-actions/actions/sonar-java-analysis-master@v1.30.6
+        uses: CleverShuttle/gh-composite-actions/actions/sonar-java-analysis-master@v1.34.3
         with:
           sonar_token: ${{ secrets.SONAR_TOKEN }}
           artifactory_username: ${{ secrets.ARTIFACTORY_USERNAME }}

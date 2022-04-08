@@ -45,7 +45,7 @@ jobs:
           step: restore
 
       - name: "Copy Maven settings.xml"
-        uses: CleverShuttle/gh-composite-actions/actions/maven-settings@v1.30.6
+        uses: CleverShuttle/gh-composite-actions/actions/maven-settings@v1.34.3
 
       - name: "Env variable: MAVEN_GROUP_ID"
         if: ${{ inputs.sonar_analysis_enabled }}
@@ -88,7 +88,7 @@ jobs:
 
       - name: "Run Sonar analysis for pull requests"
         if: ${{ inputs.sonar_analysis_enabled }}
-        uses: CleverShuttle/gh-composite-actions/actions/sonar-java-analysis-pull-request@v1.30.6
+        uses: CleverShuttle/gh-composite-actions/actions/sonar-java-analysis-pull-request@v1.34.3
         with:
           sonar_token: ${{ secrets.SONAR_TOKEN }}
           artifactory_username: ${{ secrets.ARTIFACTORY_USERNAME }}
