@@ -1,9 +1,21 @@
+### [1.1.1](https://github.com/CleverShuttle/gh-reusable-workflows/compare/v1.1.0...v1.1.1) (2022-04-08)
+
+
+### 🐛 Bugfixes
+
+* Passing the Slack timestamp to the action in case of a failure ([22ce564](https://github.com/CleverShuttle/gh-reusable-workflows/commit/22ce564c01ec04d18849507244d028964ef6a84c))
+
 ## [1.1.0](https://github.com/CleverShuttle/gh-reusable-workflows/compare/v1.0.0...v1.1.0) (2022-04-08)
 
 
 ### 🎉 New Features
 
 * Move to github actions major version tag ([f7041b9](https://github.com/CleverShuttle/gh-reusable-workflows/commit/f7041b903999455380681da535385a82ea9e848d))
+
+
+### 🧹 Chores
+
+* **release:** 1.1.0 ([9fc3af2](https://github.com/CleverShuttle/gh-reusable-workflows/commit/9fc3af2b8c553077d30809c7c6f328a0604553aa))
 
 ## [1.0.0](https://github.com/CleverShuttle/gh-reusable-workflows/compare/v0.23.1...v1.0.0) (2022-04-08)
 
@@ -546,12 +558,4 @@
 
 * **deps:** update clevershuttle/gh-composite-actions action to v1.22.0 ([16d3010](https://github.com/CleverShuttle/gh-reusable-workflows/commit/16d3010c2a05c024f4cb46605a3fef3d305852dc))
 * **release:** v0.6.34 ([fb662d4](https://github.com/CleverShuttle/gh-reusable-workflows/commit/fb662d40f2c8fca9c10399a89b8d95a728c17a8a))
-
-### [0.6.33](https://github.com/CleverShuttle/gh-reusable-workflows/compare/v0.6.32...v0.6.33) (2022-03-19)
-
-
-### 🧹 Chores
-
-* **release:** v0.6.33 ([9c9712a](https://github.com/CleverShuttle/gh-reusable-workflows/commit/9c9712a50c73944944cfc655cd6f4aae06601c5b))
-* Update conventional-changelog to component-release flow ([e1ba891](https://github.com/CleverShuttle/gh-reusable-workflows/commit/e1ba89146e78729f415766baa7a3d1d6d60c2143))
 
