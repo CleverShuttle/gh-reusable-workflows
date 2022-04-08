@@ -1,3 +1,10 @@
+## [1.1.0](https://github.com/CleverShuttle/gh-reusable-workflows/compare/v1.0.0...v1.1.0) (2022-04-08)
+
+
+### 🎉 New Features
+
+* Move to github actions major version tag ([f7041b9](https://github.com/CleverShuttle/gh-reusable-workflows/commit/f7041b903999455380681da535385a82ea9e848d))
+
 ## [1.0.0](https://github.com/CleverShuttle/gh-reusable-workflows/compare/v0.23.1...v1.0.0) (2022-04-08)
 
 
@@ -10,6 +17,11 @@
 * Move the major version tag (such as v1, v2) to point to the Git ref of the current release ([590ae91](https://github.com/CleverShuttle/gh-reusable-workflows/commit/590ae91b1ad63670ec50772701983abd3857bf8f))
 * Optimize workflow interfaces; Implement new slack action ([e3ff5d7](https://github.com/CleverShuttle/gh-reusable-workflows/commit/e3ff5d762d9098718539019986b893305a0340cc))
 * Use new slack notification action ([87c0cfb](https://github.com/CleverShuttle/gh-reusable-workflows/commit/87c0cfb289ca3aaf09fe20aa253b5419c17c64e5))
+
+
+### 🧹 Chores
+
+* **release:** 1.0.0 ([5ad33f6](https://github.com/CleverShuttle/gh-reusable-workflows/commit/5ad33f6b8b73947f1033e75ada3991245cd96e4e))
 
 ### [0.23.1](https://github.com/CleverShuttle/gh-reusable-workflows/compare/v0.23.0...v0.23.1) (2022-04-08)
 
@@ -542,12 +554,4 @@
 
 * **release:** v0.6.33 ([9c9712a](https://github.com/CleverShuttle/gh-reusable-workflows/commit/9c9712a50c73944944cfc655cd6f4aae06601c5b))
 * Update conventional-changelog to component-release flow ([e1ba891](https://github.com/CleverShuttle/gh-reusable-workflows/commit/e1ba89146e78729f415766baa7a3d1d6d60c2143))
-
-### [0.6.32](https://github.com/CleverShuttle/gh-reusable-workflows/compare/v0.6.31...v0.6.32) (2022-03-19)
-
-
-### 🧹 Chores
-
-* **release:** v0.6.32 ([3c5bfea](https://github.com/CleverShuttle/gh-reusable-workflows/commit/3c5bfea75ed0c460a67c8340b088c3319c9c5962))
-* Update conventional-changelog to component-release flow ([a53397e](https://github.com/CleverShuttle/gh-reusable-workflows/commit/a53397ead2177dc0b85cbed4fcd97195e0d81cda))
 
