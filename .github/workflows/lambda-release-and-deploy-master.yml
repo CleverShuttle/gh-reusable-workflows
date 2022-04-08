@@ -81,19 +81,19 @@ jobs:
         env:
           USERNAME: ${{ secrets.ARTIFACTORY_USERNAME }}
           PASSWORD: ${{ secrets.ARTIFACTORY_PASSWORD }}
-        run: echo "MAVEN_GROUP_ID=$(mvn ${{ env.MAVEN_ARGS }} -Dexpression=project.groupId -q -DforceStdout org.apache.maven.plugins:maven-help-plugin:3.2.0:evaluate 2>/dev/null)" >> $GITHUB_ENV
+        run: echo "MAVEN_GROUP_ID=$(mvn $MAVEN_ARGS -Dexpression=project.groupId -q -DforceStdout org.apache.maven.plugins:maven-help-plugin:3.2.0:evaluate 2>/dev/null)" >> $GITHUB_ENV
 
       - name: "Env variable: MAVEN_ARTIFACT_ID"
         env:
           USERNAME: ${{ secrets.ARTIFACTORY_USERNAME }}
           PASSWORD: ${{ secrets.ARTIFACTORY_PASSWORD }}
-        run: echo "MAVEN_ARTIFACT_ID=$(mvn ${{ env.MAVEN_ARGS }} -Dexpression=project.artifactId -q -DforceStdout org.apache.maven.plugins:maven-help-plugin:3.2.0:evaluate 2>/dev/null)" >> $GITHUB_ENV
+        run: echo "MAVEN_ARTIFACT_ID=$(mvn $MAVEN_ARGS -Dexpression=project.artifactId -q -DforceStdout org.apache.maven.plugins:maven-help-plugin:3.2.0:evaluate 2>/dev/null)" >> $GITHUB_ENV
 
       - name: "Env variable: PROJECT_VERSION"
         env:
           USERNAME: ${{ secrets.ARTIFACTORY_USERNAME }}
           PASSWORD: ${{ secrets.ARTIFACTORY_PASSWORD }}
-        run: echo "PROJECT_VERSION=$(mvn ${{ env.MAVEN_ARGS }} -Dexpression=project.version -q -DforceStdout org.apache.maven.plugins:maven-help-plugin:3.2.0:evaluate 2>/dev/null)" >> $GITHUB_ENV
+        run: echo "PROJECT_VERSION=$(mvn $MAVEN_ARGS -Dexpression=project.version -q -DforceStdout org.apache.maven.plugins:maven-help-plugin:3.2.0:evaluate 2>/dev/null)" >> $GITHUB_ENV
 
       - name: "Slack: In progress"
         id: slack-progress
@@ -109,7 +109,7 @@ jobs:
         env:
           USERNAME: ${{ secrets.ARTIFACTORY_USERNAME }}
           PASSWORD: ${{ secrets.ARTIFACTORY_PASSWORD }}
-        run: mvn ${{ env.MAVEN_ARGS }} clean package
+        run: mvn $MAVEN_ARGS clean package
 
       - name: "Create and deploy lambda for integration tests"
         if: inputs.create_pr_environment
@@ -129,7 +129,7 @@ jobs:
           USERNAME: ${{ secrets.ARTIFACTORY_USERNAME }}
           PASSWORD: ${{ secrets.ARTIFACTORY_PASSWORD }}
           AWS_TEST_KINESIS_INPUT_STEAM: ${{ env.KINESIS_INPUT_STREAM }}
-        run: mvn ${{ env.MAVEN_ARGS }} install
+        run: mvn $MAVEN_ARGS install
 
       - name: "Remove lambda after integration tests"
         if: inputs.create_pr_environment && always()
@@ -158,7 +158,7 @@ jobs:
           USERNAME: ${{ secrets.ARTIFACTORY_USERNAME }}
           PASSWORD: ${{ secrets.ARTIFACTORY_PASSWORD }}
         run: |
-          mvn ${{ env.MAVEN_ARGS }} deploy \
+          mvn $MAVEN_ARGS deploy \
           -DskipDockerBuild \
           -DskipForbiddenApisCheck \
           -Dmaven.main.skip \

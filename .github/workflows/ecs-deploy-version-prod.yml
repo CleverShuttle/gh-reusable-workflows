@@ -48,7 +48,11 @@ jobs:
           property: "ecs.service.name.production"
 
       - name: "Env variable: IMAGE_TAG"
-        run: echo "IMAGE_TAG=${{ secrets.ECR_REGISTRY }}/${{ steps.ecr_image_name.outputs.value }}:${{ github.event.inputs.version }}" >> $GITHUB_ENV
+        env:
+          REGISTRY: ${{ secrets.ECR_REGISTRY }}
+          IMAGE_NAME: ${{ steps.ecr_image_name.outputs.value }}
+          VERSION: ${{ github.event.inputs.version }}
+        run: echo "IMAGE_TAG=$REGISTRY/$IMAGE_NAME:$VERSION" >> $GITHUB_ENV
 
       - name: "Configure AWS credentials"
         uses: aws-actions/configure-aws-credentials@v1

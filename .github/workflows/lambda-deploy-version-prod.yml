@@ -61,13 +61,13 @@ jobs:
         env:
           USERNAME: ${{ secrets.ARTIFACTORY_USERNAME }}
           PASSWORD: ${{ secrets.ARTIFACTORY_PASSWORD }}
-        run: echo "MAVEN_GROUP_ID=$(mvn -Dexpression=project.groupId -q -DforceStdout org.apache.maven.plugins:maven-help-plugin:3.2.0:evaluate 2>/dev/null)" >> $GITHUB_ENV
+        run: echo "MAVEN_GROUP_ID=$(mvn $MAVEN_ARGS -Dexpression=project.groupId -q -DforceStdout org.apache.maven.plugins:maven-help-plugin:3.2.0:evaluate 2>/dev/null)" >> $GITHUB_ENV
 
       - name: "Env variable: MAVEN_ARTIFACT_ID"
         env:
           USERNAME: ${{ secrets.ARTIFACTORY_USERNAME }}
           PASSWORD: ${{ secrets.ARTIFACTORY_PASSWORD }}
-        run: echo "MAVEN_ARTIFACT_ID=$(mvn ${{ env.MAVEN_ARGS }} -Dexpression=project.artifactId -q -DforceStdout org.apache.maven.plugins:maven-help-plugin:3.2.0:evaluate 2>/dev/null)" >> $GITHUB_ENV
+        run: echo "MAVEN_ARTIFACT_ID=$(mvn $MAVEN_ARGS -Dexpression=project.artifactId -q -DforceStdout org.apache.maven.plugins:maven-help-plugin:3.2.0:evaluate 2>/dev/null)" >> $GITHUB_ENV
 
       - name: "Configure AWS credentials"
         uses: aws-actions/configure-aws-credentials@v1
@@ -77,19 +77,21 @@ jobs:
           aws-region: ${{ secrets.AWS_REGION }}
 
       - name: "Create download destination file name"
-        run: |
-          JAR_FILE_WITH_PLACEHOLDER=${{ inputs.jar_file }}
-          echo "DOWNLOAD_DESTINATION=${JAR_FILE_WITH_PLACEHOLDER/PROJECT_VERSION/${{ github.event.inputs.version }}}" >> $GITHUB_ENV
+        env:
+          JAR_FILE_WITH_PLACEHOLDER: ${{ inputs.jar_file }}
+          VERSION: ${{ github.event.inputs.version }}
+        run: echo "DOWNLOAD_DESTINATION=${JAR_FILE_WITH_PLACEHOLDER/PROJECT_VERSION/$VERSION}" >> $GITHUB_ENV
 
       - name: "Download lambda function code"
         env:
           USERNAME: ${{ secrets.ARTIFACTORY_USERNAME }}
           PASSWORD: ${{ secrets.ARTIFACTORY_PASSWORD }}
+          VERSION: ${{ github.event.inputs.version }}
         run: |
-          mvn ${{ env.MAVEN_ARGS }} \
-            -Dartifact="${{ env.MAVEN_GROUP_ID }}:${{ env.MAVEN_ARTIFACT_ID }}:${{ github.event.inputs.version }}:jar" \
+          mvn $MAVEN_ARGS \
+            -Dartifact="${MAVEN_GROUP_ID}:${MAVEN_ARTIFACT_ID}:${VERSION}:jar" \
             -Dtransitive=false \
-            -Ddest="${{ env.DOWNLOAD_DESTINATION }}" \
+            -Ddest="$DOWNLOAD_DESTINATION" \
             dependency:get
 
       - name: "Save Maven cache"

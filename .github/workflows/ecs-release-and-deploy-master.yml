@@ -101,13 +101,13 @@ jobs:
         env:
           USERNAME: ${{ secrets.ARTIFACTORY_USERNAME }}
           PASSWORD: ${{ secrets.ARTIFACTORY_PASSWORD }}
-        run: echo "MAVEN_GROUP_ID=$(mvn org.apache.maven.plugins:maven-help-plugin:3.2.0:evaluate -Dexpression=project.groupId -q -DforceStdout 2>/dev/null)" >> $GITHUB_ENV
+        run: echo "MAVEN_GROUP_ID=$(mvn $MAVEN_ARGS org.apache.maven.plugins:maven-help-plugin:3.2.0:evaluate -Dexpression=project.groupId -q -DforceStdout 2>/dev/null)" >> $GITHUB_ENV
 
       - name: "Env variable: MAVEN_ARTIFACT_ID"
         env:
           USERNAME: ${{ secrets.ARTIFACTORY_USERNAME }}
           PASSWORD: ${{ secrets.ARTIFACTORY_PASSWORD }}
-        run: echo "MAVEN_ARTIFACT_ID=$(mvn org.apache.maven.plugins:maven-help-plugin:3.2.0:evaluate -Dexpression=project.artifactId -q -DforceStdout 2>/dev/null)" >> $GITHUB_ENV
+        run: echo "MAVEN_ARTIFACT_ID=$(mvn $MAVEN_ARGS org.apache.maven.plugins:maven-help-plugin:3.2.0:evaluate -Dexpression=project.artifactId -q -DforceStdout 2>/dev/null)" >> $GITHUB_ENV
 
       - name: "Slack: In progress"
         id: slack-progress
@@ -124,7 +124,7 @@ jobs:
           USERNAME: ${{ secrets.ARTIFACTORY_USERNAME }}
           PASSWORD: ${{ secrets.ARTIFACTORY_PASSWORD }}
         run: |
-          mvn ${{ env.MAVEN_ARGS }} clean install \
+          mvn $MAVEN_ARGS clean install \
           -DskipDockerBuild
 
       - name: "Generate changelog and create release"
@@ -141,7 +141,7 @@ jobs:
           PASSWORD: ${{ secrets.ARTIFACTORY_PASSWORD }}
         # The docker image must still be created for the new version. Therefore, the step cannot be skipped (-DskipDockerBuild)
         run: |
-          mvn ${{ env.MAVEN_ARGS }} deploy \
+          mvn $MAVEN_ARGS deploy \
           -DskipForbiddenApisCheck \
           -Dmaven.main.skip \
           -DskipTests \
@@ -164,10 +164,14 @@ jobs:
           step: save
 
       - name: "Env variable: IMAGE_TAG"
-        run: echo "IMAGE_TAG=${{ secrets.ECR_REGISTRY }}/${{ steps.ecr_image_name.outputs.value }}:${{ steps.create-changelog-and-release.outputs.version }}" >> $GITHUB_ENV
+        env:
+          REGISTRY: ${{ secrets.ECR_REGISTRY }}
+          IMAGE_NAME: ${{ steps.ecr_image_name.outputs.value }}
+          VERSION: ${{ steps.create-changelog-and-release.outputs.version }}
+        run: echo "IMAGE_TAG=$REGISTRY/$IMAGE_NAME:$VERSION" >> $GITHUB_ENV
 
       - name: "Push docker image to ECR"
-        run: docker push ${{ env.IMAGE_TAG }}
+        run: docker push "$IMAGE_TAG"
 
       - name: "Deploying service to ECS"
         # https://github.com/brunocascio/ecs-deploy
