@@ -21,7 +21,7 @@ jobs:
 
       - name: "Lint commit messages"
         # https://github.com/wagoid/commitlint-github-action
-        uses: wagoid/commitlint-github-action@v4.1.10
+        uses: wagoid/commitlint-github-action@v4.1.11
         with:
           failOnWarnings: true
           # Path to cloned actions repo
