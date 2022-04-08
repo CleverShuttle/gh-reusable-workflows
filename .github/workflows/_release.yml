@@ -57,7 +57,7 @@ jobs:
         env:
           SEMANTIC_VERSIONING_VERSION: ${{ env.nextStrict }}
         run: |
-          version="${{ env.SEMANTIC_VERSIONING_VERSION }}"
+          version="$SEMANTIC_VERSIONING_VERSION"
           echo "::set-output name=version::$version"
           echo "::set-output name=tag::v$version"
           parts=(${version//./ })
@@ -65,25 +65,29 @@ jobs:
 
       - name: "Commit changes and set git tags"
         shell: bash
+        env:
+          NEW_VERSION: ${{ steps.versioning.outputs.version }}
+          NEW_TAG: ${{ steps.versioning.outputs.tag }}
+          MAJOR: ${{ steps.versioning.outputs.major }}
         run: |
           git config --local user.email "action@github.com"
           git config --local user.name "Github Action"
           git add .
-          git commit -m "chore(release): ${{ steps.versioning.outputs.version }}" -a
+          git commit -m "chore(release): $NEW_VERSION" -a
           
-          if [ $(git tag -l "${{ steps.versioning.outputs.tag }}") ]; then
+          if [ $(git tag -l "$NEW_TAG") ]; then
             echo "Delete tag from 'conventional-changelog-action'"
-            git tag -d ${{ steps.versioning.outputs.tag }}
+            git tag -d $NEW_TAG
           fi
           
-          if [ $(git tag -l "${{ steps.versioning.outputs.major }}") ]; then
-            echo "Delete major tag '${{ steps.versioning.outputs.major }}'"
-            git tag -d ${{ steps.versioning.outputs.major }}
+          if [ $(git tag -l "$MAJOR") ]; then
+            echo "Delete major tag '$MAJOR'"
+            git tag -d "$MAJOR"
           fi
 
           # major version tag (such as v1, v2) to point to the Git ref of the current release
-          git tag -a ${{ steps.versioning.outputs.major }} -m ${{ steps.versioning.outputs.major }}
-          git tag -a ${{ steps.versioning.outputs.tag }} -m ${{ steps.versioning.outputs.tag }}
+          git tag -a "$MAJOR" -m "$MAJOR"
+          git tag -a "$NEW_TAG" -m "$NEW_TAG"
 
       - name: 'Push changes'
         # https://github.com/ad-m/github-push-action

@@ -115,26 +115,26 @@ jobs:
         run: echo "PROJECT_VERSION=$(xmlstarlet sel -N my=http://maven.apache.org/POM/4.0.0 -t -m my:project -v my:version pom.xml)" >> $GITHUB_ENV
 
       - name: "Env variable: NONPROD_VERSION"
-        run: echo "NONPROD_VERSION=${{ env.PROJECT_VERSION }}-NONPROD-${{ github.run_number }}" >> $GITHUB_ENV
+        run: echo "NONPROD_VERSION=${PROJECT_VERSION}-NONPROD-${{ github.run_number }}" >> $GITHUB_ENV
 
       - name: "Bump Version"
         env:
           USERNAME: ${{ secrets.ARTIFACTORY_USERNAME }}
           PASSWORD: ${{ secrets.ARTIFACTORY_PASSWORD }}
-        run: mvn ${{ env.MAVEN_ARGS }} -DnewVersion="${{ env.NONPROD_VERSION }}" -DprocessAllModules=true versions:set
+        run: mvn $MAVEN_ARGS -DnewVersion="$NONPROD_VERSION" -DprocessAllModules=true versions:set
 
       - name: "Build service with Maven"
         env:
           USERNAME: ${{ secrets.ARTIFACTORY_USERNAME }}
           PASSWORD: ${{ secrets.ARTIFACTORY_PASSWORD }}
-        run: mvn ${{ env.MAVEN_ARGS }} clean install
+        run: mvn $MAVEN_ARGS clean install
 
       - name: "Deploy to Artifactory"
         env:
           USERNAME: ${{ secrets.ARTIFACTORY_USERNAME }}
           PASSWORD: ${{ secrets.ARTIFACTORY_PASSWORD }}
         run: |
-          mvn ${{ env.MAVEN_ARGS }} deploy \
+          mvn $MAVEN_ARGS deploy \
           -DskipDockerBuild \
           -DskipForbiddenApisCheck \
           -Dmaven.main.skip \
@@ -149,10 +149,12 @@ jobs:
           step: save
 
       - name: "Env variable: IMAGE_TAG"
-        run: echo "IMAGE_TAG=${{ secrets.ECR_REGISTRY }}/${{ steps.ecr_image_name.outputs.value }}:${{ env.NONPROD_VERSION }}" >> $GITHUB_ENV
+        env:
+          IMAGE_NAME: ${{ steps.ecr_image_name.outputs.value }}
+        run: echo "IMAGE_TAG=${{ secrets.ECR_REGISTRY }}/$IMAGE_NAME:$NONPROD_VERSION" >> $GITHUB_ENV
 
       - name: "Push docker image to ECR"
-        run: docker push ${{ env.IMAGE_TAG }}
+        run: docker push "$IMAGE_TAG"
 
       - name: "Deploying service to ECS"
         # https://github.com/brunocascio/ecs-deploy

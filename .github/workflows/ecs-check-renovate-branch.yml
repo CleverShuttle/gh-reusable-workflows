@@ -66,7 +66,7 @@ jobs:
         env:
           USERNAME: ${{ secrets.ARTIFACTORY_USERNAME }}
           PASSWORD: ${{ secrets.ARTIFACTORY_PASSWORD }}
-        run: mvn ${{ env.MAVEN_ARGS }} clean install
+        run: mvn $MAVEN_ARGS clean install
 
       - name: "Save Maven cache"
         uses: skjolber/maven-cache-github-action@v1
