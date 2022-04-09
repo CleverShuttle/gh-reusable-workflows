@@ -1,8 +1,16 @@
+### [1.1.3](https://github.com/CleverShuttle/gh-reusable-workflows/compare/v1.1.2...v1.1.3) (2022-04-09)
+
+
+### 🐛 Bugfixes
+
+* Suppress slack progress message for renovate pull requests ([e8b947f](https://github.com/CleverShuttle/gh-reusable-workflows/commit/e8b947f6ece43086b76b5ff63d80dbe4d04c1748))
+
 ### [1.1.2](https://github.com/CleverShuttle/gh-reusable-workflows/compare/v1.1.1...v1.1.2) (2022-04-09)
 
 
 ### 🧹 Chores
 
+* **release:** 1.1.2 ([c74bc78](https://github.com/CleverShuttle/gh-reusable-workflows/commit/c74bc78f4e9e479945961af61b8d506d2b58f19b))
 * Update renovate.json5 ([43041a6](https://github.com/CleverShuttle/gh-reusable-workflows/commit/43041a601c2a4926c0f829d7484e61040ba69f44))
 
 ### [1.1.1](https://github.com/CleverShuttle/gh-reusable-workflows/compare/v1.1.0...v1.1.1) (2022-04-08)
@@ -554,12 +562,4 @@
 
 * Append create-changelog-and-create-release to component-release flow ([d9a5083](https://github.com/CleverShuttle/gh-reusable-workflows/commit/d9a508319ba0368ea42d2c64ff797b09de990610))
 * **release:** v0.6.36 ([0492229](https://github.com/CleverShuttle/gh-reusable-workflows/commit/0492229e68055cd26057965a2f894b5efd0bcadc))
-
-### [0.6.35](https://github.com/CleverShuttle/gh-reusable-workflows/compare/v0.6.34...v0.6.35) (2022-03-22)
-
-
-### 🧹 Chores
-
-* **deps:** update tripss/conventional-changelog-action action to v3.11.0 ([a85dfae](https://github.com/CleverShuttle/gh-reusable-workflows/commit/a85dfae8a40ad37b65debe6e40b7ac840f166856))
-* **release:** v0.6.35 ([46bdab3](https://github.com/CleverShuttle/gh-reusable-workflows/commit/46bdab3fc378b56f159b52a65c40d50b593b9213))
 
