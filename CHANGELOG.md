@@ -1,3 +1,10 @@
+## [1.2.0](https://github.com/CleverShuttle/gh-reusable-workflows/compare/v1.1.4...v1.2.0) (2022-04-11)
+
+
+### 🎉 New Features
+
+* Apply security best practices ([f6b4a8b](https://github.com/CleverShuttle/gh-reusable-workflows/commit/f6b4a8b69147326fb21da2960c79a6d9d8efcb6a))
+
 ### [1.1.4](https://github.com/CleverShuttle/gh-reusable-workflows/compare/v1.1.3...v1.1.4) (2022-04-11)
 
 
@@ -7,6 +14,11 @@
 * PROJECT_VERSION for lambdas ([0f0d2cf](https://github.com/CleverShuttle/gh-reusable-workflows/commit/0f0d2cfa5d48078238c79749934a0bba9ce582bc))
 * PROJECT_VERSION for lambdas ([c38061f](https://github.com/CleverShuttle/gh-reusable-workflows/commit/c38061f1c0310b2bb5d0d68534347dc4c5615721))
 * PROJECT_VERSION for lambdas ([69661ef](https://github.com/CleverShuttle/gh-reusable-workflows/commit/69661efa09266260a6f160213333726e2cebb85d))
+
+
+### 🧹 Chores
+
+* **release:** 1.1.4 ([76b38c1](https://github.com/CleverShuttle/gh-reusable-workflows/commit/76b38c16c56ea67e6b35ef5ee50cf0c1758132c9))
 
 ### [1.1.3](https://github.com/CleverShuttle/gh-reusable-workflows/compare/v1.1.2...v1.1.3) (2022-04-09)
 
@@ -561,12 +573,4 @@
 ### 🧹 Chores
 
 * **release:** v0.7.0 ([cfb4c20](https://github.com/CleverShuttle/gh-reusable-workflows/commit/cfb4c204129aa78a5ae43d86ae42034d67a849e9))
-
-### [0.6.37](https://github.com/CleverShuttle/gh-reusable-workflows/compare/v0.6.36...v0.6.37) (2022-03-23)
-
-
-### 🧹 Chores
-
-* Cleanup project ([62685d7](https://github.com/CleverShuttle/gh-reusable-workflows/commit/62685d7d34c917e69c782859946cdc01488b8b27))
-* **release:** v0.6.37 ([42d0bbd](https://github.com/CleverShuttle/gh-reusable-workflows/commit/42d0bbd83a3bbf66c9c1231a47d323421768976e))
 
