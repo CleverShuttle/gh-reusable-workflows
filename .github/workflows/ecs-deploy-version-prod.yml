@@ -62,6 +62,7 @@ jobs:
           aws-region: ${{ secrets.AWS_REGION }}
 
       - name: "Slack: In progress"
+        if: ${{ success() && !(github.event.sender.login == 'renovate[bot]' || startsWith(github.event.head_commit.message, 'renovate/')) }}
         id: slack-progress
         uses: CleverShuttle/gh-composite-actions/actions/slack-status@v1
         with:

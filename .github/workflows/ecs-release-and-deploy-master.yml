@@ -110,6 +110,7 @@ jobs:
         run: echo "MAVEN_ARTIFACT_ID=$(mvn $MAVEN_ARGS org.apache.maven.plugins:maven-help-plugin:3.2.0:evaluate -Dexpression=project.artifactId -q -DforceStdout 2>/dev/null)" >> $GITHUB_ENV
 
       - name: "Slack: In progress"
+        if: ${{ success() && !(github.event.sender.login == 'renovate[bot]' || startsWith(github.event.head_commit.message, 'renovate/')) }}
         id: slack-progress
         uses: CleverShuttle/gh-composite-actions/actions/slack-status@v1
         with:
