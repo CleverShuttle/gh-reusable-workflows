@@ -1,9 +1,24 @@
+### [1.1.4](https://github.com/CleverShuttle/gh-reusable-workflows/compare/v1.1.3...v1.1.4) (2022-04-11)
+
+
+### 🐛 Bugfixes
+
+* PROJECT_VERSION for lambdas ([2af5e6e](https://github.com/CleverShuttle/gh-reusable-workflows/commit/2af5e6e747e2890d4e1258e21c1501f78da01bd7))
+* PROJECT_VERSION for lambdas ([0f0d2cf](https://github.com/CleverShuttle/gh-reusable-workflows/commit/0f0d2cfa5d48078238c79749934a0bba9ce582bc))
+* PROJECT_VERSION for lambdas ([c38061f](https://github.com/CleverShuttle/gh-reusable-workflows/commit/c38061f1c0310b2bb5d0d68534347dc4c5615721))
+* PROJECT_VERSION for lambdas ([69661ef](https://github.com/CleverShuttle/gh-reusable-workflows/commit/69661efa09266260a6f160213333726e2cebb85d))
+
 ### [1.1.3](https://github.com/CleverShuttle/gh-reusable-workflows/compare/v1.1.2...v1.1.3) (2022-04-09)
 
 
 ### 🐛 Bugfixes
 
 * Suppress slack progress message for renovate pull requests ([e8b947f](https://github.com/CleverShuttle/gh-reusable-workflows/commit/e8b947f6ece43086b76b5ff63d80dbe4d04c1748))
+
+
+### 🧹 Chores
+
+* **release:** 1.1.3 ([6da74d6](https://github.com/CleverShuttle/gh-reusable-workflows/commit/6da74d6353e497265d289bc92512d9e1d4a779c2))
 
 ### [1.1.2](https://github.com/CleverShuttle/gh-reusable-workflows/compare/v1.1.1...v1.1.2) (2022-04-09)
 
@@ -554,12 +569,4 @@
 
 * Cleanup project ([62685d7](https://github.com/CleverShuttle/gh-reusable-workflows/commit/62685d7d34c917e69c782859946cdc01488b8b27))
 * **release:** v0.6.37 ([42d0bbd](https://github.com/CleverShuttle/gh-reusable-workflows/commit/42d0bbd83a3bbf66c9c1231a47d323421768976e))
-
-### [0.6.36](https://github.com/CleverShuttle/gh-reusable-workflows/compare/v0.6.35...v0.6.36) (2022-03-23)
-
-
-### 🧹 Chores
-
-* Append create-changelog-and-create-release to component-release flow ([d9a5083](https://github.com/CleverShuttle/gh-reusable-workflows/commit/d9a508319ba0368ea42d2c64ff797b09de990610))
-* **release:** v0.6.36 ([0492229](https://github.com/CleverShuttle/gh-reusable-workflows/commit/0492229e68055cd26057965a2f894b5efd0bcadc))
 
