@@ -1,9 +1,21 @@
+### [1.2.1](https://github.com/CleverShuttle/gh-reusable-workflows/compare/v1.2.0...v1.2.1) (2022-04-11)
+
+
+### 🐛 Bugfixes
+
+* Omit slack progress message from Renovate ([8e72824](https://github.com/CleverShuttle/gh-reusable-workflows/commit/8e72824105e54add4687287bf2146b60f166df49))
+
 ## [1.2.0](https://github.com/CleverShuttle/gh-reusable-workflows/compare/v1.1.4...v1.2.0) (2022-04-11)
 
 
 ### 🎉 New Features
 
 * Apply security best practices ([f6b4a8b](https://github.com/CleverShuttle/gh-reusable-workflows/commit/f6b4a8b69147326fb21da2960c79a6d9d8efcb6a))
+
+
+### 🧹 Chores
+
+* **release:** 1.2.0 ([f5aef93](https://github.com/CleverShuttle/gh-reusable-workflows/commit/f5aef9387ec7e8419d9e60abce0909e4a571a410))
 
 ### [1.1.4](https://github.com/CleverShuttle/gh-reusable-workflows/compare/v1.1.3...v1.1.4) (2022-04-11)
 
@@ -561,16 +573,4 @@
 ### 🧹 Chores
 
 * **release:** v0.8.0 ([1e94ee9](https://github.com/CleverShuttle/gh-reusable-workflows/commit/1e94ee9c60751f903b324e8a241c8e03f792973c))
-
-## [0.7.0](https://github.com/CleverShuttle/gh-reusable-workflows/compare/v0.6.37...v0.7.0) (2022-03-23)
-
-
-### 🎉 New Features
-
-* Upgrade to latest composite-actions; Optimize workflow ([555f91c](https://github.com/CleverShuttle/gh-reusable-workflows/commit/555f91c7914eaa4f7efdbc1d0e4189324bc978e4))
-
-
-### 🧹 Chores
-
-* **release:** v0.7.0 ([cfb4c20](https://github.com/CleverShuttle/gh-reusable-workflows/commit/cfb4c204129aa78a5ae43d86ae42034d67a849e9))
 
