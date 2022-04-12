@@ -193,10 +193,7 @@ jobs:
 
       - name: "Trigger test automation"
         if: ${{ success() && inputs.trigger_test_automation }}
-        # https://github.com/peter-evans/repository-dispatch
-        uses: peter-evans/repository-dispatch@v2
+        uses: CleverShuttle/gh-composite-actions/actions/trigger-test-automation@v1
         with:
           token: ${{ secrets.REPO_ACCESS_TOKEN }}
-          repository: CleverShuttle/cs-ops-control-tests
-          event-type: trigger-test-automation-event
-          client-payload: '{"ref": "${{ github.ref }}", "sha": "${{ github.sha }}"}'
+          slack_message_ts: ${{ inputs.slack_message_timestamp }}
