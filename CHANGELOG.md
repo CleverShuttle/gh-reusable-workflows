@@ -1,9 +1,21 @@
+### [1.2.4](https://github.com/CleverShuttle/gh-reusable-workflows/compare/v1.2.3...v1.2.4) (2022-04-12)
+
+
+### 🧹 Chores
+
+* Suppress component releases via renovate ([608e7ca](https://github.com/CleverShuttle/gh-reusable-workflows/commit/608e7ca418d008acda40733da9376e56e3fbe238))
+
 ### [1.2.3](https://github.com/CleverShuttle/gh-reusable-workflows/compare/v1.2.2...v1.2.3) (2022-04-12)
 
 
 ### 🐛 Bugfixes
 
 * Remove non-existing version from Slack message ([c5745d4](https://github.com/CleverShuttle/gh-reusable-workflows/commit/c5745d4ad70f2e2437654241ac1e976def923130))
+
+
+### 🧹 Chores
+
+* **release:** 1.2.3 ([f7e01b9](https://github.com/CleverShuttle/gh-reusable-workflows/commit/f7e01b96f5b85076b3586fd254699ea214998b22))
 
 ### [1.2.2](https://github.com/CleverShuttle/gh-reusable-workflows/compare/v1.2.1...v1.2.2) (2022-04-12)
 
@@ -551,22 +563,4 @@
 ### 🧹 Chores
 
 * **release:** v0.10.0 ([8e03e48](https://github.com/CleverShuttle/gh-reusable-workflows/commit/8e03e489b686beb59851a94e269799ba9defc872))
-
-## [0.9.0](https://github.com/CleverShuttle/gh-reusable-workflows/compare/v0.8.1...v0.9.0) (2022-03-24)
-
-
-### 🐛 Bugfixes
-
-* Upgrade all workflows to create-changelog-and-release; Set Slf4jMavenTransferListener to warn level ([57970b3](https://github.com/CleverShuttle/gh-reusable-workflows/commit/57970b3e788ed0a3354edd7e49dbf4e89b508cc5))
-
-
-### 🎉 New Features
-
-* Set Slf4jMavenTransferListener to warn level ([e39d446](https://github.com/CleverShuttle/gh-reusable-workflows/commit/e39d446977d581be6b4e556ceae1d0651b4a6304))
-
-
-### 🧹 Chores
-
-* **release:** v0.9.0 ([6216c26](https://github.com/CleverShuttle/gh-reusable-workflows/commit/6216c2676b66c35433ae508f2f0d9679424b50d3))
-* Use deploy-lambda-function action ([3506697](https://github.com/CleverShuttle/gh-reusable-workflows/commit/3506697a1c055643dd331b7faa1e28f2303c27dc))
 
