@@ -153,4 +153,3 @@ jobs:
           job: PULL_REQUEST
           status: FAILURE
           type: LAMBDA
-          version: ${{ github.event.inputs.version }}

@@ -128,4 +128,3 @@ jobs:
           job: PULL_REQUEST
           status: FAILURE
           type: SERVICE
-          version: ${{ github.event.inputs.version }}
