@@ -1,8 +1,16 @@
+## [1.3.0](https://github.com/CleverShuttle/gh-reusable-workflows/compare/v1.2.4...v1.3.0) (2022-04-12)
+
+
+### 🎉 New Features
+
+* Append new trigger-test-automation action to workflows ([668a8ca](https://github.com/CleverShuttle/gh-reusable-workflows/commit/668a8ca23bd92ea429fd4d1a7b650c72b920f37e))
+
 ### [1.2.4](https://github.com/CleverShuttle/gh-reusable-workflows/compare/v1.2.3...v1.2.4) (2022-04-12)
 
 
 ### 🧹 Chores
 
+* **release:** 1.2.4 ([9dabb0b](https://github.com/CleverShuttle/gh-reusable-workflows/commit/9dabb0bb5113e941fcf298626541104dc274f678))
 * Suppress component releases via renovate ([608e7ca](https://github.com/CleverShuttle/gh-reusable-workflows/commit/608e7ca418d008acda40733da9376e56e3fbe238))
 
 ### [1.2.3](https://github.com/CleverShuttle/gh-reusable-workflows/compare/v1.2.2...v1.2.3) (2022-04-12)
@@ -551,16 +559,4 @@
 ### 🧹 Chores
 
 * **release:** v0.11.0 ([78ad45b](https://github.com/CleverShuttle/gh-reusable-workflows/commit/78ad45b6f2b8f90fe9756f4b8e6ef39a5587c3ff))
-
-## [0.10.0](https://github.com/CleverShuttle/gh-reusable-workflows/compare/v0.9.0...v0.10.0) (2022-03-24)
-
-
-### 🎉 New Features
-
-* Cleanup ecs-workflows; TODOs added ([9f2193e](https://github.com/CleverShuttle/gh-reusable-workflows/commit/9f2193ef23679f2cd7f7667ccecc14bc0ce2b443))
-
-
-### 🧹 Chores
-
-* **release:** v0.10.0 ([8e03e48](https://github.com/CleverShuttle/gh-reusable-workflows/commit/8e03e489b686beb59851a94e269799ba9defc872))
 
