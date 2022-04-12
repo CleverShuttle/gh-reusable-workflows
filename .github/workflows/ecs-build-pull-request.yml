@@ -118,3 +118,14 @@ jobs:
         uses: skjolber/maven-cache-github-action@v1
         with:
           step: save
+
+      - name: "Slack: Failure"
+        if: ${{ failure() }}
+        uses: CleverShuttle/gh-composite-actions/actions/slack-status@v1
+        with:
+          slack_token: ${{secrets.SLACK_TOKEN}}
+          slack_channel_id: ${{secrets.SLACK_CHANNEL_ID}}
+          job: PULL_REQUEST
+          status: FAILURE
+          type: SERVICE
+          version: ${{ github.event.inputs.version }}
