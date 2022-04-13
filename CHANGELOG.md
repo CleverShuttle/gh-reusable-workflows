@@ -1,9 +1,21 @@
+### [1.3.1](https://github.com/CleverShuttle/gh-reusable-workflows/compare/v1.3.0...v1.3.1) (2022-04-13)
+
+
+### 🐛 Bugfixes
+
+* Omit slack failure message from Renovate ([7e2104a](https://github.com/CleverShuttle/gh-reusable-workflows/commit/7e2104ab783631380c9549583b9efbae0d5ba313))
+
 ## [1.3.0](https://github.com/CleverShuttle/gh-reusable-workflows/compare/v1.2.4...v1.3.0) (2022-04-12)
 
 
 ### 🎉 New Features
 
 * Append new trigger-test-automation action to workflows ([668a8ca](https://github.com/CleverShuttle/gh-reusable-workflows/commit/668a8ca23bd92ea429fd4d1a7b650c72b920f37e))
+
+
+### 🧹 Chores
+
+* **release:** 1.3.0 ([5911ee8](https://github.com/CleverShuttle/gh-reusable-workflows/commit/5911ee827ab9f7cb5c82cfe32a42907f80685e12))
 
 ### [1.2.4](https://github.com/CleverShuttle/gh-reusable-workflows/compare/v1.2.3...v1.2.4) (2022-04-12)
 
@@ -547,16 +559,4 @@
 ### 🧹 Chores
 
 * **release:** v0.12.0 ([a4cb738](https://github.com/CleverShuttle/gh-reusable-workflows/commit/a4cb738049891967ef21d82c7488ccfa39a0765f))
-
-## [0.11.0](https://github.com/CleverShuttle/gh-reusable-workflows/compare/v0.10.0...v0.11.0) (2022-03-24)
-
-
-### 🎉 New Features
-
-* Use merge-to-nonprod action for workflow; Update to latest composite-actions ([968c06f](https://github.com/CleverShuttle/gh-reusable-workflows/commit/968c06f6910b5ceafa42655dc3a504532607cb50))
-
-
-### 🧹 Chores
-
-* **release:** v0.11.0 ([78ad45b](https://github.com/CleverShuttle/gh-reusable-workflows/commit/78ad45b6f2b8f90fe9756f4b8e6ef39a5587c3ff))
 
