@@ -181,7 +181,7 @@ jobs:
           version: ${{ env.NONPROD_VERSION }}
 
       - name: "Slack: Failure"
-        if: ${{ failure() }}
+        if: ${{ failure() && !(github.event.sender.login == 'renovate[bot]' || startsWith(github.event.head_commit.message, 'renovate/'))  }}
         uses: CleverShuttle/gh-composite-actions/actions/slack-status@v1
         with:
           slack_token: ${{secrets.SLACK_TOKEN}}
