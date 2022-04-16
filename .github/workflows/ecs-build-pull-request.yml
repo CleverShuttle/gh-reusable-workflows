@@ -119,6 +119,16 @@ jobs:
         with:
           step: save
 
+      - name: "Report test results as GitHub pull request check"
+        if: ${{ always() && !(github.event.sender.login == 'renovate[bot]' || startsWith(github.event.head_commit.message, 'renovate/')) }}
+        # https://github.com/mikepenz/action-junit-report
+        uses: mikepenz/action-junit-report@v3
+        with:
+          report_paths: '**/target/surefire-reports/TEST-*.xml'
+          fail_on_failure: true
+          require_tests: false
+          summary: "JUnit Test Report"
+
       - name: "Slack: Failure"
         if: ${{ failure() && !(github.event.sender.login == 'renovate[bot]' || startsWith(github.event.head_commit.message, 'renovate/')) }}
         uses: CleverShuttle/gh-composite-actions/actions/slack-status@v1
