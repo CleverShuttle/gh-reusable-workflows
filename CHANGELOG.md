@@ -1,9 +1,21 @@
+### [1.3.2](https://github.com/CleverShuttle/gh-reusable-workflows/compare/v1.3.1...v1.3.2) (2022-04-18)
+
+
+### 🐛 Bugfixes
+
+* Append slack timestamp to failed pr-builds ([04593bb](https://github.com/CleverShuttle/gh-reusable-workflows/commit/04593bb52287c9253f725344f1743c56d448eaa4))
+
 ### [1.3.1](https://github.com/CleverShuttle/gh-reusable-workflows/compare/v1.3.0...v1.3.1) (2022-04-13)
 
 
 ### 🐛 Bugfixes
 
 * Omit slack failure message from Renovate ([7e2104a](https://github.com/CleverShuttle/gh-reusable-workflows/commit/7e2104ab783631380c9549583b9efbae0d5ba313))
+
+
+### 🧹 Chores
+
+* **release:** 1.3.1 ([6ee1a7f](https://github.com/CleverShuttle/gh-reusable-workflows/commit/6ee1a7f6a1a1641f53cc080fb9a19887ca91b3b2))
 
 ## [1.3.0](https://github.com/CleverShuttle/gh-reusable-workflows/compare/v1.2.4...v1.3.0) (2022-04-12)
 
@@ -547,16 +559,4 @@
 ### 🧹 Chores
 
 * **release:** v0.13.0 ([a1d2edd](https://github.com/CleverShuttle/gh-reusable-workflows/commit/a1d2edd4cb864a0098dc0a60a9fd3f17ed66f0fd))
-
-## [0.12.0](https://github.com/CleverShuttle/gh-reusable-workflows/compare/v0.11.0...v0.12.0) (2022-03-24)
-
-
-### 🎉 New Features
-
-* Use create-nonprod-changelog action for ecs- and lambda-workflow; Update to latest composite-actions ([efb2f04](https://github.com/CleverShuttle/gh-reusable-workflows/commit/efb2f04d50ad773e1bc7b6bbb52f26dc1648fbc9))
-
-
-### 🧹 Chores
-
-* **release:** v0.12.0 ([a4cb738](https://github.com/CleverShuttle/gh-reusable-workflows/commit/a4cb738049891967ef21d82c7488ccfa39a0765f))
 
