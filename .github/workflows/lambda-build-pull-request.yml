@@ -150,6 +150,7 @@ jobs:
         with:
           slack_token: ${{secrets.SLACK_TOKEN}}
           slack_channel_id: ${{secrets.SLACK_CHANNEL_ID}}
+          slack_message_ts: ${{ steps.slack-progress.outputs.slack_message_ts }}
           job: PULL_REQUEST
           status: FAILURE
           type: LAMBDA
