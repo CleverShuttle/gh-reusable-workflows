@@ -1,8 +1,16 @@
+## [1.4.0](https://github.com/CleverShuttle/gh-reusable-workflows/compare/v1.3.3...v1.4.0) (2022-04-19)
+
+
+### 🎉 New Features
+
+* Reports JUnit test results as GitHub pull request check ([bd19173](https://github.com/CleverShuttle/gh-reusable-workflows/commit/bd19173a2a97270a06b36ac2d17e1eed6c21a533))
+
 ### [1.3.3](https://github.com/CleverShuttle/gh-reusable-workflows/compare/v1.3.2...v1.3.3) (2022-04-19)
 
 
 ### 🧹 Chores
 
+* **release:** 1.3.3 ([427db5d](https://github.com/CleverShuttle/gh-reusable-workflows/commit/427db5d58a7acc3bc535361b74874a129f6b084c))
 * Use inline Renovate config ([365425f](https://github.com/CleverShuttle/gh-reusable-workflows/commit/365425fa5377eba6ce98711f598c35ea9e8e8172))
 
 ### [1.3.2](https://github.com/CleverShuttle/gh-reusable-workflows/compare/v1.3.1...v1.3.2) (2022-04-18)
@@ -547,16 +555,4 @@
 ### 🧹 Chores
 
 * **release:** v0.13.2 ([1b42497](https://github.com/CleverShuttle/gh-reusable-workflows/commit/1b424979b59ed4c5bde2dee87514b945def95e88))
-
-### [0.13.1](https://github.com/CleverShuttle/gh-reusable-workflows/compare/v0.13.0...v0.13.1) (2022-03-24)
-
-
-### 🐛 Bugfixes
-
-* Expression for components without sonar key (and coverage) ([1539e7d](https://github.com/CleverShuttle/gh-reusable-workflows/commit/1539e7d276eb744325d4eb3bed70ab2f494e55a2))
-
-
-### 🧹 Chores
-
-* **release:** v0.13.1 ([99d3de7](https://github.com/CleverShuttle/gh-reusable-workflows/commit/99d3de752033b59b7a71532cd2e1bb0babe6eedd))
 
