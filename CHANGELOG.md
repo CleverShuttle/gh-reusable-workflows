@@ -1,9 +1,21 @@
+### [1.3.3](https://github.com/CleverShuttle/gh-reusable-workflows/compare/v1.3.2...v1.3.3) (2022-04-19)
+
+
+### 🧹 Chores
+
+* Use inline Renovate config ([365425f](https://github.com/CleverShuttle/gh-reusable-workflows/commit/365425fa5377eba6ce98711f598c35ea9e8e8172))
+
 ### [1.3.2](https://github.com/CleverShuttle/gh-reusable-workflows/compare/v1.3.1...v1.3.2) (2022-04-18)
 
 
 ### 🐛 Bugfixes
 
 * Append slack timestamp to failed pr-builds ([04593bb](https://github.com/CleverShuttle/gh-reusable-workflows/commit/04593bb52287c9253f725344f1743c56d448eaa4))
+
+
+### 🧹 Chores
+
+* **release:** 1.3.2 ([41fdf5f](https://github.com/CleverShuttle/gh-reusable-workflows/commit/41fdf5f5a0edaba8da6fef914a01b657d886b0a2))
 
 ### [1.3.1](https://github.com/CleverShuttle/gh-reusable-workflows/compare/v1.3.0...v1.3.1) (2022-04-13)
 
@@ -547,16 +559,4 @@
 ### 🧹 Chores
 
 * **release:** v0.13.1 ([99d3de7](https://github.com/CleverShuttle/gh-reusable-workflows/commit/99d3de752033b59b7a71532cd2e1bb0babe6eedd))
-
-## [0.13.0](https://github.com/CleverShuttle/gh-reusable-workflows/compare/v0.12.0...v0.13.0) (2022-03-24)
-
-
-### 🎉 New Features
-
-* Use expression for components without sonar key (and coverage) ([902156b](https://github.com/CleverShuttle/gh-reusable-workflows/commit/902156b005907dae0bea688254bebed03c8d91a3))
-
-
-### 🧹 Chores
-
-* **release:** v0.13.0 ([a1d2edd](https://github.com/CleverShuttle/gh-reusable-workflows/commit/a1d2edd4cb864a0098dc0a60a9fd3f17ed66f0fd))
 
