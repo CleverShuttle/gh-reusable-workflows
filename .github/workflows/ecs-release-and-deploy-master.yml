@@ -7,6 +7,14 @@ on:
         required: false
         default: "17"
         type: string
+      container_image_fixed_tag:
+        type: string
+        required: false
+        default: ""
+      do_ecs_deployment:
+        type: boolean
+        required: false
+        default: true
     secrets:
       ARTIFACTORY_PASSWORD:
         required: true
@@ -169,13 +177,20 @@ jobs:
           REGISTRY: ${{ secrets.ECR_REGISTRY }}
           IMAGE_NAME: ${{ steps.ecr_image_name.outputs.value }}
           VERSION: ${{ steps.create-changelog-and-release.outputs.version }}
-        run: echo "IMAGE_TAG=$REGISTRY/$IMAGE_NAME:$VERSION" >> $GITHUB_ENV
+          FIXED_TAG: ${{ inputs.container_image_fixed_tag }}
+        run: |
+          if [[ -n "$FIXED_TAG" ]] ; then
+            echo "IMAGE_TAG=$REGISTRY/$IMAGE_NAME:$FIXED_TAG" >> $GITHUB_ENV
+          else
+            echo "IMAGE_TAG=$REGISTRY/$IMAGE_NAME:$VERSION" >> $GITHUB_ENV
+          fi
 
       - name: "Push docker image to ECR"
         run: docker push "$IMAGE_TAG"
 
       - name: "Deploying service to ECS"
         # https://github.com/brunocascio/ecs-deploy
+        if: inputs.do_ecs_deployment
         uses: brunocascio/ecs-deploy@v2.0.0
         with:
           args: deploy ${{ steps.ecs_cluster_name_cs_production.outputs.value }} ${{ steps.ecs_service_name_production.outputs.value }} --image ${{ steps.ecs_taskDefinition_container_name.outputs.value }} ${{ env.IMAGE_TAG }} --region ${{ secrets.AWS_REGION }} --timeout 600 --rollback
