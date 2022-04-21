@@ -1,9 +1,17 @@
+### [1.4.2](https://github.com/CleverShuttle/gh-reusable-workflows/compare/v1.4.1...v1.4.2) (2022-04-21)
+
+
+### 🐛 Bugfixes
+
+* Typo in README.md ([4077c5d](https://github.com/CleverShuttle/gh-reusable-workflows/commit/4077c5d273a465c00211f69c577cc68df1b79830))
+
 ### [1.4.1](https://github.com/CleverShuttle/gh-reusable-workflows/compare/v1.4.0...v1.4.1) (2022-04-21)
 
 
 ### 🧹 Chores
 
 * Add development hints to README.md ([8973e3c](https://github.com/CleverShuttle/gh-reusable-workflows/commit/8973e3c1fd48d90216736c972ee59e5aa7367342))
+* **release:** 1.4.1 ([833f678](https://github.com/CleverShuttle/gh-reusable-workflows/commit/833f678a2327a13c13e9ec0201d39f5f63b0435c))
 
 ## [1.4.0](https://github.com/CleverShuttle/gh-reusable-workflows/compare/v1.3.3...v1.4.0) (2022-04-19)
 
@@ -543,16 +551,4 @@
 ### 🧹 Chores
 
 * **release:** v0.14.1 ([c031c42](https://github.com/CleverShuttle/gh-reusable-workflows/commit/c031c42b422bea4c85ecba71f1a8814235d13501))
-
-## [0.14.0](https://github.com/CleverShuttle/gh-reusable-workflows/compare/v0.13.2...v0.14.0) (2022-03-25)
-
-
-### 🎉 New Features
-
-* Clear component flow from the properties ([88fddcb](https://github.com/CleverShuttle/gh-reusable-workflows/commit/88fddcb6e90a7a44701460aa84c602b901decc36))
-
-
-### 🧹 Chores
-
-* **release:** v0.14.0 ([d1bf573](https://github.com/CleverShuttle/gh-reusable-workflows/commit/d1bf573f6e300741f95640a8acee6bb3e9bedb04))
 
