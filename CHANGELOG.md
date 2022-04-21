@@ -1,9 +1,21 @@
+### [1.4.1](https://github.com/CleverShuttle/gh-reusable-workflows/compare/v1.4.0...v1.4.1) (2022-04-21)
+
+
+### 🧹 Chores
+
+* Add development hints to README.md ([8973e3c](https://github.com/CleverShuttle/gh-reusable-workflows/commit/8973e3c1fd48d90216736c972ee59e5aa7367342))
+
 ## [1.4.0](https://github.com/CleverShuttle/gh-reusable-workflows/compare/v1.3.3...v1.4.0) (2022-04-19)
 
 
 ### 🎉 New Features
 
 * Reports JUnit test results as GitHub pull request check ([bd19173](https://github.com/CleverShuttle/gh-reusable-workflows/commit/bd19173a2a97270a06b36ac2d17e1eed6c21a533))
+
+
+### 🧹 Chores
+
+* **release:** 1.4.0 ([24b499c](https://github.com/CleverShuttle/gh-reusable-workflows/commit/24b499c3dd7c9c16bb7dcc95b55641620eb3e415))
 
 ### [1.3.3](https://github.com/CleverShuttle/gh-reusable-workflows/compare/v1.3.2...v1.3.3) (2022-04-19)
 
@@ -543,16 +555,4 @@
 ### 🧹 Chores
 
 * **release:** v0.14.0 ([d1bf573](https://github.com/CleverShuttle/gh-reusable-workflows/commit/d1bf573f6e300741f95640a8acee6bb3e9bedb04))
-
-### [0.13.2](https://github.com/CleverShuttle/gh-reusable-workflows/compare/v0.13.1...v0.13.2) (2022-03-24)
-
-
-### 🐛 Bugfixes
-
-* Execute the REPO_BASE_URL step earlier to successfully complete the error case ([cda70d5](https://github.com/CleverShuttle/gh-reusable-workflows/commit/cda70d545e93911270709399385b5d8829fe27cb))
-
-
-### 🧹 Chores
-
-* **release:** v0.13.2 ([1b42497](https://github.com/CleverShuttle/gh-reusable-workflows/commit/1b424979b59ed4c5bde2dee87514b945def95e88))
 
