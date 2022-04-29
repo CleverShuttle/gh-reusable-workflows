@@ -38,7 +38,7 @@ jobs:
         uses: actions/setup-java@v3
         with:
           java-version: ${{ inputs.java_version }}
-          distribution: "temurin"
+          distribution: "corretto"
 
       - name: "Restore Maven cache"
         uses: skjolber/maven-cache-github-action@v1
