@@ -1,9 +1,21 @@
+## [1.6.0](https://github.com/CleverShuttle/gh-reusable-workflows/compare/v1.5.0...v1.6.0) (2022-05-04)
+
+
+### 🎉 New Features
+
+* use Corretto in setup-java action ([1737d70](https://github.com/CleverShuttle/gh-reusable-workflows/commit/1737d7055badffa1b7a7debf453d25fa1f4e4d03))
+
 ## [1.5.0](https://github.com/CleverShuttle/gh-reusable-workflows/compare/v1.4.2...v1.5.0) (2022-04-22)
 
 
 ### 🎉 New Features
 
 * make ecs-deploy step optional and allow for building a container image with a fixed tag ([12d6836](https://github.com/CleverShuttle/gh-reusable-workflows/commit/12d683648722f49a9cff399d32dc32b3bc0828c7))
+
+
+### 🧹 Chores
+
+* **release:** 1.5.0 ([10cfc2d](https://github.com/CleverShuttle/gh-reusable-workflows/commit/10cfc2dd2a6a4f23e0c144d839f28eace1b68255))
 
 ### [1.4.2](https://github.com/CleverShuttle/gh-reusable-workflows/compare/v1.4.1...v1.4.2) (2022-04-21)
 
@@ -539,16 +551,4 @@
 ### 🧹 Chores
 
 * **release:** v0.15.0 ([4a5b0dc](https://github.com/CleverShuttle/gh-reusable-workflows/commit/4a5b0dc7e140c8ec6555f12be49982e141031b37))
-
-### [0.14.2](https://github.com/CleverShuttle/gh-reusable-workflows/compare/v0.14.1...v0.14.2) (2022-03-25)
-
-
-### 🐛 Bugfixes
-
-* Latest component flow ([412764a](https://github.com/CleverShuttle/gh-reusable-workflows/commit/412764a7b165e0db303184a34a687be751f8a4ca))
-
-
-### 🧹 Chores
-
-* **release:** v0.14.2 ([afb7a3f](https://github.com/CleverShuttle/gh-reusable-workflows/commit/afb7a3ff53a072f541c436bd9fb3ef984cb590cd))
 
