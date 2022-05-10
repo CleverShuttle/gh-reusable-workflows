@@ -1,9 +1,21 @@
+### [1.6.1](https://github.com/CleverShuttle/gh-reusable-workflows/compare/v1.6.0...v1.6.1) (2022-05-10)
+
+
+### 🧹 Chores
+
+* **deps:** update docker/login-action action to v2 ([af941b6](https://github.com/CleverShuttle/gh-reusable-workflows/commit/af941b60d3aaf8504541c9ba935208427e5a680c))
+
 ## [1.6.0](https://github.com/CleverShuttle/gh-reusable-workflows/compare/v1.5.0...v1.6.0) (2022-05-04)
 
 
 ### 🎉 New Features
 
 * use Corretto in setup-java action ([1737d70](https://github.com/CleverShuttle/gh-reusable-workflows/commit/1737d7055badffa1b7a7debf453d25fa1f4e4d03))
+
+
+### 🧹 Chores
+
+* **release:** 1.6.0 ([5e75236](https://github.com/CleverShuttle/gh-reusable-workflows/commit/5e75236037bdccf54e48d024c6231ae36ed27555))
 
 ## [1.5.0](https://github.com/CleverShuttle/gh-reusable-workflows/compare/v1.4.2...v1.5.0) (2022-04-22)
 
@@ -539,16 +551,4 @@
 ### 🧹 Chores
 
 * Update composite actions ([1569236](https://github.com/CleverShuttle/gh-reusable-workflows/commit/15692361e34ed7d710bea78fe190bae15152ad90))
-
-## [0.15.0](https://github.com/CleverShuttle/gh-reusable-workflows/compare/v0.14.2...v0.15.0) (2022-03-25)
-
-
-### 🎉 New Features
-
-* Replace configuration by convention ([4a48865](https://github.com/CleverShuttle/gh-reusable-workflows/commit/4a4886568548106f60ea73cbc1f18ed72bf7a33f))
-
-
-### 🧹 Chores
-
-* **release:** v0.15.0 ([4a5b0dc](https://github.com/CleverShuttle/gh-reusable-workflows/commit/4a5b0dc7e140c8ec6555f12be49982e141031b37))
 
