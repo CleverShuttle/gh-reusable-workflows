@@ -1,9 +1,17 @@
+### [1.6.2](https://github.com/CleverShuttle/gh-reusable-workflows/compare/v1.6.1...v1.6.2) (2022-05-10)
+
+
+### 🧹 Chores
+
+* **deps:** update wagoid/commitlint-github-action action to v4.1.12 ([4aefb42](https://github.com/CleverShuttle/gh-reusable-workflows/commit/4aefb429a51506537809400ab9de8f1dc3d579c1))
+
 ### [1.6.1](https://github.com/CleverShuttle/gh-reusable-workflows/compare/v1.6.0...v1.6.1) (2022-05-10)
 
 
 ### 🧹 Chores
 
 * **deps:** update docker/login-action action to v2 ([af941b6](https://github.com/CleverShuttle/gh-reusable-workflows/commit/af941b60d3aaf8504541c9ba935208427e5a680c))
+* **release:** 1.6.1 ([b863e99](https://github.com/CleverShuttle/gh-reusable-workflows/commit/b863e99270cce7a22b7803f4149f15c04133a836))
 
 ## [1.6.0](https://github.com/CleverShuttle/gh-reusable-workflows/compare/v1.5.0...v1.6.0) (2022-05-04)
 
@@ -544,11 +552,4 @@
 ### 🧹 Chores
 
 * **release:** v0.15.2 ([cb0b257](https://github.com/CleverShuttle/gh-reusable-workflows/commit/cb0b257844cdc100a86cfbee8b5f9f60d365c440))
-
-### [0.15.1](https://github.com/CleverShuttle/gh-reusable-workflows/compare/v0.15.0...v0.15.1) (2022-03-25)
-
-
-### 🧹 Chores
-
-* Update composite actions ([1569236](https://github.com/CleverShuttle/gh-reusable-workflows/commit/15692361e34ed7d710bea78fe190bae15152ad90))
 
