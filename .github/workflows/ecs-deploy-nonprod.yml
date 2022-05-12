@@ -164,7 +164,7 @@ jobs:
 
       - name: "Generate NONPROD changelog"
         id: create-nonprod-changelog
-        uses: CleverShuttle/gh-composite-actions/actions/create-nonprod-changelog@refactor/CP-558_use_merge_instead_of_rebase
+        uses: CleverShuttle/gh-composite-actions/actions/create-nonprod-changelog@refactor/CS-558_use_merge_instead_of_rebase
 
       - name: "Slack: Success"
         if: ${{ success() && !(github.event.sender.login == 'renovate[bot]' || startsWith(github.event.head_commit.message, 'renovate/')) }}
