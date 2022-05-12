@@ -8,4 +8,4 @@ jobs:
     runs-on: ubuntu-20.04
     steps:
       - name: "Merge to NONPROD"
-        uses: CleverShuttle/gh-composite-actions/actions/merge-to-nonprod@fix/CP-558_fix_merge_action
+        uses: CleverShuttle/gh-composite-actions/actions/merge-to-nonprod@refactor/CP-558_use_merge_instead_of_rebase
