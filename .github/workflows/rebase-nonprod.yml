@@ -1,4 +1,4 @@
-name: 'Common: Rebase NONPROD onto master'
+name: 'Common: Rebase NONPROD onto default branch'
 
 on:
   workflow_call:
@@ -7,5 +7,5 @@ jobs:
   rebase-nonprod:
     runs-on: ubuntu-20.04
     steps:
-      - name: "Rebase NONPROD onto master"
+      - name: "Rebase NONPROD onto default branch"
         uses: CleverShuttle/gh-composite-actions/actions/rebase-nonprod@v1
