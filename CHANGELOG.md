@@ -1,9 +1,17 @@
+### [1.6.3](https://github.com/CleverShuttle/gh-reusable-workflows/compare/v1.6.2...v1.6.3) (2022-05-17)
+
+
+### 🐛 Bugfixes
+
+* set ref branch nonProd to workflows ([26124eb](https://github.com/CleverShuttle/gh-reusable-workflows/commit/26124eb4027de7b6d79d7b8831c5736972f0fccc))
+
 ### [1.6.2](https://github.com/CleverShuttle/gh-reusable-workflows/compare/v1.6.1...v1.6.2) (2022-05-10)
 
 
 ### 🧹 Chores
 
 * **deps:** update wagoid/commitlint-github-action action to v4.1.12 ([4aefb42](https://github.com/CleverShuttle/gh-reusable-workflows/commit/4aefb429a51506537809400ab9de8f1dc3d579c1))
+* **release:** 1.6.2 ([facc6a1](https://github.com/CleverShuttle/gh-reusable-workflows/commit/facc6a17b0a97db5880335ab2384913aa02c725b))
 
 ### [1.6.1](https://github.com/CleverShuttle/gh-reusable-workflows/compare/v1.6.0...v1.6.1) (2022-05-10)
 
@@ -540,16 +548,4 @@
 ### 🧹 Chores
 
 * **release:** v0.15.3 ([cf13cc7](https://github.com/CleverShuttle/gh-reusable-workflows/commit/cf13cc721e229164255b2fe5b953825427409187))
-
-### [0.15.2](https://github.com/CleverShuttle/gh-reusable-workflows/compare/v0.15.1...v0.15.2) (2022-03-25)
-
-
-### 🐛 Bugfixes
-
-* Replace MAVEN_OPTS by MAVEN_ARGS ([c1a2a64](https://github.com/CleverShuttle/gh-reusable-workflows/commit/c1a2a649a7487469b654417569f781e6e9964cec))
-
-
-### 🧹 Chores
-
-* **release:** v0.15.2 ([cb0b257](https://github.com/CleverShuttle/gh-reusable-workflows/commit/cb0b257844cdc100a86cfbee8b5f9f60d365c440))
 
