@@ -1,9 +1,21 @@
+## [1.7.0](https://github.com/CleverShuttle/gh-reusable-workflows/compare/v1.6.3...v1.7.0) (2022-05-24)
+
+
+### 🎉 New Features
+
+* do Groundwork Setup Honeycomb with Github Actions ([beb5dab](https://github.com/CleverShuttle/gh-reusable-workflows/commit/beb5dab84fcbf5bcf47fc953639efe4c4f01553d))
+
 ### [1.6.3](https://github.com/CleverShuttle/gh-reusable-workflows/compare/v1.6.2...v1.6.3) (2022-05-17)
 
 
 ### 🐛 Bugfixes
 
 * set ref branch nonProd to workflows ([26124eb](https://github.com/CleverShuttle/gh-reusable-workflows/commit/26124eb4027de7b6d79d7b8831c5736972f0fccc))
+
+
+### 🧹 Chores
+
+* **release:** 1.6.3 ([5898e9e](https://github.com/CleverShuttle/gh-reusable-workflows/commit/5898e9ef93caa0c85a7b3039e544f6099a7ef8f7))
 
 ### [1.6.2](https://github.com/CleverShuttle/gh-reusable-workflows/compare/v1.6.1...v1.6.2) (2022-05-10)
 
@@ -535,17 +547,4 @@
 ### 🧹 Chores
 
 * **release:** v0.15.4 ([e9e59f4](https://github.com/CleverShuttle/gh-reusable-workflows/commit/e9e59f42230a950c85ad53728c4259d2185a7cf9))
-
-### [0.15.3](https://github.com/CleverShuttle/gh-reusable-workflows/compare/v0.15.2...v0.15.3) (2022-03-28)
-
-
-### 🐛 Bugfixes
-
-* Correct mvn args ([38e28b1](https://github.com/CleverShuttle/gh-reusable-workflows/commit/38e28b1149f4ad66ee74ac1969315074a0b37c72))
-* Correct mvn args ([b1363ee](https://github.com/CleverShuttle/gh-reusable-workflows/commit/b1363ee7a05c3948aa385c19fe0843a72a06131e))
-
-
-### 🧹 Chores
-
-* **release:** v0.15.3 ([cf13cc7](https://github.com/CleverShuttle/gh-reusable-workflows/commit/cf13cc721e229164255b2fe5b953825427409187))
 
