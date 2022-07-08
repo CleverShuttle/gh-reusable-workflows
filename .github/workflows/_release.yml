@@ -30,7 +30,7 @@ jobs:
       - name: 'Generate changelog'
         id: conventional-changelog
         # https://github.com/TriPSs/conventional-changelog-action
-        uses: TriPSs/conventional-changelog-action@v3.11.0
+        uses: TriPSs/conventional-changelog-action@v3.14.0
         with:
           preset: conventionalcommits
           github-token: ${{ github.token }}
