@@ -1,9 +1,17 @@
+## [1.7.2](https://github.com/CleverShuttle/gh-reusable-workflows/compare/v1.7.1...v1.7.2) (2022-07-11)
+
+
+### 🧹 Chores
+
+* **deps:** update tripss/conventional-changelog-action action to v3.14.0 ([7cd8687](https://github.com/CleverShuttle/gh-reusable-workflows/commit/7cd86873c64bf1beb0ea22516236e8515687d104))
+
 ## [1.7.1](https://github.com/CleverShuttle/gh-reusable-workflows/compare/v1.7.0...v1.7.1) (2022-06-29)
 
 
 ### 🧹 Chores
 
 * **deps:** update wagoid/commitlint-github-action action to v5 ([2b47872](https://github.com/CleverShuttle/gh-reusable-workflows/commit/2b47872ffc2b07c497fde8d11fceed29cd207c7f))
+* **release:** 1.7.1 ([631c53b](https://github.com/CleverShuttle/gh-reusable-workflows/commit/631c53b3bf614b2739062b1cc954f8be1aa18ba2))
 
 ## [1.7.0](https://github.com/CleverShuttle/gh-reusable-workflows/compare/v1.6.3...v1.7.0) (2022-05-24)
 
@@ -534,17 +542,4 @@
 ### 🐛 Bugfixes
 
 * Enable chore commits ([5e5099d](https://github.com/CleverShuttle/gh-reusable-workflows/commit/5e5099dadb7835943ca06c1a01d98ab7e68d63e6))
-
-## [0.16.0](https://github.com/CleverShuttle/gh-reusable-workflows/compare/v0.15.4...v0.16.0) (2022-03-30)
-
-
-### 🎉 New Features
-
-* Optimize concurrency; Wording ([69fc356](https://github.com/CleverShuttle/gh-reusable-workflows/commit/69fc3567e8a8a4f34cdc03b21c1a487fc3a451de))
-* Use config-conventional for lint commits ([7567a0f](https://github.com/CleverShuttle/gh-reusable-workflows/commit/7567a0fcfe05555a529fe0d211597ae1e094e01e))
-
-
-### 🧹 Chores
-
-* **release:** v0.16.0 ([e1f0a26](https://github.com/CleverShuttle/gh-reusable-workflows/commit/e1f0a26b5b164f62d1c0e6c4209af69b7ef8ef7f))
 
